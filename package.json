@@ -1,0 +1,39 @@
+{
+  "name": "strapi-plugin-preview-button",
+  "version": "0.0.0",
+  "description": "Add a preview button to the content manager edit view.",
+  "strapi": {
+    "name": "Preview Button",
+    "description": "Add a preview button to the content manager edit view.",
+    "kind": "plugin"
+  },
+  "author": {
+    "name": "Matt Milburn"
+  },
+  "maintainers": [
+    {
+      "name": "Matt Milburn"
+    }
+  ],
+  "homepage": "https://github.com/mattmilburn/strapi-plugin-preview-button#readme",
+  "bugs": {
+    "url": "https://github.com/mattmilburn/strapi-plugin-preview-button/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattmilburn/strapi-plugin-preview-button.git"
+  },
+  "engines": {
+    "node": ">=12.x. <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "keywords": [
+    "strapi",
+    "plugin",
+    "preview"
+  ]
+}
