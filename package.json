@@ -4,6 +4,7 @@
   "description": "Add a preview button to the content manager edit view.",
   "license": "MIT",
   "strapi": {
+    "displayName": "Preview Button",
     "name": "preview-button",
     "description": "Add a preview button to the content manager edit view.",
     "kind": "plugin"
