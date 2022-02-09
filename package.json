@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-preview-button",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Add a preview button to the content manager edit view.",
   "license": "MIT",
   "strapi": {
