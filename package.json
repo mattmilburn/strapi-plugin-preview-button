@@ -2,10 +2,30 @@
   "name": "strapi-plugin-preview-button",
   "version": "0.0.0",
   "description": "Add a preview button to the content manager edit view.",
+  "license": "MIT",
   "strapi": {
     "name": "Preview Button",
     "description": "Add a preview button to the content manager edit view.",
     "kind": "plugin"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": "^4.0.5"
+  },
+  "dependencies": {
+    "@strapi/design-system": "^0.0.1-alpha.74",
+    "@strapi/helper-plugin": "^4.0.5",
+    "@strapi/icons": "^0.0.1-alpha.74",
+    "immer": "^9.0.12",
+    "prop-types": "^15.8.1",
+    "qs": "^6.10.3",
+    "react": "^17.0.2",
+    "react-intl": "^5.24.6",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.1"
+  },
+  "engines": {
+    "node": ">=12.x. <=16.x.x",
+    "npm": ">=6.0.0"
   },
   "author": {
     "name": "Matt Milburn"
@@ -15,21 +35,12 @@
       "name": "Matt Milburn"
     }
   ],
-  "homepage": "https://github.com/mattmilburn/strapi-plugin-preview-button#readme",
-  "bugs": {
-    "url": "https://github.com/mattmilburn/strapi-plugin-preview-button/issues"
-  },
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mattmilburn/strapi-plugin-preview-button.git"
-  },
-  "engines": {
-    "node": ">=12.x. <=16.x.x",
-    "npm": ">=6.0.0"
   },
   "keywords": [
     "strapi",
