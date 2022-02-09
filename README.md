@@ -16,7 +16,7 @@ Start by adding the following code to `/config/plugins.js`.
 module.exports = {
   'preview-button': {
     enabled: true,
-    resolve: './src/plugins/preview-button',
+    resolve: './node_modules/strapi-plugin-preview-button',
     config: {},
   },
 };

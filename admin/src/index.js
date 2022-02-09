@@ -6,7 +6,7 @@ import { getTrad } from './utils';
 import { Initializer, Injector } from './components';
 import reducers from './reducers';
 
-const pluginName = pluginPkg.strapi.name;
+const pluginName = pluginPkg.strapi.displayName;
 
 export default {
   register( app ) {
