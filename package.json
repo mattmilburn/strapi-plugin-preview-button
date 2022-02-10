@@ -10,12 +10,13 @@
     "kind": "plugin"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.0.5"
+    "@strapi/strapi": "^4.0.7"
   },
   "dependencies": {
     "@strapi/design-system": "^0.0.1-alpha.74",
-    "@strapi/helper-plugin": "^4.0.5",
+    "@strapi/helper-plugin": "^4.0.7",
     "@strapi/icons": "^0.0.1-alpha.74",
+    "@strapi/utils": "^4.0.7",
     "immer": "^9.0.12",
     "prop-types": "^15.8.1",
     "qs": "^6.10.3",
