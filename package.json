@@ -29,11 +29,13 @@
     "npm": ">=6.0.0"
   },
   "author": {
-    "name": "Matt Milburn"
+    "name": "Matt Milburn",
+    "url": "https://github.com/mattmilburn"
   },
   "maintainers": [
     {
-      "name": "Matt Milburn"
+      "name": "Matt Milburn",
+      "url": "https://github.com/mattmilburn"
     }
   ],
   "scripts": {
