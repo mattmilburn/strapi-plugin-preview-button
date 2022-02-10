@@ -13,7 +13,7 @@ module.exports = {
     ].every( val => val );
 
     const pluginService = await getService( 'preview-button' );
-    const { contentTypes } = await pluginService.getConfig();
+    const { contentTypes, targetField } = await pluginService.getConfig();
     const supportedType = contentTypes.find( type => type === uid || type.uid === uid );
     const isSupported = hasEnvVars && !! supportedType;
 
@@ -24,6 +24,7 @@ module.exports = {
       return;
     }
 
+    // Query the entity object for it's `slug` value.
     const entity = await strapi.query( uid ).findOne( {
       where: { id },
     } );
@@ -33,7 +34,7 @@ module.exports = {
       return;
     }
 
-    const urls = pluginService.getPreviewUrls( entity, supportedType );
+    const urls = pluginService.getPreviewUrls( entity, supportedType, targetField );
 
     // Return preview URLs.
     ctx.send( { urls } );
