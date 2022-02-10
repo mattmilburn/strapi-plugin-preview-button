@@ -1,8 +1,7 @@
-const pluginPkg = require( '../../package.json' );
-const pluginName = pluginPkg.name;
+const pluginId = require( './plugin-id' );
 
 const getService = name => {
-  return strapi.plugin( pluginName ).service( name );
+  return strapi.plugin( pluginId ).service( name );
 };
 
 module.exports = getService;

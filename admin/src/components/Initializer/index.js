@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import pluginId from '../../pluginId';
 import { useSupportedUIDs } from '../../hooks';
+import { pluginId } from '../../utils';
 
 const Initializer = ( { setPlugin } ) => {
   const { uids, isLoading } = useSupportedUIDs();

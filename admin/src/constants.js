@@ -1,4 +1,4 @@
-import pluginId from './pluginId';
+import { pluginId } from './utils';
 
 export const PREVIEW_WINDOW_NAME = 'StrapiPreview';
 

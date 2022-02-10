@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
-import pluginId from '../../pluginId';
 import { usePreviewData } from '../../hooks';
+import { pluginId } from '../../utils';
 import { PreviewButton } from '../';
 
 const Injector = () => {

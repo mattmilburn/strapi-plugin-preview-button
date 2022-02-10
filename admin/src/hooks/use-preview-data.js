@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { request, useNotification } from '@strapi/helper-plugin';
 
-import pluginId from '../pluginId';
 import { RESOLVE_DATA } from '../constants';
+import { pluginId } from '../utils';
 
 const fetchData = async ( uid, id, toggleNotification ) => {
   try {

@@ -1,4 +1,4 @@
-import pluginId from '../pluginId';
+import { pluginId } from '../utils';
 import main from './main';
 import config from './config';
 
