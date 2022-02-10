@@ -12,7 +12,8 @@ module.exports = ( { strapi } ) => ( {
     return data;
   },
 
-  getPreviewUrls( entity, contentType, targetField ) {
+  getPreviewUrls( entity, contentType ) {
+    const { uid, targetField, draft, published } = contentType;
     const secret = process.env.STRAPI_PREVIEW_SECRET;
     let publishedUrl = process.env.STRAPI_PREVIEW_PUBLISHED_URL.replace( /\/$/, '' );
     let draftUrl = process.env.STRAPI_PREVIEW_DRAFT_URL.replace( /\/$/, '' );
@@ -21,22 +22,17 @@ module.exports = ( { strapi } ) => ( {
       [ targetField ]: entity[ targetField ],
     };
 
-    // Maybe apply specific settings from contentType object.
-    if ( typeof contentType !== 'string' ) {
-      const { draft, published } = contentType;
+    // Maybe append optional `query` string values to draft urls.
+    if ( draft && draft.query ) {
+      draftParams = {
+        ...draft.query,
+        ...draftParams,
+      };
+    }
 
-      // Append optional `query` string values to draft urls.
-      if ( draft && draft.query ) {
-        draftParams = {
-          ...draft.query,
-          ...draftParams,
-        };
-      }
-
-      // Append optional `basePath` value to published urls.
-      if ( published && published.basePath ) {
-        publishedUrl = `${publishedUrl}/${published.basePath}`;
-      }
+    // Maybe append optional `basePath` value to published urls.
+    if ( published && published.basePath ) {
+      publishedUrl = `${publishedUrl}/${published.basePath}`;
     }
 
     draftUrl = `${draftUrl}?${qs.stringify( draftParams )}`;
