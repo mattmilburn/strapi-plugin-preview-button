@@ -24,8 +24,7 @@ module.exports = {
       return;
     }
 
-    // Query the entity object for it's `slug` value.
-    const entity = await await strapi.query( uid ).findOne( {
+    const entity = await strapi.query( uid ).findOne( {
       where: { id },
     } );
 
