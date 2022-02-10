@@ -19,8 +19,7 @@ const Injector = () => {
   const uids = useSelector( state => state[ `${pluginId}_config` ].uids );
 
   const isSupportedType = uids.includes( uid );
-  const isSupported = hasDraftAndPublish && isSupportedType;
-  const shouldRender = isSupported && ! isCreatingEntry;
+  const shouldRender = isSupportedType && ! isCreatingEntry;
 
   if ( ! shouldRender ) {
     return null;
@@ -33,10 +32,11 @@ const Injector = () => {
   }
 
   const { draftUrl, publishedUrl } = data.urls;
+  const isDraft = hasDraftAndPublish && ! modifiedData.publishedAt;
 
   return (
     <PreviewButton
-      isDraft={ ! modifiedData.publishedAt }
+      isDraft={ isDraft }
       draftUrl={ draftUrl }
       publishedUrl={ publishedUrl }
     />
