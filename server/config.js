@@ -9,20 +9,33 @@ module.exports = {
     contentTypes: [],
   },
   validator: config => {
+    if ( ! config.contentTypes ) {
+      return;
+    }
+
     // Ensure `contentTypes` is an array.
     if ( ! Array.isArray( config.contentTypes ) ) {
-      throw new ValidationError( `In ${pluginId} plugin config, contentTypes must be an array.` );
-      return;
+      throw new ValidationError( `Must define contentTypes as an array.` );
     }
 
-    const entriesMatchFormat = config.contentTypes.every( entry => {
-      return !! entry.uid && !! entry.targetField;
+    // Validate each content type.
+    config.contentTypes.forEach( entry => {
+      // Required `uid` prop.
+      if ( ! entry.uid ) {
+        throw new ValidationError( `Missing uid for ${entry.uid}.` );
+      }
+
+      // Required `targetField` prop.
+      if ( ! entry.targetField ) {
+        throw new ValidationError( `Missing targetField for ${entry.uid}.` );
+      }
+
+      const schema = strapi.getModel( entry.uid );
+
+      // Check for existing schema.
+      if ( ! schema ) {
+        throw new ValidationError( `Unable to find schema for ${entry.uid}.` );
+      }
     } );
-
-    // Ensure entries in `contentTypes` define `uid` and `targetField`.
-    if ( ! entriesMatchFormat ) {
-      throw new ValidationError( `In ${pluginId} plugin config, entries in contentTypes must define a uid and targetField.` );
-      return;
-    }
   },
 };
