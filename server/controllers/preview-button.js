@@ -13,8 +13,8 @@ module.exports = {
     ].every( val => val );
 
     const pluginService = await getService( 'preview-button' );
-    const { contentTypes, targetField } = await pluginService.getConfig();
-    const supportedType = contentTypes.find( type => type === uid || type.uid === uid );
+    const { contentTypes } = await pluginService.getConfig();
+    const supportedType = contentTypes.find( type => type.uid === uid );
     const isSupported = hasEnvVars && !! supportedType;
 
     // Do nothing if this UID is not supported in the plugin config or if the
@@ -24,7 +24,6 @@ module.exports = {
       return;
     }
 
-    // Query the entity object for it's `slug` value.
     const entity = await strapi.query( uid ).findOne( {
       where: { id },
     } );
@@ -34,7 +33,7 @@ module.exports = {
       return;
     }
 
-    const urls = pluginService.getPreviewUrls( entity, supportedType, targetField );
+    const urls = pluginService.getPreviewUrls( entity, supportedType );
 
     // Return preview URLs.
     ctx.send( { urls } );
@@ -42,7 +41,7 @@ module.exports = {
 
   async getUIDs( ctx ) {
     const { contentTypes } = await getService( 'preview-button' ).getConfig();
-    const uids = contentTypes.map( type => typeof type === 'string' ? type : type.uid );
+    const uids = contentTypes.map( type => type.uid );
 
     ctx.send( uids );
   },
