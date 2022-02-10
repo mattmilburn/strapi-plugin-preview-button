@@ -1,12 +1,8 @@
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
 
-import pluginPkg from '../../package.json';
-import pluginId from './pluginId';
-import { getTrad } from './utils';
+import { getTrad, pluginId, pluginName } from './utils';
 import { Initializer, Injector } from './components';
 import reducers from './reducers';
-
-const pluginName = pluginPkg.strapi.displayName;
 
 export default {
   register( app ) {
@@ -22,7 +18,7 @@ export default {
 
   bootstrap( app ) {
     app.injectContentManagerComponent( 'editView', 'right-links', {
-      name: 'preview-button',
+      name: pluginId,
       Component: Injector,
     } );
   },

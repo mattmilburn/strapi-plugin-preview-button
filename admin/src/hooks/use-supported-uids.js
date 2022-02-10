@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { request, useNotification } from '@strapi/helper-plugin';
 
-import pluginId from '../pluginId';
 import { RESOLVE_UIDS } from '../constants';
+import { pluginId } from '../utils';
 
 const fetchUIDs = async ( toggleNotification ) => {
   try {
@@ -21,7 +21,7 @@ const fetchUIDs = async ( toggleNotification ) => {
   }
 };
 
-const useSupportedUIDs = ( uid, id ) => {
+const useSupportedUIDs = () => {
   const dispatch = useDispatch();
   const toggleNotification = useNotification();
   const uids = useSelector( state => state[ `${pluginId}_config` ].uids );
