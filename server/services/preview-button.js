@@ -12,18 +12,18 @@ module.exports = ( { strapi } ) => ( {
     return data;
   },
 
-  getPreviewUrls( entity, config ) {
+  getPreviewUrls( entity, contentType, targetField ) {
     const secret = process.env.STRAPI_PREVIEW_SECRET;
     let publishedUrl = process.env.STRAPI_PREVIEW_PUBLISHED_URL.replace( /\/$/, '' );
     let draftUrl = process.env.STRAPI_PREVIEW_DRAFT_URL.replace( /\/$/, '' );
     let draftParams = {
       secret,
-      slug: entity.slug,
+      [ targetField ]: entity[ targetField ],
     };
 
-    // Maybe apply specific settings from config object.
-    if ( typeof config !== 'string' ) {
-      const { draft, published } = config;
+    // Maybe apply specific settings from contentType object.
+    if ( typeof contentType !== 'string' ) {
+      const { draft, published } = contentType;
 
       // Append optional `query` string values to draft urls.
       if ( draft && draft.query ) {
@@ -40,7 +40,7 @@ module.exports = ( { strapi } ) => ( {
     }
 
     draftUrl = `${draftUrl}?${qs.stringify( draftParams )}`;
-    publishedUrl = `${publishedUrl}/${entity.slug}`;
+    publishedUrl = `${publishedUrl}/${entity[ targetField ]}`;
 
     return {
       draftUrl,
