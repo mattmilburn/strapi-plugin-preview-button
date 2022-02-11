@@ -1,6 +1,11 @@
-# Strapi Preview Button
+<div align="center">
+  <img style="width: 160px; height: auto; border-radius: 10%;" src="public/logo.jpg" alt="Logo for Strapi preview button plugin" />
+</div>
 
-Add a preview button to the content manager edit view.
+<div align="center">
+  <h1>Strapi Preview Button</h1>
+  <p>A plugin for Strapi CMS that adds a preview button and live view button to the content manager edit view.</p>
+</div>
 
 ## Setup
 
