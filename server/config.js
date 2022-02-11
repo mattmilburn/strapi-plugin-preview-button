@@ -36,6 +36,11 @@ module.exports = {
       if ( ! schema ) {
         throw new ValidationError( `Unable to find schema for ${entry.uid}.` );
       }
+
+      // Check for existing target field in schema.
+      if ( ! Object.keys( schema.attributes ).includes( entry.targetField )  ) {
+        throw new ValidationError( `The target field ${entry.targetField} is not defined in the schema for ${entry.uid}.` );
+      }
     } );
   },
 };
