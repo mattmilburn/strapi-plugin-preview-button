@@ -27,7 +27,7 @@ const Injector = () => {
 
   const { data, isLoading } = usePreviewData( uid, id );
 
-  if ( isLoading ) {
+  if ( isLoading || ! data || ! data?.urls ) {
     return null;
   }
 

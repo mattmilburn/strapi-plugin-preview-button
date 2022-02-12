@@ -2,8 +2,6 @@
 
 const { ValidationError } = require('@strapi/utils').errors;
 
-const { pluginId } = require( './utils' );
-
 module.exports = {
   default: {
     contentTypes: [],
@@ -28,18 +26,6 @@ module.exports = {
       // Required `targetField` prop.
       if ( ! entry.targetField ) {
         throw new ValidationError( `Missing targetField for ${entry.uid}.` );
-      }
-
-      const schema = strapi.getModel( entry.uid );
-
-      // Check for existing schema.
-      if ( ! schema ) {
-        throw new ValidationError( `Unable to find schema for ${entry.uid}.` );
-      }
-
-      // Check for existing target field in schema.
-      if ( ! Object.keys( schema.attributes ).includes( entry.targetField )  ) {
-        throw new ValidationError( `The target field ${entry.targetField} is not defined in the schema for ${entry.uid}.` );
       }
     } );
   },

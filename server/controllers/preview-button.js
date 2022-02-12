@@ -1,6 +1,6 @@
 'use strict';
 
-const { getService } = require( '../utils' );
+const { getService, pluginId } = require( '../utils' );
 
 module.exports = {
   async findOne( ctx ) {
@@ -15,22 +15,18 @@ module.exports = {
     const pluginService = await getService( 'preview-button' );
     const { contentTypes } = await pluginService.getConfig();
     const supportedType = contentTypes.find( type => type.uid === uid );
-    const isSupported = hasEnvVars && !! supportedType;
-
-    // Do nothing if this UID is not supported in the plugin config or if the
-    // required environment variables are not set.
-    if ( ! isSupported ) {
-      ctx.send( {} );
-      return;
-    }
-
     const entity = await strapi.query( uid ).findOne( {
       where: { id },
     } );
 
-    if ( ! entity ) {
-      ctx.send( {} );
-      return;
+    // Raise warning if plugin is active but not properly configured with required env vars.
+    if ( ! hasEnvVars ) {
+      console.warn( `Environment variables required for ${pluginId} must be defined before it can be used.` );
+    }
+
+    // Return empty object if requirements are not met.
+    if ( ! hasEnvVars || ! supportedType || ! entity ) {
+      return ctx.send( {} );
     }
 
     const urls = pluginService.getPreviewUrls( entity, supportedType );
