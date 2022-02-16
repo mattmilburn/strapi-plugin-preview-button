@@ -21,7 +21,7 @@ const fetchData = async ( uid, id, toggleNotification ) => {
   }
 };
 
-const usePreviewData = ( uid, id ) => {
+const usePreviewData = ( uid, id, fetchDependencies ) => {
   const dispatch = useDispatch();
   const toggleNotification = useNotification();
   const data = useSelector( state => state[ pluginId ].data );
@@ -31,7 +31,7 @@ const usePreviewData = ( uid, id ) => {
     fetchData( uid, id, toggleNotification ).then( data => {
       dispatch( { type: RESOLVE_DATA, data } );
     } );
-  }, [ dispatch, toggleNotification ] );
+  }, [ dispatch, toggleNotification, ...fetchDependencies ] );
 
   return { data, isLoading };
 };

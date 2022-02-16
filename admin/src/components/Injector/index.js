@@ -11,6 +11,7 @@ const Injector = () => {
   const {
     allLayoutData,
     hasDraftAndPublish,
+    initialData,
     isCreatingEntry,
     modifiedData,
   } = useCMEditViewDataManager();
@@ -25,7 +26,7 @@ const Injector = () => {
     return null;
   }
 
-  const { data, isLoading } = usePreviewData( uid, id );
+  const { data, isLoading } = usePreviewData( uid, id, [ initialData ] );
 
   if ( isLoading || ! data || ! data?.urls ) {
     return null;
