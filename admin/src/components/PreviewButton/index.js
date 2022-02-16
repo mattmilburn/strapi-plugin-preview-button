@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Button } from '@strapi/design-system';
@@ -49,4 +49,4 @@ PreviewButton.propTypes = {
   publishedUrl: PropTypes.string,
 };
 
-export default PreviewButton;
+export default memo( PreviewButton );
