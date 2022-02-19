@@ -21,7 +21,7 @@ module.exports = {
 
     // Raise warning if plugin is active but not properly configured with required env vars.
     if ( ! hasEnvVars ) {
-      console.warn( `Environment variables required for ${pluginId} must be defined before it can be used.` );
+      console.warn( `Environment variables required for ${pluginId} plugin must be defined before it can be used.` );
     }
 
     // Return empty object if requirements are not met.
@@ -39,6 +39,7 @@ module.exports = {
     const { contentTypes } = await getService( 'preview-button' ).getConfig();
     const uids = contentTypes.map( type => type.uid );
 
-    ctx.send( uids );
+    // Return supported UIDs.
+    ctx.send( { uids } );
   },
 };
