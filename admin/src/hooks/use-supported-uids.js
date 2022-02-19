@@ -10,7 +10,7 @@ const fetchUIDs = async ( toggleNotification ) => {
     const endpoint = `/${pluginId}/uids`;
     const data = await request( endpoint, { method: 'GET' } );
 
-    return data;
+    return data?.uids ?? [];
   } catch ( err ) {
     toggleNotification( {
       type: 'warning',

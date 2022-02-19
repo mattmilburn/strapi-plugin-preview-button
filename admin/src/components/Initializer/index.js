@@ -6,18 +6,16 @@ import { useSupportedUIDs } from '../../hooks';
 import { pluginId } from '../../utils';
 
 const Initializer = ( { setPlugin } ) => {
-  const { data, isLoading } = useSupportedUIDs();
+  const { uids, isLoading } = useSupportedUIDs();
   const ref = useRef();
 
   ref.current = setPlugin;
 
   useEffect( () => {
-    const uids = data?.uids ?? [];
-
     if ( ! isLoading && uids.length > 0 ) {
       ref.current( pluginId );
     }
-  }, [ data, isLoading ] );
+  }, [ uids, isLoading ] );
 
   return null;
 };
