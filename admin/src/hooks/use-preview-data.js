@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { request, useNotification } from '@strapi/helper-plugin';
 
-import { RESOLVE_DATA } from '../constants';
+import { RESOLVE_PREVIEW } from '../constants';
 import { pluginId } from '../utils';
 
 const fetchData = async ( uid, id, toggleNotification ) => {
@@ -29,7 +29,7 @@ const usePreviewData = ( uid, id, fetchDependencies ) => {
 
   useEffect( () => {
     fetchData( uid, id, toggleNotification ).then( data => {
-      dispatch( { type: RESOLVE_DATA, data } );
+      dispatch( { type: RESOLVE_PREVIEW, data } );
     } );
   }, [ dispatch, toggleNotification, ...fetchDependencies ] );
 
