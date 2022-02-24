@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-import { RESOLVE_DATA } from '../constants';
+import { RESOLVE_PREVIEW } from '../constants';
 
 const initialState = {
   isLoading: true,
@@ -9,7 +9,7 @@ const initialState = {
 
 const mainReducer = produce( ( state = initialState, action ) => {
   switch ( action.type ) {
-    case RESOLVE_DATA: {
+    case RESOLVE_PREVIEW: {
       state.isLoading = false;
       state.data = action.data;
       break;
