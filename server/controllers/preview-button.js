@@ -3,6 +3,16 @@
 const { getService, pluginId } = require( '../utils' );
 
 module.exports = {
+  async config( ctx ) {
+    const { contentTypes } = await getService( 'preview-button' ).getConfig();
+
+    const config = {
+      contentTypes: contentTypes.map( type => type.uid ),
+    };
+
+    ctx.send( { config } );
+  },
+
   async findOne( ctx ) {
     const { uid, id } = ctx.request.params;
 
@@ -33,13 +43,5 @@ module.exports = {
 
     // Return preview URLs.
     ctx.send( { urls } );
-  },
-
-  async getUIDs( ctx ) {
-    const { contentTypes } = await getService( 'preview-button' ).getConfig();
-    const uids = contentTypes.map( type => type.uid );
-
-    // Return supported UIDs.
-    ctx.send( { uids } );
   },
 };

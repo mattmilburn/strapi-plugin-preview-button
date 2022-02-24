@@ -1,17 +1,19 @@
 import produce from 'immer';
 
-import { RESOLVE_UIDS } from '../constants';
+import { RESOLVE_CONFIG } from '../constants';
 
 const initialState = {
   isLoading: true,
-  uids: [],
+  config: {
+    contentTypes: [],
+  },
 };
 
 const configReducer = produce( ( state = initialState, action ) => {
   switch ( action.type ) {
-    case RESOLVE_UIDS: {
+    case RESOLVE_CONFIG: {
       state.isLoading = false;
-      state.uids = action.data;
+      state.config = action.data;
       break;
     }
 
