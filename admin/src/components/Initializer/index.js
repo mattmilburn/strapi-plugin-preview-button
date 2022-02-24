@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 
 import { useSupportedUIDs } from '../../hooks';
 import { pluginId } from '../../utils';
@@ -12,10 +11,10 @@ const Initializer = ( { setPlugin } ) => {
   ref.current = setPlugin;
 
   useEffect( () => {
-    if ( ! isLoading && uids.length > 0 ) {
+    if ( ! isLoading ) {
       ref.current( pluginId );
     }
-  }, [ uids, isLoading ] );
+  }, [ isLoading ] );
 
   return null;
 };
