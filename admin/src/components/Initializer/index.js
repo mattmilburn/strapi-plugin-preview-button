@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { useSupportedUIDs } from '../../hooks';
+import { usePluginConfig } from '../../hooks';
 import { pluginId } from '../../utils';
 
 const Initializer = ( { setPlugin } ) => {
-  const { uids, isLoading } = useSupportedUIDs();
+  const { isLoading } = usePluginConfig();
   const ref = useRef();
 
   ref.current = setPlugin;

@@ -17,9 +17,9 @@ const Injector = () => {
   } = useCMEditViewDataManager();
   const { id } = useParams();
   const { uid } = allLayoutData.contentType;
-  const uids = useSelector( state => state[ `${pluginId}_config` ].uids );
+  const { contentTypes } = useSelector( state => state[ `${pluginId}_config` ].config );
 
-  const isSupportedType = uids.includes( uid );
+  const isSupportedType = contentTypes.includes( uid );
   const shouldRender = isSupportedType && ! isCreatingEntry;
 
   if ( ! shouldRender ) {

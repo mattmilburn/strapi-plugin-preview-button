@@ -5,8 +5,8 @@ module.exports = {
   routes: [
     {
       method: 'GET',
-      path: '/uids',
-      handler: 'preview-button.getUIDs',
+      path: '/config',
+      handler: 'preview-button.config',
       config: {
         policies: [ 'admin::isAuthenticatedAdmin' ],
       },

@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { request, useNotification } from '@strapi/helper-plugin';
 
-import { RESOLVE_UIDS } from '../constants';
+import { RESOLVE_CONFIG } from '../constants';
 import { pluginId } from '../utils';
 
-const fetchUIDs = async ( toggleNotification ) => {
+const fetchConfig = async ( toggleNotification ) => {
   try {
-    const endpoint = `/${pluginId}/uids`;
+    const endpoint = `/${pluginId}/config`;
     const data = await request( endpoint, { method: 'GET' } );
 
-    return data?.uids ?? [];
+    return data?.config ?? {};
   } catch ( err ) {
     toggleNotification( {
       type: 'warning',
@@ -21,19 +21,19 @@ const fetchUIDs = async ( toggleNotification ) => {
   }
 };
 
-const useSupportedUIDs = () => {
+const usePluginConfig = () => {
   const dispatch = useDispatch();
   const toggleNotification = useNotification();
-  const uids = useSelector( state => state[ `${pluginId}_config` ].uids );
+  const config = useSelector( state => state[ `${pluginId}_config` ].config );
   const isLoading = useSelector( state => state[ `${pluginId}_config` ].isLoading );
 
   useEffect( () => {
-    fetchUIDs( toggleNotification ).then( data => {
-      dispatch( { type: RESOLVE_UIDS, data } );
+    fetchConfig( toggleNotification ).then( data => {
+      dispatch( { type: RESOLVE_CONFIG, data } );
     } );
   }, [ dispatch, toggleNotification ] );
 
-  return { uids, isLoading };
+  return { config, isLoading };
 };
 
-export default useSupportedUIDs;
+export default usePluginConfig;
