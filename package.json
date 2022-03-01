@@ -50,6 +50,7 @@
     "strapi",
     "plugin",
     "preview",
+    "draft",
     "page",
     "next"
   ]
