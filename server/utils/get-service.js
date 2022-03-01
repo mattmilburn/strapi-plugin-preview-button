@@ -1,3 +1,5 @@
+'use strict';
+
 const pluginId = require( './plugin-id' );
 
 const getService = name => {
