@@ -13,17 +13,17 @@
 * [Configuration](#configuration)
 * [User Guide](#user-guide)
 
-## :sparkles: Features
+## <a id="features" />✨ Features
 * New button in content manager sidebar which links the user to a preview or live view of a frontend app view.
 * Customize which content types should use the preview button.
 * Customize endpoints for draft and published URLs.
 
-## :gem: Installation
+## <a id="installation" />💎 Installation
 ```bash
 yarn add strapi-plugin-preview-button@latest
 ```
 
-## :exclamation: Requirements
+## <a id="requirements" />🚨 Requirements
 Include the following variables in your application's `.env` file.
 
 ```
@@ -39,7 +39,7 @@ With `draftAndPublish` mode enabled for a content type, a preview button will re
 
 It is **not** required to enable `draftAndPublish` for content types using this plugin. The live view button will still display to conveniently redirect a user to the live version of the page.
 
-## :wrench: Configuration
+## <a id="configuration" />🔧 Configuration
 | property | type (default) | description |
 | - | - | - |
 | contentTypes | array (`[]`) | An array of objects describing which content types should use the preview button. |
@@ -116,7 +116,7 @@ https://example.com/my-page
 https://example.com/blog/my-post
 ```
 
-## :blue_book: User Guide
+## <a id="user-guide" />📘 User Guide
 
 ### How does this work with my frontend app?
 
