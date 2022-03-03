@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Button } from '@strapi/design-system';
-import { Exit } from '@strapi/icons';
+import { ExternalLink } from '@strapi/icons';
 
 import { PREVIEW_WINDOW_NAME } from '../../constants';
 import { getTrad } from '../../utils';
@@ -29,7 +29,7 @@ const PreviewButton = ( {
     <Button
       onClick={ handleClick }
       size="S"
-      startIcon={ <Exit /> }
+      startIcon={ <ExternalLink /> }
       style={ { width: '100%' } }
     >
       { formatMessage( isDraft ? {
