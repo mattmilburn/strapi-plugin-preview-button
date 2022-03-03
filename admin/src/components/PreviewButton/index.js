@@ -30,6 +30,7 @@ const PreviewButton = ( {
       onClick={ handleClick }
       size="S"
       startIcon={ <ExternalLink /> }
+      variant="secondary"
       style={ { width: '100%' } }
     >
       { formatMessage( isDraft ? {
