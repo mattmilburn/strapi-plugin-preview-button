@@ -19,7 +19,7 @@ const Injector = () => {
   const { uid } = allLayoutData.contentType;
   const { contentTypes } = useSelector( state => state[ `${pluginId}_config` ].config );
 
-  const isSupportedType = contentTypes.includes( uid );
+  const isSupportedType = contentTypes && contentTypes.includes( uid );
   const shouldRender = isSupportedType && ! isCreatingEntry;
 
   if ( ! shouldRender ) {
