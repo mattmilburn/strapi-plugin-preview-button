@@ -36,7 +36,8 @@ module.exports = ( { strapi } ) => ( {
     }
 
     draftUrl = `${draftUrl}?${qs.stringify( draftParams )}`;
-    publishedUrl = `${publishedUrl}/${entity[ targetField ]}`;
+    // Remove entity targetField if is a SingleType
+    publishedUrl = entity[ targetField ] ? `${publishedUrl}/${entity[ targetField ]}` : `${publishedUrl}`;
 
     return {
       draftUrl,

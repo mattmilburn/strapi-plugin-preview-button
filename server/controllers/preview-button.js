@@ -25,9 +25,12 @@ module.exports = {
     const pluginService = await getService( 'preview-button' );
     const { contentTypes } = await pluginService.getConfig();
     const supportedType = contentTypes.find( type => type.uid === uid );
-    const entity = await strapi.query( uid ).findOne( {
-      where: { id },
-    } );
+    // Fetch only entity if id of Collection is undefined.
+    const entity = id != undefined ?
+      await strapi.query( uid ).findOne({}) :
+      await strapi.query( uid ).findOne({
+        where: { id },
+      } );
 
     // Raise warning if plugin is active but not properly configured with required env vars.
     if ( ! hasEnvVars ) {
