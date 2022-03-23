@@ -10,10 +10,10 @@ module.exports = {
   bootstrap() {},
   destroy() {},
   config,
+  contentTypes: {},
   controllers,
+  middlewares: {},
+  policies: {},
   routes,
   services,
-  contentTypes: {},
-  policies: {},
-  middlewares: {},
 };
