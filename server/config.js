@@ -16,16 +16,11 @@ module.exports = {
       throw new ValidationError( `Must define contentTypes as an array.` );
     }
 
-    // Validate each content type.
+    // Validate each content type object.
     config.contentTypes.forEach( entry => {
       // Required `uid` prop.
       if ( ! entry.uid ) {
         throw new ValidationError( `Missing uid for ${entry.uid}.` );
-      }
-
-      // Required `targetField` prop.
-      if ( ! entry.targetField ) {
-        throw new ValidationError( `Missing targetField for ${entry.uid}.` );
       }
     } );
   },
