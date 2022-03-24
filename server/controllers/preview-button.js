@@ -22,12 +22,11 @@ module.exports = {
       process.env.STRAPI_PREVIEW_PUBLISHED_URL,
     ].every( val => val );
 
-    const pluginService = await getService( 'preview-button' );
+    const pluginService = getService( 'preview-button' );
     const { contentTypes } = await pluginService.getConfig();
     const supportedType = contentTypes.find( type => type.uid === uid );
-    const entity = await strapi.query( uid ).findOne( {
-      where: { id },
-    } );
+    const findParams = id ? { where: { id } } : {};
+    const entity = await strapi.query( uid ).findOne( findParams );
 
     // Raise warning if plugin is active but not properly configured with required env vars.
     if ( ! hasEnvVars ) {
