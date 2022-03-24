@@ -17,6 +17,7 @@
 * New button in content manager sidebar which links the user to a preview or live view of a frontend app view.
 * Customize which content types should use the preview button.
 * Customize endpoints for draft and published URLs.
+* Support collection and single types.
 
 ## <a id="installation"></a>💎 Installation
 ```bash
@@ -47,10 +48,10 @@ It is **not** required to enable `draftAndPublish` for content types using this 
 ### `contentTypes`
 An array of objects describing which content types should use the preview button.
 
-Each object in the array requires a `uid` and `targetField` prop. The field name "slug" is recommended for the `targetField` value because it represents the unique part of the URL path, but it is not required.
+Each object in the array requires a `uid` prop at minimum. If you are configuring a collection type, the `targetField` is also required but it is optional with single types. The field name "slug" is recommended for the `targetField` value because it represents the unique part of the URL path, but it is not required.
 
-#### Example
-Consider we have `Page` and `Post` content types, where each has a `uid` field named `slug` and entries created for each, with the slug values set to `my-page` and `my-post`.
+#### Collection type example
+Consider we have `Page` and `Post` content types, where each has a `uid` field named `slug` and entries created for each, with the slug values set to `my-page` and `my-post`. Here is the minimum required config.
 
 ```js
 module.exports = {
@@ -72,7 +73,7 @@ module.exports = {
 };
 ```
 
-In this example, our pages and posts will be routed differently in our frontend app. To help with this, each content type may include a `query` string object for the draft URL and a `basePath` for the published URL.
+In this example, our pages and posts will be routed differently in our frontend app. To help with this, props like `basePath` and `query` may be configured for variations between `draft` and `published` URLs.
 
 ```js
 module.exports = {
@@ -114,6 +115,44 @@ https://example.com/api/preview?slug=my-post&type=post&secret=YOURSECRET
 ```
 https://example.com/my-page
 https://example.com/blog/my-post
+```
+
+#### Single type example
+Consider we have an `About` single type to serve as our "About" page. Unlike collection types, we don't necessarily need an editable `targetField` with our model if we know for sure it will always be `/about`. You can still provide the `targetField` if you want to keep this value editable in Strapi.
+
+```js
+module.exports = {
+  'preview-button': {
+    enabled: true,
+    config: {
+      contentTypes: [
+        {
+          uid: 'api::about.about',
+          draft: {
+            query: {
+              slug: 'about',
+            },
+          },
+          published: {
+            basePath: 'about',
+          },
+        },
+      ],
+    },
+  },
+};
+```
+
+This configuration will result in the following preview URLs for `About`.
+
+##### Draft URL path
+```
+https://example.com/api/preview?slug=aboute&secret=YOURSECRET
+```
+
+##### Published URL path
+```
+https://example.com/about
 ```
 
 ## <a id="user-guide"></a>📘 User Guide
