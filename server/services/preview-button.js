@@ -1,9 +1,10 @@
 'use strict';
 
+const { get } = require( 'lodash' );
 const qs = require( 'qs' );
 
 const config = require( '../config' );
-const { pluginId } = require( '../utils' );
+const { buildUrl, pluginId } = require( '../utils' );
 
 module.exports = ( { strapi } ) => ( {
   async getConfig() {
@@ -14,29 +15,36 @@ module.exports = ( { strapi } ) => ( {
 
   getPreviewUrls( entity, contentType ) {
     const { uid, targetField, draft, published } = contentType;
-    const secret = process.env.STRAPI_PREVIEW_SECRET;
-    let publishedUrl = process.env.STRAPI_PREVIEW_PUBLISHED_URL.replace( /\/$/, '' );
-    let draftUrl = process.env.STRAPI_PREVIEW_DRAFT_URL.replace( /\/$/, '' );
-    let draftParams = {
-      secret,
-      [ targetField ]: entity[ targetField ],
-    };
+    const targetFieldValue = get( entity, targetField, null );
+    const publishedBasePath = get( published, 'basePath', null );
+    const publishedQuery = get( published, 'query', {} );
+    const draftBasePath = get( draft, 'basePath', null );
+    let draftQuery = get( draft, 'query', {} );
 
-    // Maybe append optional `query` string values to draft urls.
-    if ( draft && draft.query ) {
-      draftParams = {
-        ...draft.query,
-        ...draftParams,
-      };
+    // Include the required `secret` into the draft query params.
+    draftQuery.secret = process.env.STRAPI_PREVIEW_SECRET;
+
+    // Optionally include the `targetField` value in the draft query params.
+    // Only collection types truly require the `targetField`, while single types
+    // can optionally use the `basePath` to help build the desired URL.
+    if ( targetField && targetFieldValue ) {
+      draftQuery[ targetField ] = targetFieldValue;
     }
 
-    // Maybe append optional `basePath` value to published urls.
-    if ( published && published.basePath ) {
-      publishedUrl = `${publishedUrl}/${published.basePath}`;
-    }
+    // Build final URLs.
+    const draftUrl = buildUrl(
+      process.env.STRAPI_PREVIEW_DRAFT_URL,
+      draftBasePath,
+      null,
+      draftQuery
+    );
 
-    draftUrl = `${draftUrl}?${qs.stringify( draftParams )}`;
-    publishedUrl = `${publishedUrl}/${entity[ targetField ]}`;
+    const publishedUrl = buildUrl(
+      process.env.STRAPI_PREVIEW_PUBLISHED_URL,
+      publishedBasePath,
+      targetFieldValue,
+      publishedQuery
+    );
 
     return {
       draftUrl,
