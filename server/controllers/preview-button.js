@@ -25,6 +25,8 @@ module.exports = {
     const pluginService = getService( 'preview-button' );
     const { contentTypes } = await pluginService.getConfig();
     const supportedType = contentTypes.find( type => type.uid === uid );
+
+    // Collection types will find by the ID and single types do not.
     const findParams = id ? { where: { id } } : {};
     const entity = await strapi.query( uid ).findOne( findParams );
 
