@@ -7,7 +7,13 @@ import { pluginId } from '../utils';
 
 const fetchData = async ( uid, id, toggleNotification ) => {
   try {
-    const endpoint = `/${pluginId}/${uid}/${id}`;
+    let endpoint = `/${pluginId}/${uid}`;
+
+    // Optional ID to support single types.
+    if ( id ) {
+      endpoint = `${endpoint}/${id}`;
+    }
+
     const data = await request( endpoint, { method: 'GET' } );
 
     return data;
