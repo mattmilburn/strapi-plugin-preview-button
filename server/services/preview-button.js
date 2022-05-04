@@ -14,8 +14,11 @@ module.exports = ( { strapi } ) => ( {
   },
 
   getPreviewUrls( entity, contentType ) {
-    const { uid, targetField, draft, published } = contentType;
-    const targetFieldValue = get( entity, targetField, null );
+    const { uid, targetField, publishedTargetField, draftTargetField, draft, published } = contentType;
+
+    const publishedTargetFieldValue = get( entity, publishedTargetField, null );
+    const draftTargetFieldValue = get( entity, draftTargetField, null );
+
     const publishedBasePath = get( published, 'basePath', null );
     const publishedQuery = get( published, 'query', {} );
     const draftBasePath = get( draft, 'basePath', null );
@@ -27,8 +30,8 @@ module.exports = ( { strapi } ) => ( {
     // Optionally include the `targetField` value in the draft query params.
     // Only collection types truly require the `targetField`, while single types
     // can optionally use the `basePath` to help build the desired URL.
-    if ( targetField && targetFieldValue ) {
-      draftQuery[ targetField ] = targetFieldValue;
+    if ( draftTargetField && draftTargetFieldValue ) {
+      draftQuery[ draftTargetField ] = draftTargetFieldValue;
     }
 
     // Build final URLs.
@@ -42,7 +45,7 @@ module.exports = ( { strapi } ) => ( {
     const publishedUrl = buildUrl(
       process.env.STRAPI_PREVIEW_PUBLISHED_URL,
       publishedBasePath,
-      targetFieldValue,
+      publishedTargetFieldValue,
       publishedQuery
     );
 
