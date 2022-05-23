@@ -27,19 +27,30 @@ const fetchData = async ( uid, id, toggleNotification ) => {
   }
 };
 
-const usePreviewData = ( uid, id, fetchDependencies ) => {
+const usePreviewData = ( uid, id, isCreatingEntry, fetchDependencies = [] ) => {
   const dispatch = useDispatch();
   const toggleNotification = useNotification();
   const data = useSelector( state => state[ pluginId ].data );
   const isLoading = useSelector( state => state[ pluginId ].isLoading );
+  const { contentTypes } = useSelector( state => state[ `${pluginId}_config` ].config );
+
+  const isSupportedType = contentTypes && contentTypes.includes( uid );
 
   useEffect( () => {
+    if ( ! isSupportedType || isCreatingEntry ) {
+      return;
+    }
+
     fetchData( uid, id, toggleNotification ).then( data => {
       dispatch( { type: RESOLVE_PREVIEW, data } );
     } );
   }, [ dispatch, toggleNotification, ...fetchDependencies ] );
 
-  return { data, isLoading };
+  return {
+    data,
+    isLoading,
+    isSupportedType,
+  };
 };
 
 export default usePreviewData;
