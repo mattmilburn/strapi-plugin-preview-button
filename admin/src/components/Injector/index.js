@@ -1,10 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 import { usePreviewData } from '../../hooks';
-import { pluginId } from '../../utils';
 import { PreviewButton } from '../';
 
 const Injector = () => {
@@ -17,18 +15,13 @@ const Injector = () => {
   } = useCMEditViewDataManager();
   const { id } = useParams();
   const { uid } = allLayoutData.contentType;
-  const { contentTypes } = useSelector( state => state[ `${pluginId}_config` ].config );
+  const {
+    data,
+    isLoading,
+    isSupportedType,
+  } = usePreviewData( uid, id, isCreatingEntry, [ initialData ] );
 
-  const isSupportedType = contentTypes && contentTypes.includes( uid );
-  const shouldRender = isSupportedType && ! isCreatingEntry;
-
-  if ( ! shouldRender ) {
-    return null;
-  }
-
-  const { data, isLoading } = usePreviewData( uid, id, [ initialData ] );
-
-  if ( isLoading || ! data || ! data?.urls ) {
+  if ( ! isSupportedType || isCreatingEntry || isLoading || ! data || ! data?.urls ) {
     return null;
   }
 
