@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-preview-button",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A plugin for Strapi CMS that adds a preview button and live view button to the content manager edit view.",
   "license": "MIT",
   "strapi": {
