@@ -14,10 +14,12 @@ module.exports = ( { strapi } ) => ( {
   },
 
   getPreviewUrls( entity, contentType ) {
-    const { uid, targetField, publishedTargetField, draftTargetField, draft, published } = contentType;
+    const { uid, targetField, draft, published } = contentType;
 
-    const publishedTargetFieldValue = get( entity, publishedTargetField, null );
-    const draftTargetFieldValue = get( entity, draftTargetField, null );
+    const draftTargetField = get( draft, 'targetField', null );
+    const publishedTargetField = get( published, 'targetField', null );
+    const draftTargetFieldValue = get( entity, draftTargetField, targetField );
+    const publishedTargetFieldValue = get( entity, publishedTargetField, targetField );
 
     const publishedBasePath = get( published, 'basePath', null );
     const publishedQuery = get( published, 'query', {} );
