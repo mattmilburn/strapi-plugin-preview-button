@@ -26,8 +26,9 @@ module.exports = {
     const supportedType = contentTypes.find( type => type.uid === uid );
 
     // Collection types will find by the ID and single types do not.
-    const findParams = id ? { filters: { id } } : {};
-    const entity = await strapi.entityService.findOne( uid, findParams );
+    const entity = id
+      ? await strapi.service( uid ).findOne( id )
+      : await strapi.service( uid ).find();
 
     // Raise warning if plugin is active but not properly configured with required env vars.
     if ( ! hasEnvVars ) {
