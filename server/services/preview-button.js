@@ -7,14 +7,17 @@ const config = require( '../config' );
 const { buildUrl } = require( '../utils' );
 
 module.exports = ( { strapi } ) => ( {
-  getPreviewUrls( entity, contentType ) {
-    const { uid, targetField, draft, published } = contentType;
+  getPreviewUrls( entity, contentTypeConfig ) {
+    const { uid, targetField, draft, published } = contentTypeConfig;
 
-    const draftTargetField = get( draft, 'targetField', null );
-    const publishedTargetField = get( published, 'targetField', null );
-    const draftTargetFieldValue = get( entity, draftTargetField, targetField );
-    const publishedTargetFieldValue = get( entity, publishedTargetField, targetField );
+    // If `targetField` is defined in either `draft` or `publish`, prioritize those
+    // props over the top-level `targetField`.
+    const draftTargetField = get( draft, 'targetField', targetField );
+    const publishedTargetField = get( published, 'targetField', targetField );
+    const draftTargetFieldValue = get( entity, draftTargetField, null );
+    const publishedTargetFieldValue = get( entity, publishedTargetField, null );
 
+    // Prepare draft and published URL parts.
     const publishedBasePath = get( published, 'basePath', null );
     const publishedQuery = get( published, 'query', {} );
     const draftBasePath = get( draft, 'basePath', null );
