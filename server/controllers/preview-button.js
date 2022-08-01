@@ -4,7 +4,7 @@ const { getService, pluginId } = require( '../utils' );
 
 module.exports = {
   async config( ctx ) {
-    const { contentTypes } = await getService( 'preview-button' ).getConfig();
+    const { contentTypes } = await getService( 'plugin' ).getConfig();
 
     const config = {
       contentTypes: contentTypes.map( type => type.uid ),
@@ -22,13 +22,12 @@ module.exports = {
       process.env.STRAPI_PREVIEW_PUBLISHED_URL,
     ].every( val => val );
 
-    const pluginService = getService( 'preview-button' );
-    const { contentTypes } = await pluginService.getConfig();
+    const { contentTypes } = await getService( 'plugin' ).getConfig();
     const supportedType = contentTypes.find( type => type.uid === uid );
 
     // Collection types will find by the ID and single types do not.
-    const findParams = id ? { where: { id } } : {};
-    const entity = await strapi.query( uid ).findOne( findParams );
+    const findParams = id ? { filters: { id } } : {};
+    const entity = await strapi.entityService.findOne( uid, findParams );
 
     // Raise warning if plugin is active but not properly configured with required env vars.
     if ( ! hasEnvVars ) {
@@ -40,7 +39,7 @@ module.exports = {
       return ctx.send( {} );
     }
 
-    const urls = pluginService.getPreviewUrls( entity, supportedType );
+    const urls = getService( 'preview-button' ).getPreviewUrls( entity, supportedType );
 
     // Return preview URLs.
     ctx.send( { urls } );
