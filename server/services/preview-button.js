@@ -4,15 +4,9 @@ const { get } = require( 'lodash' );
 const qs = require( 'qs' );
 
 const config = require( '../config' );
-const { buildUrl, pluginId } = require( '../utils' );
+const { buildUrl } = require( '../utils' );
 
 module.exports = ( { strapi } ) => ( {
-  async getConfig() {
-    const data = await strapi.config.get( `plugin.${pluginId}`, config.default );
-
-    return data;
-  },
-
   getPreviewUrls( entity, contentType ) {
     const { uid, targetField, draft, published } = contentType;
 
