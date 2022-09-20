@@ -6,7 +6,7 @@ const qs = require( 'qs' );
 const { buildUrl } = require( '../utils' );
 
 module.exports = ( { strapi } ) => ( {
-  getPreviewUrls( entity, contentTypeConfig, requireSecret ) {
+  getPreviewUrls( entity, contentTypeConfig, requireDraftSecret ) {
     const { uid, targetField, draft, published } = contentTypeConfig;
 
     // If `targetField` is defined in either `draft` or `publish`, prioritize those
@@ -23,7 +23,7 @@ module.exports = ( { strapi } ) => ( {
     let draftQuery = get( draft, 'query', {} );
 
     // Maybe include the `secret` into the draft query params.
-    if ( requireSecret ) {
+    if ( requireDraftSecret ) {
       draftQuery.secret = process.env.STRAPI_PREVIEW_SECRET;
     }
 
