@@ -2,13 +2,27 @@
 
 const { ValidationError } = require('@strapi/utils').errors;
 
+const { pluginId } = require( './utils' );
+
 module.exports = {
   default: {
     contentTypes: [],
+    requireSecret: true,
   },
   validator: config => {
     if ( ! config.contentTypes ) {
       return;
+    }
+
+    const requiredEnvVars = [
+      process.env.STRAPI_PREVIEW_SECRET,
+      process.env.STRAPI_PREVIEW_DRAFT_URL,
+      process.env.STRAPI_PREVIEW_PUBLISHED_URL,
+    ];
+
+    // Ensure env vars are set.
+    if ( ! requiredEnvVars.every( val => val ) ) {
+      throw new ValidationError( `Must define required environment variables for the ${pluginId} plugin.` );
     }
 
     // Ensure `contentTypes` is an array.

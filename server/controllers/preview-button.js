@@ -1,7 +1,5 @@
 'use strict';
 
-const { get } = require( 'lodash' );
-
 const { getService, pluginId } = require( '../utils' );
 
 module.exports = {
@@ -18,12 +16,6 @@ module.exports = {
   async findOne( ctx ) {
     const { uid, id } = ctx.request.params;
 
-    const hasEnvVars = [
-      process.env.STRAPI_PREVIEW_SECRET,
-      process.env.STRAPI_PREVIEW_DRAFT_URL,
-      process.env.STRAPI_PREVIEW_PUBLISHED_URL,
-    ].every( val => val );
-
     const { contentTypes } = await getService( 'plugin' ).getConfig();
     const supportedType = contentTypes.find( type => type.uid === uid );
 
@@ -36,13 +28,8 @@ module.exports = {
       ? await strapi.service( uid ).findOne( id, params )
       : await strapi.service( uid ).find( params );
 
-    // Raise warning if plugin is active but not properly configured with required env vars.
-    if ( ! hasEnvVars ) {
-      console.warn( `Environment variables required for ${pluginId} plugin must be defined before it can be used.` );
-    }
-
     // Return empty object if requirements are not met.
-    if ( ! hasEnvVars || ! supportedType || ! entity ) {
+    if ( ! supportedType || ! entity ) {
       return ctx.send( {} );
     }
 
