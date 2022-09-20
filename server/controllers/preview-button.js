@@ -16,7 +16,7 @@ module.exports = {
   async findOne( ctx ) {
     const { uid, id } = ctx.request.params;
 
-    const { contentTypes, requireSecret } = await getService( 'plugin' ).getConfig();
+    const { contentTypes, requireDraftSecret } = await getService( 'plugin' ).getConfig();
     const supportedType = contentTypes.find( type => type.uid === uid );
 
     // Not sure if this is expected behavior, but using `find()` with single types
@@ -36,7 +36,7 @@ module.exports = {
     const urls = getService( 'preview-button' ).getPreviewUrls(
       entity,
       supportedType,
-      requireSecret
+      requireDraftSecret
     );
 
     // Return preview URLs.

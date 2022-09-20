@@ -7,7 +7,7 @@ const { pluginId } = require( './utils' );
 module.exports = {
   default: {
     contentTypes: [],
-    requireSecret: true,
+    requireDraftSecret: true,
   },
   validator: config => {
     if ( ! config.contentTypes ) {
@@ -20,7 +20,7 @@ module.exports = {
     ];
 
     // Maybe require the env SECRET.
-    if ( config.requireSecret ) {
+    if ( config.requireDraftSecret ) {
       requiredEnvVars.push( process.env.STRAPI_PREVIEW_SECRET );
     }
 
