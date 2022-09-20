@@ -35,6 +35,9 @@ STRAPI_PREVIEW_PUBLISHED_URL=https://example.com
 
 You must generate your own secret key to use for `STRAPI_PREVIEW_SECRET` which will also be given to the frontend app later.
 
+#### Optional Secret
+The `STRAPI_PREVIEW_SECRET` is optional and can be disabled in the plugin configuration.
+
 #### Draft and publish mode
 With `draftAndPublish` mode enabled for a content type, a preview button will render when the entry is in a draft state while a live view button will render when it is in a published state.
 
@@ -44,6 +47,7 @@ It is **not** required to enable `draftAndPublish` for content types using this 
 | property | type (default) | description |
 | - | - | - |
 | contentTypes | array (`[]`) | An array of objects describing which content types should use the preview button. |
+| requireDraftSecret | boolean (`true`) | A flag to optionally require a secret be configured for draft entries. |
 
 ### `contentTypes`
 An array of objects describing which content types should use the preview button.
@@ -192,6 +196,9 @@ https://example.com/api/preview?slug=aboute&secret=YOURSECRET
 // Published URL
 https://example.com/about
 ```
+
+### `requireDraftSecret`
+A flag to optionally require a secret be configured for draft entries. This is `true` by default.
 
 ## <a id="user-guide"></a>📘 User Guide
 
