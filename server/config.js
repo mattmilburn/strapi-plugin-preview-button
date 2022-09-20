@@ -14,11 +14,15 @@ module.exports = {
       return;
     }
 
-    const requiredEnvVars = [
-      process.env.STRAPI_PREVIEW_SECRET,
+    let requiredEnvVars = [
       process.env.STRAPI_PREVIEW_DRAFT_URL,
       process.env.STRAPI_PREVIEW_PUBLISHED_URL,
     ];
+
+    // Maybe require the env SECRET.
+    if ( config.requireSecret ) {
+      requiredEnvVars.push( process.env.STRAPI_PREVIEW_SECRET );
+    }
 
     // Ensure env vars are set.
     if ( ! requiredEnvVars.every( val => val ) ) {
