@@ -21,11 +21,11 @@ const Injector = () => {
     isSupportedType,
   } = usePreviewData( uid, id, isCreatingEntry, [ initialData ] );
 
-  if ( ! isSupportedType || isCreatingEntry || isLoading || ! data || ! data?.urls ) {
+  if ( ! isSupportedType || isCreatingEntry || isLoading || ! data?.data ) {
     return null;
   }
 
-  const { draftUrl, publishedUrl } = data.urls;
+  const { draftUrl, publishedUrl } = data.data;
   const isDraft = hasDraftAndPublish && ! modifiedData.publishedAt;
 
   return (

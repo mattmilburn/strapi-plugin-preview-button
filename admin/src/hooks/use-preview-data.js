@@ -34,7 +34,7 @@ const usePreviewData = ( uid, id, isCreatingEntry, fetchDependencies = [] ) => {
   const isLoading = useSelector( state => state[ pluginId ].isLoading );
   const { contentTypes } = useSelector( state => state[ `${pluginId}_config` ].config );
 
-  const isSupportedType = contentTypes && contentTypes.includes( uid );
+  const isSupportedType = contentTypes?.map( item => item.uid )?.includes( uid );
 
   useEffect( () => {
     if ( ! isSupportedType || isCreatingEntry ) {
