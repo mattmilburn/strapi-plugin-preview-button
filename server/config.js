@@ -1,32 +1,15 @@
 'use strict';
 
 const { ValidationError } = require('@strapi/utils').errors;
-
-const { pluginId } = require( './utils' );
+const { has } = require( 'lodash' );
 
 module.exports = {
   default: {
     contentTypes: [],
-    requireDraftSecret: true,
   },
   validator: config => {
     if ( ! config.contentTypes ) {
       return;
-    }
-
-    let requiredEnvVars = [
-      process.env.STRAPI_PREVIEW_DRAFT_URL,
-      process.env.STRAPI_PREVIEW_PUBLISHED_URL,
-    ];
-
-    // Maybe require the env SECRET.
-    if ( config.requireDraftSecret ) {
-      requiredEnvVars.push( process.env.STRAPI_PREVIEW_SECRET );
-    }
-
-    // Ensure env vars are set.
-    if ( ! requiredEnvVars.every( val => val ) ) {
-      throw new ValidationError( `Must define required environment variables for the ${pluginId} plugin.` );
     }
 
     // Ensure `contentTypes` is an array.
@@ -39,6 +22,15 @@ module.exports = {
       // Required `uid` prop.
       if ( ! entry.uid ) {
         throw new ValidationError( `Missing uid for ${entry.uid}.` );
+      }
+
+      // Required `url` props.
+      if ( ! has( entry, 'draft', url ) ) {
+        throw new ValidationError( `Missing draft URL for ${entry.uid}.` );
+      }
+
+      if ( ! has( entry, 'published', url ) ) {
+        throw new ValidationError( `Missing published URL for ${entry.uid}.` );
       }
     } );
   },
