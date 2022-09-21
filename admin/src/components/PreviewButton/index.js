@@ -7,11 +7,7 @@ import { ExternalLink } from '@strapi/icons';
 import { PREVIEW_WINDOW_NAME } from '../../constants';
 import { getTrad } from '../../utils';
 
-const PreviewButton = ( {
-  isDraft,
-  draftUrl,
-  publishedUrl,
-} ) => {
+const PreviewButton = ( { isDraft, draftUrl, publishedUrl } ) => {
   const { formatMessage } = useIntl();
 
   const handleClick = event => {
