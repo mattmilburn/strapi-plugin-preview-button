@@ -1,4 +1,7 @@
 {
   "label.draft": "下書きプレビューを開く",
-  "label.published": "ライブプレビューを開く"
+  "label.published": "ライブプレビューを開く",
+  "label.copy-link": "リンクをコピーする",
+  "label.copy-preview-link": "プレビュー リンクをコピー",
+  "notification.link-copied": "クリップボードにリンクをコピーしました"
 }
