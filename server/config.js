@@ -25,11 +25,11 @@ module.exports = {
       }
 
       // Required `url` props.
-      if ( ! has( entry, 'draft', url ) ) {
+      if ( ! has( entry, 'draft.url' ) ) {
         throw new ValidationError( `Missing draft URL for ${entry.uid}.` );
       }
 
-      if ( ! has( entry, 'published', url ) ) {
+      if ( ! has( entry, 'published.url' ) ) {
         throw new ValidationError( `Missing published URL for ${entry.uid}.` );
       }
     } );
