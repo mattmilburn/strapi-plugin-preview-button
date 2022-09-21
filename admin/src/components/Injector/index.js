@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 import { usePreviewData } from '../../hooks';
-import { PreviewButton } from '../';
+import { CopyLinkButton, PreviewButton } from '../';
 
 const Injector = () => {
   const {
@@ -29,11 +29,18 @@ const Injector = () => {
   const isDraft = hasDraftAndPublish && ! modifiedData.publishedAt;
 
   return (
-    <PreviewButton
-      isDraft={ isDraft }
-      draftUrl={ draftUrl }
-      publishedUrl={ publishedUrl }
-    />
+    <>
+      <PreviewButton
+        isDraft={ isDraft }
+        draftUrl={ draftUrl }
+        publishedUrl={ publishedUrl }
+      />
+      <CopyLinkButton
+        isDraft={ isDraft }
+        draftUrl={ draftUrl }
+        publishedUrl={ publishedUrl }
+      />
+    </>
   );
 };
 
