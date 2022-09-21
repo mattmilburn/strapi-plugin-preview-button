@@ -6,7 +6,7 @@ const qs = require( 'qs' );
 const { buildUrl } = require( '../utils' );
 
 module.exports = ( { strapi } ) => ( {
-  getPreviewUrls( entity, contentTypeConfig, requireDraftSecret ) {
+  getPreviewUrls( entity, contentTypeConfig ) {
     const { uid, targetField, draft, published } = contentTypeConfig;
 
     // If `targetField` is defined in either `draft` or `publish`, prioritize those
@@ -21,11 +21,6 @@ module.exports = ( { strapi } ) => ( {
     const publishedQuery = get( published, 'query', {} );
     const draftBasePath = get( draft, 'basePath', null );
     let draftQuery = get( draft, 'query', {} );
-
-    // Maybe include the `secret` into the draft query params.
-    if ( requireDraftSecret ) {
-      draftQuery.secret = process.env.STRAPI_PREVIEW_SECRET;
-    }
 
     // Optionally include the `targetField` value in the draft query params.
     // Only collection types truly require the `targetField`, while single types
