@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -7,13 +7,13 @@ import { useNotification } from '@strapi/helper-plugin';
 import { Link } from '@strapi/icons';
 import { getTrad } from '../../utils';
 
-const CopyLinkButton = ( { isDraft, draftUrl, publishedUrl } ) => {
+const CopyLinkButton = ( { isDraft, url } ) => {
   const { formatMessage } = useIntl();
   const toggleNotification = useNotification();
 
   return (
     <CopyToClipboard
-      text={ isDraft ? draftUrl : publishedUrl }
+      text={ url }
       onCopy={ () => {
         toggleNotification( {
           type: 'success',
@@ -44,8 +44,7 @@ const CopyLinkButton = ( { isDraft, draftUrl, publishedUrl } ) => {
 
 CopyLinkButton.propTypes = {
   isDraft: PropTypes.bool,
-  draftUrl: PropTypes.string,
-  publishedUrl: PropTypes.string,
+  url: PropTypes.string,
 };
 
-export default CopyLinkButton;
+export default memo( CopyLinkButton );

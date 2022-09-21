@@ -1,8 +1,7 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
-import { usePreviewData } from '../../hooks';
+import { usePreviewUrl } from '../../hooks';
 import { CopyLinkButton, PreviewButton } from '../';
 
 const Injector = () => {
@@ -13,33 +12,22 @@ const Injector = () => {
     isCreatingEntry,
     modifiedData,
   } = useCMEditViewDataManager();
-  const { id } = useParams();
+  const isDraft = hasDraftAndPublish && ! modifiedData.publishedAt;
   const { uid } = allLayoutData.contentType;
   const {
-    data,
     isLoading,
     isSupportedType,
-  } = usePreviewData( uid, id, isCreatingEntry, [ initialData ] );
+    url,
+  } = usePreviewUrl( uid, initialData, isDraft, isCreatingEntry );
 
-  if ( ! isSupportedType || isCreatingEntry || isLoading || ! data?.data ) {
+  if ( ! isSupportedType || isCreatingEntry || isLoading ) {
     return null;
   }
 
-  const { draftUrl, publishedUrl } = data.data;
-  const isDraft = hasDraftAndPublish && ! modifiedData.publishedAt;
-
   return (
     <>
-      <PreviewButton
-        isDraft={ isDraft }
-        draftUrl={ draftUrl }
-        publishedUrl={ publishedUrl }
-      />
-      <CopyLinkButton
-        isDraft={ isDraft }
-        draftUrl={ draftUrl }
-        publishedUrl={ publishedUrl }
-      />
+      <PreviewButton isDraft={ isDraft } url={ url } />
+      <CopyLinkButton isDraft={ isDraft } url={ url } />
     </>
   );
 };

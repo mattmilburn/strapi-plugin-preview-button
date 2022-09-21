@@ -7,18 +7,16 @@ import { ExternalLink } from '@strapi/icons';
 import { PREVIEW_WINDOW_NAME } from '../../constants';
 import { getTrad } from '../../utils';
 
-const PreviewButton = ( { isDraft, draftUrl, publishedUrl } ) => {
+const PreviewButton = ( { isDraft, url } ) => {
   const { formatMessage } = useIntl();
 
   const handleClick = event => {
-    const destination = isDraft ? draftUrl : publishedUrl;
-
-    if ( ! destination ) {
+    if ( ! url ) {
       event.preventDefault();
       return;
     }
 
-    window.open( destination, PREVIEW_WINDOW_NAME );
+    window.open( url, PREVIEW_WINDOW_NAME );
   };
 
   return (
@@ -42,8 +40,7 @@ const PreviewButton = ( { isDraft, draftUrl, publishedUrl } ) => {
 
 PreviewButton.propTypes = {
   isDraft: PropTypes.bool,
-  draftUrl: PropTypes.string,
-  publishedUrl: PropTypes.string,
+  url: PropTypes.string,
 };
 
 export default memo( PreviewButton );
