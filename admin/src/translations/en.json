@@ -1,4 +1,7 @@
 {
   "label.draft": "Open draft preview",
-  "label.published": "Open live view"
+  "label.published": "Open live view",
+  "label.copy-link": "Copy link",
+  "label.copy-preview-link": "Copy preview link",
+  "notification.link-copied": "Link copied to the clipboard"
 }

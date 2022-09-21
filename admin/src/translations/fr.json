@@ -1,4 +1,7 @@
 {
   "label.draft": "Ouvrir l'aperçu du brouillon",
-  "label.published": "Ouvrir la version publiée"
+  "label.published": "Ouvrir la version publiée",
+  "label.copy-link": "Copier le lien",
+  "label.copy-preview-link": "Copier lien du l'aperçu",
+  "notification.link-copied": "Lien copié dans le presse-papier"
 }
