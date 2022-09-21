@@ -11,21 +11,5 @@ module.exports = {
         policies: [ 'admin::isAuthenticatedAdmin' ],
       },
     },
-    {
-      method: 'GET',
-      path: '/:uid/:id',
-      handler: 'preview-button.findOne',
-      config: {
-        policies: [ 'admin::isAuthenticatedAdmin' ],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/:uid',
-      handler: 'preview-button.findOne',
-      config: {
-        policies: [ 'admin::isAuthenticatedAdmin' ],
-      },
-    },
   ],
 };
