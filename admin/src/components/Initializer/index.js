@@ -5,8 +5,10 @@ import { usePluginConfig } from '../../hooks';
 import { pluginId } from '../../utils';
 
 const Initializer = ( { setPlugin } ) => {
-  const { isLoading } = usePluginConfig();
   const ref = useRef();
+
+  // Load the plugin config ASAP.
+  const { isLoading } = usePluginConfig();
 
   ref.current = setPlugin;
 

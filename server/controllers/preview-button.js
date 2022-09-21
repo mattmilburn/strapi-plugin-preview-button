@@ -4,13 +4,9 @@ const { getService, pluginId } = require( '../utils' );
 
 module.exports = {
   async config( ctx ) {
-    const { contentTypes } = await getService( 'plugin' ).getConfig();
+    const config = await getService( 'plugin' ).getConfig();
 
-    const config = {
-      contentTypes: contentTypes.map( type => type.uid ),
-    };
-
-    ctx.send( { config } );
+    ctx.send( config );
   },
 
   async findOne( ctx ) {
@@ -18,6 +14,11 @@ module.exports = {
 
     const { contentTypes, requireDraftSecret } = await getService( 'plugin' ).getConfig();
     const supportedType = contentTypes.find( type => type.uid === uid );
+
+    // Return empty object if UID type is not supported.
+    if ( ! supportedType ) {
+      return ctx.send( {} );
+    }
 
     // Not sure if this is expected behavior, but using `find()` with single types
     // seem to always return null when they are either in draft state or if they
@@ -28,9 +29,9 @@ module.exports = {
       ? await strapi.service( uid ).findOne( id, params )
       : await strapi.service( uid ).find( params );
 
-    // Return empty object if requirements are not met.
-    if ( ! supportedType || ! entity ) {
-      return ctx.send( {} );
+    // Entity not found.
+    if ( ! entity ) {
+      return ctx.notFound();
     }
 
     const urls = getService( 'preview-button' ).getPreviewUrls(
@@ -40,6 +41,6 @@ module.exports = {
     );
 
     // Return preview URLs.
-    ctx.send( { urls } );
+    ctx.send( { data: urls } );
   },
 };
