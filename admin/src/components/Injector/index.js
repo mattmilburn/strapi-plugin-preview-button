@@ -20,7 +20,7 @@ const Injector = () => {
     url,
   } = usePreviewUrl( uid, initialData, isDraft, isCreatingEntry );
 
-  if ( ! isSupportedType || isCreatingEntry || isLoading ) {
+  if ( ! url || ! isSupportedType || isCreatingEntry || isLoading ) {
     return null;
   }
 
