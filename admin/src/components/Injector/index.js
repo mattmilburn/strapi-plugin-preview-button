@@ -15,6 +15,7 @@ const Injector = () => {
   const isDraft = hasDraftAndPublish && ! modifiedData.publishedAt;
   const { uid } = allLayoutData.contentType;
   const {
+    canCopy,
     isLoading,
     isSupportedType,
     url,
@@ -27,7 +28,7 @@ const Injector = () => {
   return (
     <>
       <PreviewButton isDraft={ isDraft } url={ url } />
-      <CopyLinkButton isDraft={ isDraft } url={ url } />
+      { canCopy && <CopyLinkButton isDraft={ isDraft } url={ url } /> }
     </>
   );
 };
