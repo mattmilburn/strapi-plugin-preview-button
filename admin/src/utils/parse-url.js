@@ -15,9 +15,15 @@ const parseUrl = ( config, data ) => {
       [ key ]: val,
     };
   }, {} );
+  const parsedQuery = Object.entries( config.query ).reduce( ( acc, [ key, val ] ) => {
+    return {
+      ...acc,
+      [ key ]: interpolate( val, props ),
+    };
+  }, {} );
 
   const url = interpolate( trimSlashes( config.url ), props );
-  const query = qs.stringify( config.query, { addQueryPrefix: true } );
+  const query = qs.stringify( parsedQuery, { addQueryPrefix: true } );
 
   return `${url}${query}`;
 };
