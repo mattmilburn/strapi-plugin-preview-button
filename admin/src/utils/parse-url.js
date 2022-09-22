@@ -4,8 +4,12 @@ import interpolate from './interpolate';
 import trimSlashes from './trim-slashes';
 
 const parseUrl = ( config, data ) => {
+  if ( ! config || ! data ) {
+    return null;
+  }
+
   const supportedTypes = [ 'number', 'string' ];
-  const props = Object.entries( data ).reduce( ( acc, [ key, val ] ) => {
+  const replacements = Object.entries( data ).reduce( ( acc, [ key, val ] ) => {
     if ( ! supportedTypes.includes( typeof val ) ) {
       return acc;
     }
@@ -15,15 +19,15 @@ const parseUrl = ( config, data ) => {
       [ key ]: val,
     };
   }, {} );
-  const parsedQuery = Object.entries( config.query ).reduce( ( acc, [ key, val ] ) => {
+  const params = Object.entries( config?.query ?? {} ).reduce( ( acc, [ key, val ] ) => {
     return {
       ...acc,
-      [ key ]: interpolate( val, props ),
+      [ key ]: interpolate( val, replacements ),
     };
   }, {} );
 
-  const url = interpolate( trimSlashes( config.url ), props );
-  const query = qs.stringify( parsedQuery, { addQueryPrefix: true } );
+  const url = interpolate( trimSlashes( config.url ), replacements );
+  const query = qs.stringify( params, { addQueryPrefix: true } );
 
   return `${url}${query}`;
 };

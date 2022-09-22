@@ -19,6 +19,10 @@ const usePreviewUrl = ( uid, data, isDraft, isCreating ) => {
 
     const url = parseUrl( match[ isDraft ? 'draft' : 'published' ], data );
 
+    if ( ! url ) {
+      return;
+    }
+
     setUrl( url );
   }, [ isLoading, isCreating ] );
 
