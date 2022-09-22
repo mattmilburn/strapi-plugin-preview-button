@@ -6,6 +6,7 @@ import { parseUrl, pluginId } from '../utils';
 
 const usePreviewUrl = ( uid, data, isDraft, isCreating ) => {
   const [ url, setUrl ] = useState( null );
+  const [ canCopy, setCopy ] = useState( true );
   const { config, isLoading } = usePluginConfig();
   const { contentTypes } = config;
 
@@ -17,16 +18,19 @@ const usePreviewUrl = ( uid, data, isDraft, isCreating ) => {
       return;
     }
 
-    const url = parseUrl( match[ isDraft ? 'draft' : 'published' ], data );
+    const stateConfig = match[ isDraft ? 'draft' : 'published' ];
+    const url = parseUrl( stateConfig, data );
 
     if ( ! url ) {
       return;
     }
 
     setUrl( url );
-  }, [ isLoading, isCreating ] );
+    setCopy( stateConfig?.copy === false ? false : true );
+  }, [ isDraft, isCreating, isLoading ] );
 
   return {
+    canCopy,
     isLoading,
     isSupportedType,
     url,
