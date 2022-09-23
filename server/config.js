@@ -5,6 +5,7 @@ const { get, has } = require( 'lodash' );
 
 module.exports = {
   default: {
+    injectListViewColumn: true,
     contentTypes: [],
   },
   validator: config => {
