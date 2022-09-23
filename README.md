@@ -18,6 +18,7 @@
 * Customize which content types should use the preview button.
 * Customize endpoints for draft and published URLs.
 * Map custom values from an entry's data into preview URLs.
+* Include icons for preview and copy link functions in list view.
 * Supports collection and single types.
 
 ## <a id="installation"></a>💎 Installation
@@ -32,6 +33,7 @@ yarn add strapi-plugin-preview-button@latest
 | contentTypes[].uid | string | The `uid` value of either a single or collection type. |
 | contentTypes[].draft | object (`{}`) | A configuration object to enable a draft preview button. |
 | contentTypes[].published | object (`{}`) | A configuration object to enable a live view button. |
+  | injectListViewColumn | boolean (`true`) | Set to `false` to disable the preview and copy link buttons from displaying in list view. |
 
 ### `contentTypes`
 An array of objects describing which content types should use the preview button.
@@ -139,7 +141,7 @@ module.exports = ( { env } ) => {
 };
 ```
 
-#### Use a `STRAPI_PREVIEW_SECRET` key with preview URLs
+#### Use a secret key with preview URLs
 You can optionally use a secret key with your preview URLs by taking advantage of environment vars and the `query` prop. See example below.
 
 ```js
@@ -199,6 +201,22 @@ module.exports = {
             copy: false,
           },
         },
+        // etc.
+      ],
+    },
+  },
+};
+```
+
+### `injectListViewColumn`
+Set to `false` to disable the preview and copy link buttons from displaying in list view. This applies to all configured content types.
+
+```js
+module.exports = {
+  'preview-button': {
+    config: {
+      injectListViewColumn: false,
+      contentTypes: [
         // etc.
       ],
     },
