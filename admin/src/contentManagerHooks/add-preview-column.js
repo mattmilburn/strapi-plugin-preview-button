@@ -5,12 +5,12 @@ import { ListViewTableCell } from '../components';
 import { parseUrl, pluginId } from '../utils';
 
 const addPreviewColumn = ( { displayedHeaders, layout }, pluginConfig ) => {
-  const { contentTypes } = pluginConfig;
+  const { contentTypes, disableListViewButton } = pluginConfig;
   const match = contentTypes?.find( type => type.uid === layout.contentType.uid );
   const isSupportedType = !! match;
 
   // Do nothing if this feature is not a supported type for the preview button.
-  if ( ! isSupportedType ) {
+  if ( ! isSupportedType || disableListViewButton ) {
     return {
       displayedHeaders,
       layout,
