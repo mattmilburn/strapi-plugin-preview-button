@@ -1,7 +1,8 @@
-import { prefixPluginTranslations } from '@strapi/helper-plugin';
+import { prefixPluginTranslations, request } from '@strapi/helper-plugin';
 
 import { getTrad, pluginId, pluginName } from './utils';
 import { Initializer, Injector } from './components';
+import { addPreviewColumn } from './contentManagerHooks';
 import reducers from './reducers';
 
 export default {
@@ -16,11 +17,26 @@ export default {
     } );
   },
 
-  bootstrap( app ) {
+  async bootstrap( app ) {
     app.injectContentManagerComponent( 'editView', 'right-links', {
       name: pluginId,
       Component: Injector,
     } );
+
+    try {
+      const endpoint = `/${pluginId}/config`;
+      const data = await request( endpoint, { method: 'GET' } );
+      const pluginConfig = data ?? {};
+
+      // Create callbacks with plugin config included.
+      const listViewColumnHook = props => addPreviewColumn( props, pluginConfig );
+
+      // Register hooks.
+      app.registerHook( 'Admin/CM/pages/ListView/inject-column-in-table', listViewColumnHook );
+    } catch ( _err ) {
+      // Probably just failed because user is not logged in, which is fine.
+      return;
+    }
   },
 
   async registerTrads( { locales } ) {
