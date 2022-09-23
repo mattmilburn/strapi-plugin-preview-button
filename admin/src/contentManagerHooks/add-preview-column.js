@@ -42,7 +42,11 @@ const addPreviewColumn = ( { displayedHeaders, layout }, pluginConfig ) => {
           }
 
           return (
-            <ListViewTableCell isDraft={ isDraft } url={ url } />
+            <ListViewTableCell
+              canCopy={ stateConfig?.copy === false ? false : true }
+              isDraft={ isDraft }
+              url={ url }
+            />
           );
         },
       },
