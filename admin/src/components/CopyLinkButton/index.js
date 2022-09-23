@@ -5,6 +5,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Button } from '@strapi/design-system';
 import { useNotification } from '@strapi/helper-plugin';
 import { Link } from '@strapi/icons';
+
 import { getTrad } from '../../utils';
 
 const CopyLinkButton = ( { isDraft, url } ) => {
