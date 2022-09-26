@@ -224,7 +224,9 @@ module.exports = {
 };
 ```
 
-> Ideally, the preview and copy link buttons in list view should appear alongside the other action icons for each row in the table. However, Strapi does not currently provide a hook to append new icons to that column. For now, this plugin will add its own "Preview" column with the extra icon actions.
+Ideally, the preview and copy link buttons in list view should appear alongside the other action icons for each row in the table. However, Strapi does not currently provide a hook to append new icons to that column. For now, this plugin will add its own "Preview" column with the extra icon actions.
+
+<img style="width: 960px; height: auto;" src="public/list-view.png" alt="Screenshot for list view in Strapi preview button plugin" />
 
 ## <a id="user-guide"></a>📘 User Guide
 
