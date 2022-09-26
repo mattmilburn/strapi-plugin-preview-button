@@ -17,9 +17,10 @@
 * Include optional button to copy the preview link to your clipboard.
 * Customize which content types should use the preview button.
 * Customize endpoints for draft and published URLs.
-* Map custom values from an entry's data into preview URLs.
-* Include icons for preview and copy link functions in list view.
+* Map values from an entry's data into preview URLs.
 * Supports collection and single types.
+* Supports localization with the `i18n` Strapi plugin.
+* Optionally include preview and copy icons in list view.
 
 ## <a id="installation"></a>💎 Installation
 ```bash
@@ -42,8 +43,8 @@ Each object in the array requires the `uid` as well as `draft` and/or `published
 
 | property | type (default) | description |
 | - | - | - |
-| url | string | The destination URL. See [URL template section](#url-template) for details on using this value with dynamic values. |
-| query | object (`{}`) | Optional query string params to include into the final URL. |
+| url | string | The destination URL. See section about [mapping data into the URLs](#mapping-values-from-entry-data-into-preview-urls) for greater customization. |
+| query | object (`{}`) | Optional query string params to include in the final URL. |
 | copy | boolean (`true`) | Set to `false` to disable the copy link button that appears below the preview button. |
 
 #### Example
@@ -114,31 +115,42 @@ http://localhost:3000/blog/my-post
 #### Mapping values from entry data into preview URLs
 By using `{curly_braces}`, you can map values from the entry data into your preview URLs to customize the URL however you like.
 
-For example, you could pass an `id` value to your **draft preview** but pass a `slug` value to your **live view**.
+For example, depending on how you are choosing to handle your preview method, you could pass an `id` value to your **draft preview** but pass a `slug` value to your **live view**.
 
 ```js
-module.exports = ( { env } ) => {
-  'preview-button': {
-    config: {
-      contentTypes: [
-        {
-          uid: 'api::page.page',
-          draft: {
-            url: 'http://localhost:3000/api/preview',
-            query: {
-              type: 'page',
-              id: '{id}',
-            },
-          },
-          published: {
-            url: 'http://localhost:3000/{slug}',
-          },
-        },
-        // etc.
-      ],
+{
+  uid: 'api::page.page',
+  draft: {
+    url: 'http://localhost:3000/api/preview',
+    query: {
+      type: 'page',
+      id: '{id}',
     },
   },
-};
+  published: {
+    url: 'http://localhost:3000/{slug}',
+  },
+}
+```
+
+#### Use with localization enabled
+If you have localization enabled for a content type, the `locale` value will be included in the entry data and replaced like the rest. You can simply use `{locale}` to include it where you like in the URL or query string.
+
+```js
+{
+  uid: 'api::page.page',
+  draft: {
+    url: 'http://localhost:3000/api/preview',
+    query: {
+      type: 'page',
+      locale: '{locale}',
+      slug: '{slug}',
+    },
+  },
+  published: {
+    url: 'http://localhost:3000/{locale}/{slug}',
+  },
+}
 ```
 
 #### Use a secret key with preview URLs
@@ -181,31 +193,19 @@ http://localhost:3000/my-page
 
 Before granting access to the preview in your frontend app, you will want to compare and validate the secret key between both Strapi and frontend apps.
 
-For in-depth examples and instructions, please reference the links below to learn how this can be accomplished with Next.js and Strapi.
+> It may be important to note that this plugin does not offer any validation or other handling for a secret key. The goal of including a secret key is simply to give your frontend app some way of "shaking hands" with your backend app to approve of the preview access.
 
-* [Next.js Preview Mode](https://nextjs.org/docs/advanced-features/preview-mode)
-* [Next.js Preview Mode example with Strapi](https://github.com/vercel/next.js/tree/canary/examples/cms-strapi)
-
-#### Disable copy button
-The copy button located beneath the preview button can be disabled with the `copy: false` prop. This value is `true` by default.
+#### Disable copy link button
+The "copy link" button located beneath the preview button can be disabled with the `copy: false` prop applied to `draft` and `published` configurations. This value is `true` by default.
 
 ```js
-module.exports = {
-  'preview-button': {
-    config: {
-      contentTypes: [
-        {
-          uid: 'api::home.home',
-          published: {
-            url: 'http://localhost:3000',
-            copy: false,
-          },
-        },
-        // etc.
-      ],
-    },
+{
+  uid: 'api::home.home',
+  published: {
+    url: 'http://localhost:3000',
+    copy: false,
   },
-};
+}
 ```
 
 ### `injectListViewColumn`
@@ -224,9 +224,16 @@ module.exports = {
 };
 ```
 
+> Ideally, the preview and copy link buttons in list view should appear alongside the other action icons for each row in the table. However, Strapi does not currently provide a hook to append new icons to that column. For now, this plugin will add its own "Preview" column with the extra icon actions.
+
 ## <a id="user-guide"></a>📘 User Guide
 
 ### How does this work with my frontend app?
 The **Open live view** button will lead directly to the live page URL.
 
 The **Open draft preview** button should lead to an endpoint that redirects to the appropriate preview page based on the query parameters passed to it.
+
+For in-depth examples and instructions, please reference the links below to learn how this can be accomplished with Next.js and Strapi.
+
+* [Next.js Preview Mode](https://nextjs.org/docs/advanced-features/preview-mode)
+* [Next.js Preview Mode example with Strapi](https://github.com/vercel/next.js/tree/canary/examples/cms-strapi)
