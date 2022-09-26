@@ -26,7 +26,7 @@ const addPreviewColumn = ( { displayedHeaders, layout }, pluginConfig ) => {
           type: 'string',
         },
         metadatas: {
-          label: 'Preview Link',
+          label: 'Preview',
           searchable: false,
           sortable: false,
         },
