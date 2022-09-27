@@ -11,9 +11,14 @@ const usePluginConfig = () => {
   const { config, isLoading } = useSelector( state => state[ `${pluginId}_config` ] );
 
   useEffect( () => {
+    // Do nothing if we have already loaded the config data.
+    if ( ! isLoading && !! config ) {
+      return;
+    }
+
     const abortController = new AbortController();
 
-    const fetchConfig = async () => {
+    const fetchData = async () => {
       try {
         const endpoint = `/${pluginId}/config`;
         const data = await request( endpoint, {
@@ -34,7 +39,7 @@ const usePluginConfig = () => {
       }
     };
 
-    const req = fetchConfig().then( data => dispatch( { type: RESOLVE_CONFIG, data } ) );
+    fetchData().then( data => dispatch( { type: RESOLVE_CONFIG, data } ) );
 
     return () => abortController.abort();
   }, [ dispatch, toggleNotification ] );
