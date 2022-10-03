@@ -3,6 +3,9 @@ const interpolate = ( str, data = {} ) => {
     str = str.replace( new RegExp( `{${key}}`, 'g' ), value );
   } );
 
+  // Replace any remaining values with an empty string.
+  str = str.replace( new RegExp( `{(.*)}`, 'g' ), '' );
+
   return str;
 };
 

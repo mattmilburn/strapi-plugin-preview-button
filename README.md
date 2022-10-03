@@ -35,7 +35,7 @@ yarn add strapi-plugin-preview-button@latest
 | contentTypes[].uid | string | The `uid` value of either a single or collection type. |
 | contentTypes[].draft | object (`{}`) | A configuration object to enable a draft preview button. |
 | contentTypes[].published | object (`{}`) | A configuration object to enable a live view button. |
-  | injectListViewColumn | boolean (`true`) | Set to `false` to disable the preview and copy link buttons from displaying in list view. |
+| injectListViewColumn | boolean (`true`) | Set to `false` to disable the preview and copy link buttons from displaying in list view. |
 
 ### `contentTypes`
 An array of objects describing which content types should use the preview button.
