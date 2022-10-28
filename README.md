@@ -26,6 +26,15 @@
 ## <a id="installation"></a>💎 Installation
 ```bash
 yarn add strapi-plugin-preview-button@latest
+yarn build
+yarn develop
+```
+
+or with NPM
+```bash
+npm install strapi-plugin-preview-button@latest
+npm run build
+npm run develop
 ```
 
 ## <a id="configuration"></a>🔧 Configuration
