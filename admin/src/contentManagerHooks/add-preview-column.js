@@ -5,7 +5,7 @@ import { ListViewTableCell } from '../components';
 import { parseUrl, pluginId } from '../utils';
 
 const addPreviewColumn = ( { displayedHeaders, layout }, pluginConfig ) => {
-  const { contentTypes, injectListViewColumn } = pluginConfig;
+  const { contentTypes, injectListViewColumn, openTarget } = pluginConfig;
   const match = contentTypes?.find( type => type.uid === layout.contentType.uid );
   const isSupportedType = !! match;
 
@@ -45,6 +45,7 @@ const addPreviewColumn = ( { displayedHeaders, layout }, pluginConfig ) => {
             <ListViewTableCell
               canCopy={ stateConfig?.copy === false ? false : true }
               isDraft={ isDraft }
+              target={ openTarget }
               url={ url }
             />
           );

@@ -1,7 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 import { usePreviewUrl } from '../../hooks';
+import { pluginId } from '../../utils';
 import { CopyLinkButton, PreviewButton } from '../';
 
 const Injector = () => {
@@ -11,6 +13,7 @@ const Injector = () => {
     isCreatingEntry,
     modifiedData,
   } = useCMEditViewDataManager();
+  const { openTarget } = useSelector( state => state[ `${pluginId}_config` ].config );
   const isDraft = hasDraftAndPublish && ! modifiedData.publishedAt;
   const { uid } = allLayoutData.contentType;
   const {
@@ -26,7 +29,7 @@ const Injector = () => {
 
   return (
     <>
-      <PreviewButton isDraft={ isDraft } url={ url } />
+      <PreviewButton isDraft={ isDraft } url={ url } target={ openTarget } />
       { canCopy && <CopyLinkButton isDraft={ isDraft } url={ url } /> }
     </>
   );

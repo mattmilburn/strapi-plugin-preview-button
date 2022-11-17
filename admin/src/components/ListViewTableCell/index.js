@@ -6,10 +6,9 @@ import { Flex, IconButton } from '@strapi/design-system';
 import { stopPropagation, useNotification } from '@strapi/helper-plugin';
 import { ExternalLink, Link } from '@strapi/icons';
 
-import { PREVIEW_WINDOW_NAME } from '../../constants';
 import { getTrad } from '../../utils';
 
-const ListViewTableCell = ( { canCopy, isDraft, url } ) => {
+const ListViewTableCell = ( { canCopy, isDraft, target, url } ) => {
   const { formatMessage } = useIntl();
   const toggleNotification = useNotification();
 
@@ -18,7 +17,7 @@ const ListViewTableCell = ( { canCopy, isDraft, url } ) => {
       return;
     }
 
-    window.open( url, PREVIEW_WINDOW_NAME );
+    window.open( url, target );
   };
 
   return (
@@ -68,6 +67,7 @@ const ListViewTableCell = ( { canCopy, isDraft, url } ) => {
 ListViewTableCell.propTypes = {
   canCopy: PropTypes.bool,
   isDraft: PropTypes.bool,
+  target: PropTypes.string,
   url: PropTypes.string,
 };
 

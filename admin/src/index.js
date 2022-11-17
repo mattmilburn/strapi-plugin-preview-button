@@ -34,6 +34,10 @@ export default {
       // Register hooks.
       app.registerHook( 'Admin/CM/pages/ListView/inject-column-in-table', listViewColumnHook );
     } catch ( _err ) {
+      /**
+       * @TODO - Apparently this is causing issues when this fails for a logged-out user.
+       */
+
       // Probably just failed because user is not logged in, which is fine.
       return;
     }
