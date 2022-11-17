@@ -36,6 +36,7 @@ yarn add strapi-plugin-preview-button@latest
 | contentTypes[].draft | object (`{}`) | A configuration object to enable a draft preview button. |
 | contentTypes[].published | object (`{}`) | A configuration object to enable a live view button. |
 | injectListViewColumn | boolean (`true`) | Set to `false` to disable the preview and copy link buttons from displaying in list view. |
+| openTarget | string | Set to `_blank` to always open preview page in a new tab or window. Otherwise the preview will re-use the same preview tab or window. |
 
 ### `contentTypes`
 An array of objects describing which content types should use the preview button.
@@ -117,6 +118,8 @@ http://localhost:3000/blog/my-post
 By using `{curly_braces}`, you can map values from the entry data into your preview URLs to customize the URL however you like.
 
 For example, depending on how you are choosing to handle your preview method, you could pass an `id` value to your **draft preview** but pass a `slug` value to your **live view**.
+
+> **Unmatched values** will be replaced with an empty string.
 
 ```js
 {
@@ -228,6 +231,24 @@ module.exports = {
 Ideally, the preview and copy link buttons in list view should appear alongside the other action icons for each row in the table. However, Strapi does not currently provide a hook to append new icons to that column. For now, this plugin will add its own "Preview" column with the extra icon actions.
 
 <img style="width: 960px; height: auto;" src="public/list-view.png" alt="Screenshot for list view in Strapi preview button plugin" />
+
+### `openTarget`
+By default this value is set to `StrapiPreview`. It is used in the `window.open` function for the preview button to always open in the same tab.
+
+If you would rather disable this and, for example, have the preview button always open in a new tab, you could use `_blank` as the value. Any special target keywords such as `_blank`, `_top`, `_self`, or `_parent` are acceptable values.
+
+```js
+module.exports = {
+  'preview-button': {
+    config: {
+      openTarget: '_blank',
+      contentTypes: [
+        // etc.
+      ],
+    },
+  },
+};
+```
 
 ## <a id="user-guide"></a>📘 User Guide
 
