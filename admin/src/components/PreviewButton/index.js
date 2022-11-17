@@ -4,10 +4,9 @@ import { useIntl } from 'react-intl';
 import { Button } from '@strapi/design-system';
 import { ExternalLink } from '@strapi/icons';
 
-import { PREVIEW_WINDOW_NAME } from '../../constants';
 import { getTrad } from '../../utils';
 
-const PreviewButton = ( { isDraft, url } ) => {
+const PreviewButton = ( { isDraft, target, url } ) => {
   const { formatMessage } = useIntl();
 
   const handleClick = event => {
@@ -16,7 +15,7 @@ const PreviewButton = ( { isDraft, url } ) => {
       return;
     }
 
-    window.open( url, PREVIEW_WINDOW_NAME );
+    window.open( url, target );
   };
 
   return (
@@ -40,6 +39,7 @@ const PreviewButton = ( { isDraft, url } ) => {
 
 PreviewButton.propTypes = {
   isDraft: PropTypes.bool,
+  target: PropTypes.string,
   url: PropTypes.string,
 };
 

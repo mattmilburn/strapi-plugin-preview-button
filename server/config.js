@@ -3,10 +3,13 @@
 const { ValidationError } = require('@strapi/utils').errors;
 const { get, has } = require( 'lodash' );
 
+const { PREVIEW_WINDOW_NAME } = require( './constants' );
+
 module.exports = {
   default: {
     injectListViewColumn: true,
     contentTypes: [],
+    openTarget: PREVIEW_WINDOW_NAME,
   },
   validator: config => {
     if ( ! config.contentTypes ) {
