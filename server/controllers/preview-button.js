@@ -1,6 +1,6 @@
 'use strict';
 
-const { getService, pluginId } = require( '../utils' );
+const { getService } = require( '../utils' );
 
 module.exports = {
   async config( ctx ) {
