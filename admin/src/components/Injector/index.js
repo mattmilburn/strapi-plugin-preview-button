@@ -8,7 +8,6 @@ const Injector = () => {
   const {
     allLayoutData,
     hasDraftAndPublish,
-    initialData,
     isCreatingEntry,
     modifiedData,
   } = useCMEditViewDataManager();

@@ -8,7 +8,6 @@ const usePreviewUrl = ( uid, data, isDraft, isCreating ) => {
   const [ canCopy, setCopy ] = useState( true );
   const { config, isLoading } = usePluginConfig();
   const { contentTypes } = config;
-
   const { updatedAt } = data;
 
   const match = contentTypes?.find( type => type.uid === uid );
