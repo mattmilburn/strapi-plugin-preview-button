@@ -11,10 +11,10 @@
   },
   "peerDependencies": {
     "@strapi/design-system": "^1.4.0",
-    "@strapi/helper-plugin": "^4.5.4",
+    "@strapi/helper-plugin": "^4.5.3",
     "@strapi/icons": "^1.4.0",
-    "@strapi/strapi": "^4.5.4",
-    "@strapi/utils": "^4.5.4"
+    "@strapi/strapi": "^4.5.3",
+    "@strapi/utils": "^4.5.3"
   },
   "dependencies": {
     "immer": "^9.0.12",
