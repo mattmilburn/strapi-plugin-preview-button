@@ -27,7 +27,7 @@
     "react-router-dom": "^6.2.1"
   },
   "engines": {
-    "node": ">=12.x.x <=16.x.x",
+    "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
   "author": {
