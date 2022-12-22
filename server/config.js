@@ -1,7 +1,7 @@
 'use strict';
 
 const { ValidationError } = require('@strapi/utils').errors;
-const { get, has } = require( 'lodash' );
+const has = require( 'lodash/has' );
 
 const { PREVIEW_WINDOW_NAME } = require( './constants' );
 
