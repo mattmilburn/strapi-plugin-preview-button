@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useStrapiApp } from '@strapi/helper-plugin';
 
-import { usePluginConfig} from '../hooks';
+import { HOOK_BEFORE_BUILD_URL } from '../constants';
+import { usePluginConfig } from '../hooks';
 import { parseUrl } from '../utils';
 
 const usePreviewUrl = ( uid, data, isDraft, isCreating ) => {
+  const { runHookWaterfall } = useStrapiApp();
+  const { config, isLoading } = usePluginConfig();
   const [ url, setUrl ] = useState( null );
   const [ canCopy, setCopy ] = useState( true );
-  const { config, isLoading } = usePluginConfig();
+
   const { contentTypes } = config;
-  const { updatedAt } = data;
 
   const match = contentTypes?.find( type => type.uid === uid );
   const isSupportedType = !! match;
@@ -18,16 +21,17 @@ const usePreviewUrl = ( uid, data, isDraft, isCreating ) => {
       return;
     }
 
-    const stateConfig = match[ isDraft ? 'draft' : 'published' ];
-    const url = parseUrl( stateConfig, data );
+    const stateFromConfig = match[ isDraft ? 'draft' : 'published' ];
+    const { state } = runHookWaterfall( HOOK_BEFORE_BUILD_URL, { state: stateFromConfig, data } );
+    const url = parseUrl( state, data );
 
     if ( ! url ) {
       return;
     }
 
     setUrl( url );
-    setCopy( stateConfig?.copy === false ? false : true );
-  }, [ isDraft, isCreating, isLoading, updatedAt ] );
+    setCopy( state?.copy === false ? false : true );
+  }, [ isDraft, isCreating, isLoading, data ] );
 
   return {
     canCopy,
