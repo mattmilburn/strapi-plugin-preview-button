@@ -10,6 +10,7 @@
 * [Features](#features)
 * [Installation](#installation)
 * [Configuration](#configuration)
+* [Extending](#extending)
 * [User Guide](#user-guide)
 * [Migration](#migration)
 
@@ -246,6 +247,99 @@ module.exports = {
         // etc.
       ],
     },
+  },
+};
+```
+
+## <a id="extending"></a>🔩 Extending
+
+If you need to apply more advanced logic to the preview URL, you can accomplish this with the `plugin/preview-button/before-build-url` hook included with this plugin.
+
+Your Strapi app will need a **custom plugin** in order to use this hook.
+
+> See [Plugins Development](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html) in Strapi docs for more info.
+
+#### Example
+In this example, we will create the bare minimum for a Strapi plugin that allows us to run our custom hook. The file structure for the plugin will look like the code below.
+
+```
+/src/plugins/example
+  /admin
+    /src
+      index.js
+  package.json
+  strapi-admin.js
+```
+
+The `package.json` is required for a Strapi plugin.
+
+```js
+// package.json
+
+{
+  "name": "example",
+  "version": "0.1.0",
+  "description": "Example.",
+  "strapi": {
+    "displayName": "Example",
+    "name": "example",
+    "description": "Example",
+    "kind": "plugin"
+  },
+  "dependencies": {}
+}
+```
+
+```js
+// strapi-admin.js
+
+'use strict';
+
+module.exports = require( './admin/src' ).default;
+```
+
+In the main plugin file below, we register the plugin in the `register` method and we register the hook with the `bootstrap` method.
+
+The `state` argument is the original config object from `config/plugins.js`. So if you are editing a `Page` in draft mode, you will get the draft config for `Pages` from your plugin config passed into the callback.
+
+Here you can modify and return `state` while using `data` to make decisions.
+
+```js
+// admin/src/index.js
+
+export default {
+  register( app ) {
+    app.registerPlugin( {
+      id: 'example',
+      name: 'example',
+    } );
+  },
+
+  bootstrap( app ) {
+    app.registerHook( 'plugin/preview-button/before-build-url', ( { state, data } ) => {
+      // Return modified `state` object here.
+      return {
+        state: {
+          ...state,
+          example: 'EXAMPLE',
+        },
+      };
+    } );
+  },
+};
+```
+
+Finally, don't forget to enable your plugin in your app by adding it to `config/plugins.js`.
+
+```js
+// config/plugins.js
+
+'use strict';
+
+module.exports = {
+  'example': {
+    enabled: true,
+    resolve: './src/plugins/example',
   },
 };
 ```
