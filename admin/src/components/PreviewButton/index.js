@@ -27,10 +27,10 @@ const PreviewButton = ( { isDraft, target, url } ) => {
       style={ { width: '100%' } }
     >
       { formatMessage( isDraft ? {
-        id: getTrad( 'label.draft' ),
+        id: getTrad( 'form.button.draft' ),
         defaultMessage: 'Open draft preview',
       } : {
-        id: getTrad( 'label.published' ),
+        id: getTrad( 'form.button.published' ),
         defaultMessage: 'Open live view',
       } ) }
     </Button>

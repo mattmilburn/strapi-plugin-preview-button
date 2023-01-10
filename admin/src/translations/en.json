@@ -1,7 +1,7 @@
 {
-  "label.draft": "Open draft preview",
-  "label.published": "Open live view",
-  "label.copy-link": "Copy link",
-  "label.copy-preview-link": "Copy preview link",
-  "notification.link-copied": "Link copied to the clipboard"
+  "form.button.draft": "Open draft preview",
+  "form.button.published": "Open live view",
+  "form.button.copy-link": "Copy link",
+  "form.button.copy-link.draft": "Copy preview link",
+  "notification.success.link-copied": "Link copied to the clipboard"
 }
