@@ -13,6 +13,7 @@
 * [Extending](#extending)
 * [User Guide](#user-guide)
 * [Migration](#migration)
+* [Support or Donate](#donate)
 
 ## <a id="features"></a>✨ Features
 * Adds a new button in content manager sidebar which links the user to a preview or live view of a frontend app view.
@@ -358,3 +359,6 @@ For in-depth examples and instructions, please reference the links below to lear
 
 ## <a id="migration"></a>🚌 Migration
 Follow the [migration guides](MIGRATION.md) to keep your preview button plugin up-to-date.
+
+## <a id="donate"></a>❤️ Support or Donate
+If you are enjoying this plugin and feel extra appreciative, you can [buy me a beer or 3 🍺🍺🍺](https://www.buymeacoffee.com/mattmilburn).
