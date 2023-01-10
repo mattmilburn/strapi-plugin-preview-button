@@ -25,10 +25,10 @@ const ListViewTableCell = ( { canCopy, isDraft, target, url } ) => {
       <IconButton
         onClick={ handleClick }
         label={ formatMessage( isDraft ? {
-          id: getTrad( 'label.draft' ),
+          id: getTrad( 'form.button.draft' ),
           defaultMessage: 'Open draft preview',
         } : {
-          id: getTrad( 'label.published' ),
+          id: getTrad( 'form.button.published' ),
           defaultMessage: 'Open live view',
         } ) }
         icon={ <ExternalLink /> }
@@ -41,7 +41,7 @@ const ListViewTableCell = ( { canCopy, isDraft, target, url } ) => {
             toggleNotification( {
               type: 'success',
               message: {
-                id: 'notification.link-copied',
+                id: 'notification.success.link-copied',
                 defaultMessage: 'Link copied to the clipboard',
               },
             } );
@@ -50,10 +50,10 @@ const ListViewTableCell = ( { canCopy, isDraft, target, url } ) => {
           <IconButton
             icon={ <Link /> }
             label={ formatMessage( isDraft ? {
-              id: getTrad( 'label.copy-preview-link' ),
+              id: getTrad( 'form.button.copy-link.draft' ),
               defaultMessage: 'Copy preview link',
             } : {
-              id: getTrad( 'label.copy-link' ),
+              id: getTrad( 'form.button.copy-link' ),
               defaultMessage: 'Copy link',
             } ) }
             noBorder

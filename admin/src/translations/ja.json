@@ -1,7 +1,7 @@
 {
-  "label.draft": "下書きプレビューを開く",
-  "label.published": "ライブプレビューを開く",
-  "label.copy-link": "リンクをコピーする",
-  "label.copy-preview-link": "プレビュー リンクをコピー",
-  "notification.link-copied": "クリップボードにリンクをコピーしました"
+  "form.button.draft": "下書きプレビューを開く",
+  "form.button.published": "ライブプレビューを開く",
+  "form.button.copy-link": "リンクをコピーする",
+  "form.button.copy-link.draft": "プレビュー リンクをコピー",
+  "notification.success.link-copied": "クリップボードにリンクをコピーしました"
 }

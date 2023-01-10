@@ -19,7 +19,7 @@ const CopyLinkButton = ( { isDraft, url } ) => {
         toggleNotification( {
           type: 'success',
           message: {
-            id: 'notification.link-copied',
+            id: 'notification.success.link-copied',
             defaultMessage: 'Link copied to the clipboard',
           },
         } );
@@ -32,10 +32,10 @@ const CopyLinkButton = ( { isDraft, url } ) => {
         style={ { width: '100%' } }
       >
         { formatMessage( isDraft ? {
-          id: getTrad( 'label.copy-preview-link' ),
+          id: getTrad( 'form.button.copy-link.draft' ),
           defaultMessage: 'Copy preview link',
         } : {
-          id: getTrad( 'label.copy-link' ),
+          id: getTrad( 'form.button.copy-link' ),
           defaultMessage: 'Copy link',
         } ) }
       </Button>
