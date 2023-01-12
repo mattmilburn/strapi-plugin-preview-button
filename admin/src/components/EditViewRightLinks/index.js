@@ -6,7 +6,7 @@ import { usePreviewUrl } from '../../hooks';
 import { pluginId } from '../../utils';
 import { CopyLinkButton, PreviewButton } from '../';
 
-const Injector = () => {
+const EditViewRightLinks = () => {
   const {
     allLayoutData,
     hasDraftAndPublish,
@@ -14,7 +14,7 @@ const Injector = () => {
     modifiedData,
   } = useCMEditViewDataManager();
   const { openTarget } = useSelector( state => state[ `${pluginId}_config` ].config );
-  const isDraft = hasDraftAndPublish && ! modifiedData.publishedAt;
+  const isDraft = hasDraftAndPublish && ! modifiedData?.publishedAt;
   const { uid } = allLayoutData.contentType;
   const {
     canCopy,
@@ -35,4 +35,4 @@ const Injector = () => {
   );
 };
 
-export default Injector;
+export default EditViewRightLinks;

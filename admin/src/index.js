@@ -1,7 +1,7 @@
 import { prefixPluginTranslations, request } from '@strapi/helper-plugin';
 
 import { getTrad, pluginId, pluginName } from './utils';
-import { Initializer, Injector } from './components';
+import { Initializer, EditViewRightLinks } from './components';
 import { HOOK_BEFORE_BUILD_URL } from './constants';
 import { addPreviewColumn } from './contentManagerHooks';
 import reducers from './reducers';
@@ -23,7 +23,7 @@ export default {
   async bootstrap( app ) {
     app.injectContentManagerComponent( 'editView', 'right-links', {
       name: pluginId,
-      Component: Injector,
+      Component: EditViewRightLinks,
     } );
 
     try {
