@@ -65,10 +65,10 @@ const ListViewTableCell = ( { canCopy, isDraft, target, url } ) => {
 };
 
 ListViewTableCell.propTypes = {
-  canCopy: PropTypes.bool,
-  isDraft: PropTypes.bool,
-  target: PropTypes.string,
-  url: PropTypes.string,
+  canCopy: PropTypes.bool.isRequired,
+  isDraft: PropTypes.bool.isRequired,
+  target: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 export default ListViewTableCell;

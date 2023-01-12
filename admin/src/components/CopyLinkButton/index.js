@@ -44,8 +44,8 @@ const CopyLinkButton = ( { isDraft, url } ) => {
 };
 
 CopyLinkButton.propTypes = {
-  isDraft: PropTypes.bool,
-  url: PropTypes.string,
+  isDraft: PropTypes.bool.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 export default memo( CopyLinkButton );

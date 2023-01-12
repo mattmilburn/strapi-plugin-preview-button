@@ -38,9 +38,9 @@ const PreviewButton = ( { isDraft, target, url } ) => {
 };
 
 PreviewButton.propTypes = {
-  isDraft: PropTypes.bool,
-  target: PropTypes.string,
-  url: PropTypes.string,
+  isDraft: PropTypes.bool.isRequired,
+  target: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 export default memo( PreviewButton );
