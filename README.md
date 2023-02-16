@@ -1,5 +1,5 @@
 <div align="center">
-  <img style="width: 160px; height: auto;" src="public/logo.png" alt="Logo for Strapi preview button plugin" />
+  <img style="width: 160px; height: auto;" src="public/logo-2x.png" alt="Logo for Strapi preview button plugin" />
   <h1>Strapi Preview Button</h1>
   <p>A plugin for Strapi CMS that adds a preview button and live view button to the content manager edit view.</p>
   <img style="width: 960px; height: auto;" src="public/screenshot.png" alt="Screenshot for Strapi preview button plugin" />
@@ -55,6 +55,9 @@ Each object in the array requires the `uid` as well as `draft` and/or `published
 Consider we have a `Home` single type as well as `Page` and `Post` collection types, where each has a simple `title` and `content` field. The `Page` and `Post` models will also use a `uid` field named `slug` so they can create many entries with unique paths. Here is the minimum recommended config for this scenario.
 
 ```js
+// config/plugins.js
+'use strict';
+
 module.exports = {
   'preview-button': {
     config: {
@@ -163,7 +166,10 @@ If you have localization enabled for a content type, the `locale` value will be 
 You can optionally use a secret key with your preview URLs by taking advantage of environment vars and the `query` prop. See example below.
 
 ```js
-module.exports = ( { env } ) => {
+// config/plugins.js
+'use strict';
+
+module.exports = ( { env } ) => ( {
   'preview-button': {
     config: {
       contentTypes: [
@@ -184,7 +190,7 @@ module.exports = ( { env } ) => {
       ],
     },
   },
-};
+} );
 ```
 
 This configuration will result in the following preview URLs for `Pages`.
@@ -218,6 +224,9 @@ The "copy link" button located beneath the preview button can be disabled with t
 Set to `false` to disable the preview and copy link buttons from displaying in list view. This applies to all configured content types.
 
 ```js
+// config/plugins.js
+'use strict';
+
 module.exports = {
   'preview-button': {
     config: {
@@ -240,6 +249,9 @@ By default this value is set to `StrapiPreview`. It is used in the `window.open`
 If you would rather disable this and, for example, have the preview button always open in a new tab, you could use `_blank` as the value. Any special target keywords such as `_blank`, `_top`, `_self`, or `_parent` are acceptable values.
 
 ```js
+// config/plugins.js
+'use strict';
+
 module.exports = {
   'preview-button': {
     config: {
@@ -293,7 +305,6 @@ The `package.json` is required for a Strapi plugin.
 
 ```js
 // strapi-admin.js
-
 'use strict';
 
 module.exports = require( './admin/src' ).default;
@@ -334,7 +345,6 @@ Finally, don't forget to enable your plugin in your app by adding it to `config/
 
 ```js
 // config/plugins.js
-
 'use strict';
 
 module.exports = {
