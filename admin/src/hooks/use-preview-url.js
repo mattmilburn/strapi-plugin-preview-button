@@ -21,16 +21,19 @@ const usePreviewUrl = ( uid, data, isDraft, isCreating ) => {
       return;
     }
 
-    const stateFromConfig = match[ isDraft ? 'draft' : 'published' ];
-    const { state } = runHookWaterfall( HOOK_BEFORE_BUILD_URL, { state: stateFromConfig, data } );
-    const url = parseUrl( state, data );
+    // Run async hook then set state.
+    ( async () => {
+      const stateFromConfig = match[ isDraft ? 'draft' : 'published' ];
+      const { state } = await runHookWaterfall( HOOK_BEFORE_BUILD_URL, { state: stateFromConfig, data }, true );
+      const url = parseUrl( state, data );
 
-    if ( ! url ) {
-      return;
-    }
+      if ( ! url ) {
+        return;
+      }
 
-    setUrl( url );
-    setCopy( state?.copy === false ? false : true );
+      setUrl( url );
+      setCopy( state?.copy === false ? false : true );
+    } )();
   }, [ isDraft, isCreating, isLoading, data ] );
 
   return {
