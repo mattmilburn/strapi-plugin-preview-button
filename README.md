@@ -55,7 +55,7 @@ Each object in the array requires the `uid` as well as `draft` and/or `published
 Consider we have a `Home` single type as well as `Page` and `Post` collection types, where each has a simple `title` and `content` field. The `Page` and `Post` models will also use a `uid` field named `slug` so they can create many entries with unique paths. Here is the minimum recommended config for this scenario.
 
 ```js
-// config/plugins.js
+// ./config/plugins.js
 'use strict';
 
 module.exports = {
@@ -166,7 +166,7 @@ If you have localization enabled for a content type, the `locale` value will be 
 You can optionally use a secret key with your preview URLs by taking advantage of environment vars and the `query` prop. See example below.
 
 ```js
-// config/plugins.js
+// ./config/plugins.js
 'use strict';
 
 module.exports = ( { env } ) => ( {
@@ -224,7 +224,7 @@ The "copy link" button located beneath the preview button can be disabled with t
 Set to `false` to disable the preview and copy link buttons from displaying in list view. This applies to all configured content types.
 
 ```js
-// config/plugins.js
+// ./config/plugins.js
 'use strict';
 
 module.exports = {
@@ -249,7 +249,7 @@ By default this value is set to `StrapiPreview`. It is used in the `window.open`
 If you would rather disable this and, for example, have the preview button always open in a new tab, you could use `_blank` as the value. Any special target keywords such as `_blank`, `_top`, `_self`, or `_parent` are acceptable values.
 
 ```js
-// config/plugins.js
+// ./config/plugins.js
 'use strict';
 
 module.exports = {
@@ -287,7 +287,7 @@ In this example, we will create the bare minimum for a Strapi plugin that allows
 The `package.json` is required for a Strapi plugin.
 
 ```js
-// package.json
+// ./package.json
 
 {
   "name": "example",
@@ -304,7 +304,7 @@ The `package.json` is required for a Strapi plugin.
 ```
 
 ```js
-// strapi-admin.js
+// ./strapi-admin.js
 'use strict';
 
 module.exports = require( './admin/src' ).default;
@@ -317,7 +317,7 @@ The `state` argument is the original config object from `config/plugins.js`. So 
 Here you can modify and return `state` while using `data` to make decisions.
 
 ```js
-// admin/src/index.js
+// ./admin/src/index.js
 
 export default {
   register( app ) {
@@ -329,11 +329,16 @@ export default {
 
   bootstrap( app ) {
     app.registerHook( 'plugin/preview-button/before-build-url', ( { state, data } ) => {
+      const query = state?.query ?? {};
+
       // Return modified `state` object here.
       return {
         state: {
           ...state,
-          example: 'EXAMPLE',
+          query: {
+            ...query,
+            example: 'EXAMPLE',
+          },
         },
       };
     } );
@@ -344,7 +349,7 @@ export default {
 Finally, don't forget to enable your plugin in your app by adding it to `config/plugins.js`.
 
 ```js
-// config/plugins.js
+// ./config/plugins.js
 'use strict';
 
 module.exports = {
