@@ -9,6 +9,23 @@
     "description": "Adds a preview button and live view button to the content manager edit view.",
     "kind": "plugin"
   },
+  "author": {
+    "name": "Matt Milburn",
+    "url": "https://github.com/mattmilburn"
+  },
+  "maintainers": [
+    {
+      "name": "Matt Milburn",
+      "url": "https://github.com/mattmilburn"
+    }
+  ],
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "immer": "^9.0.12",
     "prop-types": "^15.8.1",
@@ -27,23 +44,6 @@
     "@strapi/utils": "^4.9.0"
   },
   "devDependencies": {},
-  "engines": {
-    "node": ">=14.19.1 <=18.x.x",
-    "npm": ">=6.0.0"
-  },
-  "author": {
-    "name": "Matt Milburn",
-    "url": "https://github.com/mattmilburn"
-  },
-  "maintainers": [
-    {
-      "name": "Matt Milburn",
-      "url": "https://github.com/mattmilburn"
-    }
-  ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mattmilburn/strapi-plugin-preview-button.git"
