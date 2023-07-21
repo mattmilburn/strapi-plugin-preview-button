@@ -1,12 +1,12 @@
 'use strict';
 
-const config = require( '../config' );
-const { pluginId } = require( '../utils' );
+const config = require('../config');
+const { pluginId } = require('../utils');
 
-module.exports = ( { strapi } ) => ( {
+module.exports = ({ strapi }) => ({
   async getConfig() {
-    const data = await strapi.config.get( `plugin.${pluginId}`, config.default );
+    const data = await strapi.config.get(`plugin.${pluginId}`, config.default);
 
     return data;
   },
-} );
+});

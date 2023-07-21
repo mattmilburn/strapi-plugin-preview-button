@@ -9,8 +9,8 @@ const initialState = {
   },
 };
 
-const configReducer = produce( ( state = initialState, action ) => {
-  switch ( action.type ) {
+const configReducer = produce((state = initialState, action) => {
+  switch (action.type) {
     case RESOLVE_CONFIG: {
       state.isLoading = false;
       state.config = action.data;
@@ -22,6 +22,6 @@ const configReducer = produce( ( state = initialState, action ) => {
   }
 
   return state;
-} );
+});
 
 export default configReducer;

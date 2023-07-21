@@ -1,12 +1,7 @@
 'use strict';
 
 module.exports = {
-  extends: [
-    'airbnb-base',
-    'eslint:recommended',
-    'prettier',
-    'plugin:import/recommended',
-  ],
+  extends: ['airbnb-base', 'eslint:recommended', 'prettier', 'plugin:import/recommended'],
   env: {
     es6: true,
     jest: true,

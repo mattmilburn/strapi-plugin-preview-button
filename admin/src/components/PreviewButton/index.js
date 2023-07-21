@@ -6,33 +6,37 @@ import { ExternalLink } from '@strapi/icons';
 
 import { getTrad } from '../../utils';
 
-const PreviewButton = ( { isDraft, target, url } ) => {
+const PreviewButton = ({ isDraft, target, url }) => {
   const { formatMessage } = useIntl();
 
-  const handleClick = event => {
-    if ( ! url ) {
+  const handleClick = (event) => {
+    if (!url) {
       event.preventDefault();
       return;
     }
 
-    window.open( url, target );
+    window.open(url, target);
   };
 
   return (
     <Button
-      onClick={ handleClick }
+      onClick={handleClick}
       size="S"
-      startIcon={ <ExternalLink /> }
+      startIcon={<ExternalLink />}
       variant="secondary"
-      style={ { width: '100%' } }
+      style={{ width: '100%' }}
     >
-      { formatMessage( isDraft ? {
-        id: getTrad( 'form.button.draft' ),
-        defaultMessage: 'Open draft preview',
-      } : {
-        id: getTrad( 'form.button.published' ),
-        defaultMessage: 'Open live view',
-      } ) }
+      {formatMessage(
+        isDraft
+          ? {
+              id: getTrad('form.button.draft'),
+              defaultMessage: 'Open draft preview',
+            }
+          : {
+              id: getTrad('form.button.published'),
+              defaultMessage: 'Open live view',
+            }
+      )}
     </Button>
   );
 };
@@ -43,4 +47,4 @@ PreviewButton.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
-export default memo( PreviewButton );
+export default memo(PreviewButton);

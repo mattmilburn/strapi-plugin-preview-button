@@ -1,11 +1,11 @@
 'use strict';
 
-const { getService } = require( '../utils' );
+const { getService } = require('../utils');
 
 module.exports = {
-  async config( ctx ) {
-    const config = await getService( 'plugin' ).getConfig();
+  async config(ctx) {
+    const config = await getService('plugin').getConfig();
 
-    ctx.send( config );
+    ctx.send(config);
   },
 };

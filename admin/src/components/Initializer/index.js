@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { usePluginConfig } from '../../hooks';
 import { pluginId } from '../../utils';
 
-const Initializer = ( { setPlugin } ) => {
+const Initializer = ({ setPlugin }) => {
   const ref = useRef();
 
   // Load the plugin config ASAP.
@@ -12,11 +12,11 @@ const Initializer = ( { setPlugin } ) => {
 
   ref.current = setPlugin;
 
-  useEffect( () => {
-    if ( ! isLoading ) {
-      ref.current( pluginId );
+  useEffect(() => {
+    if (!isLoading) {
+      ref.current(pluginId);
     }
-  }, [ isLoading ] );
+  }, [isLoading]);
 
   return null;
 };

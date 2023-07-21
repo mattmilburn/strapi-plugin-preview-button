@@ -8,7 +8,7 @@ module.exports = {
       path: '/config',
       handler: 'preview-button.config',
       config: {
-        policies: [ 'admin::isAuthenticatedAdmin' ],
+        policies: ['admin::isAuthenticatedAdmin'],
       },
     },
   ],
