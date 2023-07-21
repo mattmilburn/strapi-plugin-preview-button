@@ -7,30 +7,26 @@ import { pluginId } from '../../utils';
 import { CopyLinkButton, PreviewButton } from '../';
 
 const EditViewRightLinks = () => {
-  const {
-    allLayoutData,
-    hasDraftAndPublish,
-    isCreatingEntry,
-    modifiedData,
-  } = useCMEditViewDataManager();
-  const { openTarget } = useSelector( state => state[ `${pluginId}_config` ].config );
-  const isDraft = hasDraftAndPublish && ! modifiedData?.publishedAt;
+  const { allLayoutData, hasDraftAndPublish, isCreatingEntry, modifiedData } =
+    useCMEditViewDataManager();
+  const { openTarget } = useSelector((state) => state[`${pluginId}_config`].config);
+  const isDraft = hasDraftAndPublish && !modifiedData?.publishedAt;
   const { uid } = allLayoutData.contentType;
-  const {
-    canCopy,
-    isLoading,
-    isSupportedType,
-    url,
-  } = usePreviewUrl( uid, modifiedData, isDraft, isCreatingEntry );
+  const { canCopy, isLoading, isSupportedType, url } = usePreviewUrl(
+    uid,
+    modifiedData,
+    isDraft,
+    isCreatingEntry
+  );
 
-  if ( ! url || ! isSupportedType || isCreatingEntry || isLoading ) {
+  if (!url || !isSupportedType || isCreatingEntry || isLoading) {
     return null;
   }
 
   return (
     <>
-      <PreviewButton isDraft={ isDraft } url={ url } target={ openTarget } />
-      { canCopy && <CopyLinkButton isDraft={ isDraft } url={ url } /> }
+      <PreviewButton isDraft={isDraft} url={url} target={openTarget} />
+      {canCopy && <CopyLinkButton isDraft={isDraft} url={url} />}
     </>
   );
 };

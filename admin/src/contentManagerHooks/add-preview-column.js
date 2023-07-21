@@ -4,13 +4,13 @@ import { Typography } from '@strapi/design-system';
 import { ListViewTableCell } from '../components';
 import { parseUrl, pluginId } from '../utils';
 
-const addPreviewColumn = ( { displayedHeaders, layout }, pluginConfig ) => {
+const addPreviewColumn = ({ displayedHeaders, layout }, pluginConfig) => {
   const { contentTypes, injectListViewColumn, openTarget } = pluginConfig;
-  const match = contentTypes?.find( type => type.uid === layout.contentType.uid );
-  const isSupportedType = !! match;
+  const match = contentTypes?.find((type) => type.uid === layout.contentType.uid);
+  const isSupportedType = !!match;
 
   // Do nothing if this feature is not a supported type for the preview button.
-  if ( ! isSupportedType || ! injectListViewColumn ) {
+  if (!isSupportedType || !injectListViewColumn) {
     return {
       displayedHeaders,
       layout,
@@ -31,22 +31,22 @@ const addPreviewColumn = ( { displayedHeaders, layout }, pluginConfig ) => {
           sortable: false,
         },
         name: 'preview',
-        cellFormatter: data => {
+        cellFormatter: (data) => {
           const hasDraftAndPublish = layout.contentType.options.draftAndPublish === true;
-          const isDraft = hasDraftAndPublish && ! data.publishedAt;
-          const stateConfig = isSupportedType && match[ isDraft ? 'draft' : 'published' ];
-          const url = parseUrl( stateConfig, data );
+          const isDraft = hasDraftAndPublish && !data.publishedAt;
+          const stateConfig = isSupportedType && match[isDraft ? 'draft' : 'published'];
+          const url = parseUrl(stateConfig, data);
 
-          if ( ! url ) {
+          if (!url) {
             return null;
           }
 
           return (
             <ListViewTableCell
-              canCopy={ stateConfig?.copy === false ? false : true }
-              isDraft={ isDraft }
-              target={ openTarget }
-              url={ url }
+              canCopy={stateConfig?.copy === false ? false : true}
+              isDraft={isDraft}
+              target={openTarget}
+              url={url}
             />
           );
         },
@@ -54,6 +54,6 @@ const addPreviewColumn = ( { displayedHeaders, layout }, pluginConfig ) => {
     ],
     layout,
   };
-}
+};
 
 export default addPreviewColumn;

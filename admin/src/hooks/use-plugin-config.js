@@ -8,11 +8,11 @@ import { pluginId } from '../utils';
 const usePluginConfig = () => {
   const dispatch = useDispatch();
   const toggleNotification = useNotification();
-  const { config, isLoading } = useSelector( state => state[ `${pluginId}_config` ] );
+  const { config, isLoading } = useSelector((state) => state[`${pluginId}_config`]);
 
-  useEffect( () => {
+  useEffect(() => {
     // Do nothing if we have already loaded the config data.
-    if ( ! isLoading && !! config ) {
+    if (!isLoading && !!config) {
       return;
     }
 
@@ -21,28 +21,28 @@ const usePluginConfig = () => {
     const fetchData = async () => {
       try {
         const endpoint = `/${pluginId}/config`;
-        const data = await request( endpoint, {
+        const data = await request(endpoint, {
           method: 'GET',
           signal: abortController.signal,
-        } );
+        });
 
         return data ?? {};
-      } catch ( err ) {
-        if ( ! abortController.signal.aborted ) {
-          toggleNotification( {
+      } catch (err) {
+        if (!abortController.signal.aborted) {
+          toggleNotification({
             type: 'warning',
             message: { id: 'notification.error' },
-          } );
+          });
 
           return err;
         }
       }
     };
 
-    fetchData().then( data => dispatch( { type: RESOLVE_CONFIG, data } ) );
+    fetchData().then((data) => dispatch({ type: RESOLVE_CONFIG, data }));
 
     return () => abortController.abort();
-  }, [ dispatch, toggleNotification ] );
+  }, [dispatch, toggleNotification]);
 
   return { config, isLoading };
 };
