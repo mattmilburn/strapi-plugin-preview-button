@@ -1,5 +1,6 @@
 'use strict';
 
+// eslint-disable-next-line node/no-missing-require
 const { ValidationError } = require('@strapi/utils').errors;
 const has = require('lodash/has');
 

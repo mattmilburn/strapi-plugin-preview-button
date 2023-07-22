@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Flex, IconButton } from '@strapi/design-system';
 import { stopPropagation, useNotification } from '@strapi/helper-plugin';
-import { ExternalLink, Link } from '@strapi/icons';
+import { ExternalLink, Link as LinkIcon } from '@strapi/icons';
 
 import { getTrad } from '../../utils';
 
@@ -12,7 +12,7 @@ const ListViewTableCell = ({ canCopy, isDraft, target, url }) => {
   const { formatMessage } = useIntl();
   const toggleNotification = useNotification();
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     if (!url) {
       return;
     }
@@ -52,7 +52,7 @@ const ListViewTableCell = ({ canCopy, isDraft, target, url }) => {
           }}
         >
           <IconButton
-            icon={<Link />}
+            icon={<LinkIcon />}
             label={formatMessage(
               isDraft
                 ? {
