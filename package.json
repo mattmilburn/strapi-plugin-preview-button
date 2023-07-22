@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "immer": "^9.0.12",
+    "lodash": "4.17.21",
     "prop-types": "^15.8.1",
     "qs": "^6.10.3",
     "react": "^17.0.2",

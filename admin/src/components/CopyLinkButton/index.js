@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Button } from '@strapi/design-system';
 import { useNotification } from '@strapi/helper-plugin';
-import { Link } from '@strapi/icons';
+import { Link as LinkIcon } from '@strapi/icons';
 
 import { getTrad } from '../../utils';
 
@@ -25,7 +25,7 @@ const CopyLinkButton = ({ isDraft, url }) => {
         });
       }}
     >
-      <Button size="S" startIcon={<Link />} variant="secondary" style={{ width: '100%' }}>
+      <Button size="S" startIcon={<LinkIcon />} variant="secondary" style={{ width: '100%' }}>
         {formatMessage(
           isDraft
             ? {

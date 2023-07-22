@@ -4,7 +4,8 @@ import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 import { usePreviewUrl } from '../../hooks';
 import { pluginId } from '../../utils';
-import { CopyLinkButton, PreviewButton } from '../';
+import CopyLinkButton from '../CopyLinkButton';
+import PreviewButton from '../PreviewButton';
 
 const EditViewRightLinks = () => {
   const { allLayoutData, hasDraftAndPublish, isCreatingEntry, modifiedData } =

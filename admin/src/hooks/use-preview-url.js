@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useStrapiApp } from '@strapi/helper-plugin';
 
 import { HOOK_BEFORE_BUILD_URL } from '../constants';
-import { usePluginConfig } from '../hooks';
+import usePluginConfig from './use-plugin-config';
 import { parseUrl } from '../utils';
 
 const usePreviewUrl = (uid, data, isDraft, isCreating) => {
@@ -38,6 +38,7 @@ const usePreviewUrl = (uid, data, isDraft, isCreating) => {
       setUrl(url);
       setCopy(state?.copy === false ? false : true);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDraft, isCreating, isLoading, data]);
 
   return {

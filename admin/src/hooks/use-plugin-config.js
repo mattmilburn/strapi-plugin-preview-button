@@ -18,6 +18,7 @@ const usePluginConfig = () => {
 
     const abortController = new AbortController();
 
+    // eslint-disable-next-line consistent-return
     const fetchData = async () => {
       try {
         const endpoint = `/${pluginId}/config`;
@@ -41,7 +42,9 @@ const usePluginConfig = () => {
 
     fetchData().then((data) => dispatch({ type: RESOLVE_CONFIG, data }));
 
+    // eslint-disable-next-line consistent-return
     return () => abortController.abort();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, toggleNotification]);
 
   return { config, isLoading };

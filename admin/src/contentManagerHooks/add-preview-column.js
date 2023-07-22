@@ -1,8 +1,7 @@
 import React from 'react';
-import { Typography } from '@strapi/design-system';
 
-import { ListViewTableCell } from '../components';
-import { parseUrl, pluginId } from '../utils';
+import ListViewTableCell from '../components/ListViewTableCell';
+import { parseUrl } from '../utils';
 
 const addPreviewColumn = ({ displayedHeaders, layout }, pluginConfig) => {
   const { contentTypes, injectListViewColumn, openTarget } = pluginConfig;
