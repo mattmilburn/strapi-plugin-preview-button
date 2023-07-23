@@ -1,4 +1,6 @@
-const interpolate = (str, data = {}) => {
+const interpolate = (originalStr, data = {}) => {
+  let str = originalStr;
+
   Object.entries(data).forEach(([key, value]) => {
     // eslint-disable-next-line prefer-regex-literals
     str = str.replace(new RegExp(`{${key}}`, 'g'), value);
