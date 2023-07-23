@@ -10,7 +10,7 @@ import PreviewButton from '../PreviewButton';
 const EditViewRightLinks = () => {
   const { allLayoutData, hasDraftAndPublish, isCreatingEntry, modifiedData } =
     useCMEditViewDataManager();
-  const { openTarget } = useSelector((state) => state[`${pluginId}_config`].config);
+  const { openTarget } = useSelector((state) => state[`${pluginId}_config`]);
   const isDraft = hasDraftAndPublish && !modifiedData?.publishedAt;
   const { uid } = allLayoutData.contentType;
   const { canCopy, isLoading, isSupportedType, url } = usePreviewUrl(

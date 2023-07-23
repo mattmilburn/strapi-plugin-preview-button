@@ -7,8 +7,8 @@ const { PREVIEW_WINDOW_NAME } = require('./constants');
 
 module.exports = {
   default: {
-    injectListViewColumn: true,
     contentTypes: [],
+    injectListViewColumn: true,
     openTarget: PREVIEW_WINDOW_NAME,
   },
   validator: (config) => {
