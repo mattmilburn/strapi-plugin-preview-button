@@ -44,8 +44,7 @@ const usePluginConfig = () => {
 
     // eslint-disable-next-line consistent-return
     return () => abortController.abort();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, toggleNotification]);
+  }, [isLoading, config, dispatch, toggleNotification]);
 
   return { config, isLoading };
 };
