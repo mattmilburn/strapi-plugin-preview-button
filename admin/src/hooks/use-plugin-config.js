@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { request, useNotification } from '@strapi/helper-plugin';
 
-import { RESOLVE_CONFIG } from '../constants';
+import { ACTION_RESOLVE_CONFIG } from '../constants';
 import { pluginId } from '../utils';
 
 const usePluginConfig = () => {
@@ -40,7 +40,7 @@ const usePluginConfig = () => {
       }
     };
 
-    fetchData().then((data) => dispatch({ type: RESOLVE_CONFIG, data }));
+    fetchData().then((data) => dispatch({ type: ACTION_RESOLVE_CONFIG, data }));
 
     // eslint-disable-next-line consistent-return
     return () => abortController.abort();
