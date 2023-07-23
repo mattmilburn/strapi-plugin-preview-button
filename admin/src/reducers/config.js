@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-import { RESOLVE_CONFIG } from '../constants';
+import { ACTION_RESOLVE_CONFIG } from '../constants';
 
 const initialState = {
   isLoading: true,
@@ -13,7 +13,7 @@ const configReducer = produce((previousState, action) => {
   let state = previousState ?? initialState;
 
   switch (action.type) {
-    case RESOLVE_CONFIG:
+    case ACTION_RESOLVE_CONFIG:
       state.isLoading = false;
       state.config = action.data.config;
       break;
