@@ -26,7 +26,6 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
-    'import/no-unresolved': 0,
     'generator-star-spacing': 0,
     'no-console': 0,
     'require-atomic-updates': 0,
@@ -48,6 +47,7 @@ module.exports = {
     'implicit-arrow-linebreak': 0,
     'import/no-extraneous-dependencies': 0,
     'import/no-named-as-default': 0,
+    'import/no-unresolved': 0,
     'import/order': 2,
     'import/prefer-default-export': 'off',
     'jsx-a11y/anchor-is-valid': [
