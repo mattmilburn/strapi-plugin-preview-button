@@ -11,9 +11,7 @@ const usePreviewUrl = (uid, data, isDraft, isCreating) => {
   const [url, setUrl] = useState(null);
   const [canCopy, setCopy] = useState(true);
 
-  const { contentTypes } = config;
-
-  const match = contentTypes?.find((type) => type.uid === uid);
+  const match = config?.contentTypes?.find((type) => type.uid === uid);
   const isSupportedType = !!match;
 
   const complete = useCallback(async () => {
