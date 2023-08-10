@@ -16,6 +16,7 @@ module.exports = {
     'no-console': 'off',
     'no-param-reassign': 0,
     'no-shadow': 'off',
+    'no-underscore-dangle': 0,
     'no-use-before-define': [
       'error',
       {
