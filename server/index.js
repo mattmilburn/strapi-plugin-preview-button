@@ -6,14 +6,14 @@ const routes = require('./routes');
 const services = require('./services');
 
 module.exports = {
-  // bootstrap() {},
+  // bootstrap,
   config,
-  // contentTypes: {},
+  // contentTypes,
   controllers,
-  // destroy() {},
-  // middlewares: {},
-  // policies: {},
-  // register() {},
+  // destroy,
+  // middlewares,
+  // policies,
+  // register,
   routes,
   services,
 };
