@@ -1,25 +1,23 @@
 import React from 'react';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
-import { usePluginConfig, usePreviewUrl } from '../../hooks';
+import { usePreviewUrl } from '../../hooks';
 import CopyLinkButton from '../CopyLinkButton';
 import PreviewButton from '../PreviewButton';
 
 const EditViewRightLinks = () => {
   const { allLayoutData, hasDraftAndPublish, isCreatingEntry, modifiedData } =
     useCMEditViewDataManager();
-  const { data: config } = usePluginConfig();
-  const { openTarget } = config;
   const isDraft = hasDraftAndPublish && !modifiedData?.publishedAt;
   const { uid } = allLayoutData.contentType;
-  const { canCopy, isLoading, isSupportedType, url } = usePreviewUrl(
+  const { canCopy, isLoading, isSupported, openTarget, url } = usePreviewUrl(
     uid,
     modifiedData,
     isDraft,
     isCreatingEntry
   );
 
-  if (!isSupportedType || isCreatingEntry || isLoading || !url) {
+  if (!isSupported || isCreatingEntry || isLoading || !url) {
     return null;
   }
 

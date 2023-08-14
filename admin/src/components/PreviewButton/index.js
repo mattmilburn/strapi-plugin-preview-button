@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Button } from '@strapi/design-system';
@@ -9,14 +9,17 @@ import { getTrad } from '../../utils';
 const PreviewButton = ({ isDraft, target, url }) => {
   const { formatMessage } = useIntl();
 
-  const handleClick = (event) => {
-    if (!url) {
-      event.preventDefault();
-      return;
-    }
+  const handleClick = useCallback(
+    (event) => {
+      if (!url) {
+        event.preventDefault();
+        return;
+      }
 
-    window.open(url, target);
-  };
+      window.open(url, target);
+    },
+    [url, target]
+  );
 
   return (
     <Button
