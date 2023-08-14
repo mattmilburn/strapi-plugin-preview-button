@@ -20,22 +20,22 @@ STRAPI_PREVIEW_PUBLISHED_URL=https://example.com
 This is now optional and requires no extra handling from this plugin. To continue using these env vars, simply include them as you see below:
 
 ```js
-module.exports = ( { env } ) => {
+module.exports = ({ env }) => {
   'preview-button': {
     config: {
       contentTypes: [
         {
           uid: 'api::page.page',
           draft: {
-            url: env( 'STRAPI_PREVIEW_DRAFT_URL' ),
+            url: env('STRAPI_PREVIEW_DRAFT_URL'),
             query: {
               type: 'page',
               slug: '{slug}',
-              secret: env( 'STRAPI_PREVIEW_SECRET' ),
+              secret: env('STRAPI_PREVIEW_SECRET'),
             },
           },
           published: {
-            url: `${env( 'STRAPI_PREVIEW_PUBLISHED_URL' )}/{slug}`,
+            url: `${env('STRAPI_PREVIEW_PUBLISHED_URL')}/{slug}`,
           },
         },
       ],

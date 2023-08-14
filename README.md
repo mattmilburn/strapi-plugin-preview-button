@@ -169,7 +169,7 @@ You can optionally use a secret key with your preview URLs by taking advantage o
 // ./config/plugins.js
 'use strict';
 
-module.exports = ( { env } ) => ( {
+module.exports = ({ env }) => ({
   'preview-button': {
     config: {
       contentTypes: [
@@ -180,7 +180,7 @@ module.exports = ( { env } ) => ( {
             query: {
               type: 'page',
               slug: '{slug}',
-              secret: env( 'STRAPI_PREVIEW_SECRET' ),
+              secret: env('STRAPI_PREVIEW_SECRET'),
             },
           },
           published: {
@@ -190,7 +190,7 @@ module.exports = ( { env } ) => ( {
       ],
     },
   },
-} );
+});
 ```
 
 This configuration will result in the following preview URLs for `Pages`.
@@ -320,15 +320,15 @@ Here you can modify and return `state` while using `data` to make decisions.
 // ./admin/src/index.js
 
 export default {
-  register( app ) {
-    app.registerPlugin( {
+  register(app) {
+    app.registerPlugin({
       id: 'example',
       name: 'example',
-    } );
+    });
   },
 
-  bootstrap( app ) {
-    app.registerHook( 'plugin/preview-button/before-build-url', ( { state, data } ) => {
+  bootstrap(app) {
+    app.registerHook('plugin/preview-button/before-build-url', ({ state, data }) => {
       const query = state?.query ?? {};
 
       // Return modified `state` object here.
@@ -341,7 +341,7 @@ export default {
           },
         },
       };
-    } );
+    });
   },
 };
 ```
@@ -353,7 +353,7 @@ Finally, don't forget to enable your plugin in your app by adding it to `config/
 'use strict';
 
 module.exports = {
-  'example': {
+  example: {
     enabled: true,
     resolve: './src/plugins/example',
   },
