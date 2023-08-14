@@ -1,6 +1,6 @@
 import { prefixPluginTranslations, request } from '@strapi/helper-plugin';
 
-import { Initializer, EditViewRightLinks } from './components';
+import { EditViewRightLinks } from './components';
 import { HOOK_BEFORE_BUILD_URL } from './constants';
 import { addPreviewColumn } from './contentManagerHooks';
 import reducers from './reducers';
@@ -15,8 +15,6 @@ export default {
     app.registerPlugin({
       id: pluginId,
       name: pluginName,
-      initializer: Initializer,
-      isReady: false,
     });
   },
 
