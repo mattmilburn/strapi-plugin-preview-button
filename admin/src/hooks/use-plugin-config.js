@@ -19,10 +19,10 @@ const usePluginConfig = () => {
 
     fetchClient
       .get(`/${pluginId}/config`)
-      .then((res) => {
+      .then(({ data }) => {
         dispatch({
           type: ACTION_RESOLVE_CONFIG,
-          data: res?.data?.config ?? {},
+          data,
         });
       })
       .catch((err) => {
