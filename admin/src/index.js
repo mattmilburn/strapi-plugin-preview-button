@@ -1,4 +1,4 @@
-import { prefixPluginTranslations, request } from '@strapi/helper-plugin';
+import { prefixPluginTranslations } from '@strapi/helper-plugin';
 
 import { EditViewRightLinks } from './components';
 import { HOOK_BEFORE_BUILD_URL } from './constants';
@@ -24,24 +24,7 @@ export default {
       Component: EditViewRightLinks,
     });
 
-    try {
-      const endpoint = `/${pluginId}/config`;
-      const data = await request(endpoint, { method: 'GET' });
-      const pluginConfig = data ?? {};
-
-      // Create callbacks with plugin config included.
-      const listViewColumnHook = (props) => addPreviewColumn(props, pluginConfig);
-
-      // Register hooks.
-      app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', listViewColumnHook);
-    } catch (_err) {
-      /**
-       * @TODO - Apparently this is causing issues when this fails for a logged-out user.
-       */
-
-      // Probably just failed because user is not logged in, which is fine.
-      return;
-    }
+    app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', addPreviewColumn);
   },
 
   async registerTrads({ locales }) {
