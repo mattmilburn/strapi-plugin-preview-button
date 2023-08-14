@@ -12,7 +12,7 @@ module.exports = {
     openTarget: PREVIEW_WINDOW_NAME,
   },
   validator: (config) => {
-    if (!config.contentTypes) {
+    if (!has(config, 'contentTypes')) {
       return;
     }
 
@@ -27,7 +27,7 @@ module.exports = {
       const hasPublished = has(entry, 'published');
 
       // Require `uid` prop.
-      if (!entry.uid) {
+      if (!has(entry, 'uid')) {
         throw new ValidationError('Missing uid prop.');
       }
 
@@ -39,11 +39,11 @@ module.exports = {
       }
 
       // Require `url` props.
-      if (hasDraft && !has(entry, 'draft.url')) {
+      if (hasDraft && !has(entry, ['draft', 'url'])) {
         throw new ValidationError(`Missing draft URL for ${entry.uid}.`);
       }
 
-      if (hasPublished && !has(entry, 'published.url')) {
+      if (hasPublished && !has(entry, ['published', 'url'])) {
         throw new ValidationError(`Missing published URL for ${entry.uid}.`);
       }
     });

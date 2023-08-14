@@ -1,7 +1,7 @@
 'use strict';
 
-const plugin = require('./plugin');
+const config = require('./config');
 
 module.exports = {
-  plugin,
+  config,
 };
