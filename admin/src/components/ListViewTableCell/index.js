@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -12,13 +12,17 @@ const ListViewTableCell = ({ canCopy, isDraft, target, url }) => {
   const { formatMessage } = useIntl();
   const toggleNotification = useNotification();
 
-  const handleClick = () => {
-    if (!url) {
-      return;
-    }
+  const handleClick = useCallback(
+    (event) => {
+      if (!url) {
+        event.preventDefault();
+        return;
+      }
 
-    window.open(url, target);
-  };
+      window.open(url, target);
+    },
+    [url, target]
+  );
 
   return (
     <Flex {...stopPropagation}>
