@@ -5,11 +5,11 @@ import { parseUrl } from '../utils';
 
 const addPreviewColumn = ({ displayedHeaders, layout }, pluginConfig) => {
   const { contentTypes, injectListViewColumn, openTarget } = pluginConfig;
-  const match = contentTypes?.find((type) => type.uid === layout.contentType.uid);
-  const isSupportedType = !!match;
+  const uidConfig = contentTypes?.find((type) => type.uid === layout.contentType.uid);
+  const isSupported = !!uidConfig;
 
   // Do nothing if this feature is not a supported type for the preview button.
-  if (!isSupportedType || !injectListViewColumn) {
+  if (!isSupported || !injectListViewColumn) {
     return {
       displayedHeaders,
       layout,
@@ -33,8 +33,8 @@ const addPreviewColumn = ({ displayedHeaders, layout }, pluginConfig) => {
         cellFormatter: (data) => {
           const hasDraftAndPublish = layout.contentType.options.draftAndPublish === true;
           const isDraft = hasDraftAndPublish && !data.publishedAt;
-          const stateConfig = isSupportedType && match[isDraft ? 'draft' : 'published'];
-          const url = parseUrl(stateConfig, data);
+          const configFromState = isSupported && uidConfig[isDraft ? 'draft' : 'published'];
+          const url = parseUrl(configFromState, data);
 
           if (!url) {
             return null;
@@ -42,7 +42,7 @@ const addPreviewColumn = ({ displayedHeaders, layout }, pluginConfig) => {
 
           return (
             <ListViewTableCell
-              canCopy={stateConfig?.copy === false ? false : true}
+              canCopy={configFromState?.copy === false ? false : true}
               isDraft={isDraft}
               target={openTarget}
               url={url}

@@ -1,16 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
-import { usePreviewUrl } from '../../hooks';
-import { pluginId } from '../../utils';
+import { usePluginConfig, usePreviewUrl } from '../../hooks';
 import CopyLinkButton from '../CopyLinkButton';
 import PreviewButton from '../PreviewButton';
 
 const EditViewRightLinks = () => {
   const { allLayoutData, hasDraftAndPublish, isCreatingEntry, modifiedData } =
     useCMEditViewDataManager();
-  const { openTarget } = useSelector((state) => state[`${pluginId}_config`].config);
+  const { data: config } = usePluginConfig();
+  const { openTarget } = config;
   const isDraft = hasDraftAndPublish && !modifiedData?.publishedAt;
   const { uid } = allLayoutData.contentType;
   const { canCopy, isLoading, isSupportedType, url } = usePreviewUrl(
@@ -20,7 +19,7 @@ const EditViewRightLinks = () => {
     isCreatingEntry
   );
 
-  if (!url || !isSupportedType || isCreatingEntry || isLoading) {
+  if (!isSupportedType || isCreatingEntry || isLoading || !url) {
     return null;
   }
 

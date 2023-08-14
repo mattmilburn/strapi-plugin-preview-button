@@ -8,7 +8,7 @@ const interpolate = (originalStr, data = {}) => {
 
   // Replace any remaining values with an empty string.
   // eslint-disable-next-line prefer-regex-literals
-  str = str.replace(new RegExp(`{(.*)}`, 'g'), '');
+  str = str.replace(new RegExp(`{(.*)}`, 'g'), '').trim();
 
   return str;
 };

@@ -17,7 +17,7 @@ const configReducer = produce((previousState, action) => {
   switch (action.type) {
     case ACTION_RESOLVE_CONFIG:
       state.isLoading = false;
-      state.config = action.data;
+      state.config = action.data.config;
       break;
 
     default:

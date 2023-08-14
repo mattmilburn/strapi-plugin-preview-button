@@ -11,16 +11,22 @@ const usePreviewUrl = (uid, data, isDraft, isCreating) => {
   const [url, setUrl] = useState(null);
   const [canCopy, setCopy] = useState(true);
 
-  const match = config?.contentTypes?.find((type) => type.uid === uid);
-  const isSupportedType = !!match;
+  const uidConfig = config?.contentTypes?.find((type) => type.uid === uid);
+  const isSupported = !!uidConfig;
 
   const complete = useCallback(async () => {
-    const stateFromConfig = match[isDraft ? 'draft' : 'published'];
+    const configFromState = uidConfig[isDraft ? 'draft' : 'published'];
 
     // Run async hook then set state.
     const { state } = await runHookWaterfall(
       HOOK_BEFORE_BUILD_URL,
-      { state: stateFromConfig, data },
+      {
+        /**
+         * @TODO - Rename the `state` prop to `config` in next major version.
+         */
+        state: configFromState,
+        data,
+      },
       true
     );
     const url = parseUrl(state, data);
@@ -31,20 +37,20 @@ const usePreviewUrl = (uid, data, isDraft, isCreating) => {
 
     setUrl(url);
     setCopy(state?.copy === false ? false : true);
-  }, [match, data, isDraft, setUrl, setCopy, runHookWaterfall]);
+  }, [uidConfig, data, isDraft, setCopy, setUrl, runHookWaterfall]);
 
   useEffect(() => {
-    if (isLoading || isCreating || !isSupportedType) {
+    if (!isSupported || isLoading || isCreating) {
       return;
     }
 
     complete();
-  }, [data, isDraft, isCreating, isLoading, isSupportedType, complete]);
+  }, [isLoading, isCreating, isSupported, complete]);
 
   return {
     canCopy,
     isLoading,
-    isSupportedType,
+    isSupportedType: isSupported,
     url,
   };
 };
