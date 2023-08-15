@@ -1,12 +1,11 @@
 import produce from 'immer';
 
-import { ACTION_RESOLVE_CONFIG, PREVIEW_WINDOW_NAME } from '../constants';
+import { ACTION_RESOLVE_CONFIG } from '../constants';
 
 const initialState = {
   isLoading: true,
   config: {
     contentTypes: [],
-    openTarget: PREVIEW_WINDOW_NAME,
   },
 };
 
