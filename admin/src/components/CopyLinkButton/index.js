@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -12,19 +12,18 @@ const CopyLinkButton = ({ isDraft, url }) => {
   const { formatMessage } = useIntl();
   const toggleNotification = useNotification();
 
+  const handleOnCopy = useCallback(() => {
+    toggleNotification({
+      type: 'success',
+      message: {
+        id: 'notification.success.link-copied',
+        defaultMessage: 'Link copied to the clipboard',
+      },
+    });
+  }, [toggleNotification]);
+
   return (
-    <CopyToClipboard
-      text={url}
-      onCopy={() => {
-        toggleNotification({
-          type: 'success',
-          message: {
-            id: 'notification.success.link-copied',
-            defaultMessage: 'Link copied to the clipboard',
-          },
-        });
-      }}
-    >
+    <CopyToClipboard text={url} onCopy={handleOnCopy}>
       <Button size="S" startIcon={<LinkIcon />} variant="secondary" style={{ width: '100%' }}>
         {formatMessage(
           isDraft
