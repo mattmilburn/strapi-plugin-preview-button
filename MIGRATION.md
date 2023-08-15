@@ -4,8 +4,71 @@
   <p>Follow our migration guides to keep your preview button plugin up-to-date.</p>
 </div>
 
-## Migrate from v0.x to v1.0.0
+## Get Started
 
+* [Migrate from v1 to v2](#migrate-from-v1-to-v2)
+* [Migrate from v0 to v1](#migrate-from-v0-to-v1)
+
+---
+
+## Migrate from v1 to v2
+There is only one breaking change when migrating from version 1 to 2 of this plugin. The config options for `injectListViewColumn` and `openTarget` have now moved to the `pluginOptions` prop of model schemas.
+
+#### `injectListViewColumn` and `openTarget`
+Previously, these config options were used alongside the rest of the config options in `./config/plugins.js` but they have moved to the `pluginOptions` prop of a model schema and will need to be applied to each schema individually.
+
+In addition to the new location, the `injectListViewColumn` option is renamed to `listViewColumn` and it is set to `true` by default. You can disable the extra column by setting this value to `false` like in the code below.
+
+This change allows Strapi to inject a custom column into the content manager's list view without relying on fetching data, which solves issues that were related to this feature.
+
+#### ❌ Not correct
+```js
+// ./config/plugins.js
+'use strict';
+
+module.exports = {
+  'preview-button': {
+    config: {
+      injectListViewColumn: true,
+      openTarget: 'StrapiPreview',
+      contentTypes: [
+        // etc.
+      ],
+    },
+  },
+};
+```
+
+#### ✅ Correct
+```js
+// ./src/api/page/content-types/page/schema.js
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "preview-button": {
+      "listViewColumn": false,
+      "openTarget": "StrapiPreview"
+    }
+  },
+  "attributes": {
+    // etc.
+  }
+}
+```
+
+---
+
+## Migrate from v0 to v1
 The breaking changes in this migration are focused on configuration while simplifying code and requirements. As a result, much of the plugin configuration has changed.
 
 ### Environment vars are no longer required
@@ -20,6 +83,7 @@ STRAPI_PREVIEW_PUBLISHED_URL=https://example.com
 This is now optional and requires no extra handling from this plugin. To continue using these env vars, simply include them as you see below:
 
 ```js
+// ./config/plugins.js
 module.exports = ({ env }) => {
   'preview-button': {
     config: {
@@ -58,6 +122,7 @@ A "Copy Link" button has been added beneath the preview button in the content ma
 If you wish to disable this button for the draft or published state (or both) then you need to use `copy: false` for `draft` and `published` configurations as you see below:
 
 ```js
+// ./config/plugins.js
 {
   uid: 'api::page.page',
   draft: {
@@ -81,6 +146,7 @@ An icon button for the preview and copy buttons have been added to a new column 
 If you wish to disable this, set it to `false`. This applies to all configured content types.
 
 ```js
+// ./config/plugins.js
 module.exports = {
   'preview-button': {
     config: {
