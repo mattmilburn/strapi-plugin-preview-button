@@ -10,6 +10,7 @@
 * [Features](#features)
 * [Installation](#installation)
 * [Configuration](#configuration)
+* [Plugin Options](#plugin-options)
 * [Extending](#extending)
 * [User Guide](#user-guide)
 * [Migration](#migration)
@@ -17,13 +18,13 @@
 
 ## <a id="features"></a>✨ Features
 * Adds a new button in content manager sidebar which links the user to a preview or live view of a frontend app view.
-* Include optional button to copy the preview link to your clipboard.
+* Optional preview button column in a collection's list view.
+* Optional button to copy the preview link to your clipboard.
 * Customize which content types should use the preview button.
 * Customize endpoints for draft and published URLs.
 * Map values from an entry's data into preview URLs.
 * Supports collection and single types.
-* Supports localization with the `i18n` Strapi plugin.
-* Optionally include preview and copy icons in list view.
+* Supports localization with the `@strapi/plugin-i18n` plugin.
 
 ## <a id="installation"></a>💎 Installation
 ```bash
@@ -37,8 +38,6 @@ yarn add strapi-plugin-preview-button@latest
 | contentTypes[].uid | string | The `uid` value of either a single or collection type. |
 | contentTypes[].draft | object (`{}`) | A configuration object to enable a draft preview button. |
 | contentTypes[].published | object (`{}`) | A configuration object to enable a live view button. |
-| injectListViewColumn | boolean (`true`) | Set to `false` to disable the preview and copy link buttons from displaying in list view. |
-| openTarget | string | Set to `_blank` to always open preview page in a new tab or window. Otherwise the preview will re-use the same preview tab or window. |
 
 ### `contentTypes`
 An array of objects describing which content types should use the preview button.
@@ -127,6 +126,7 @@ For example, depending on how you are choosing to handle your preview method, yo
 > **Unmatched values** will be replaced with an empty string.
 
 ```js
+// ./config/plugins.js
 {
   uid: 'api::page.page',
   draft: {
@@ -146,6 +146,7 @@ For example, depending on how you are choosing to handle your preview method, yo
 If you have localization enabled for a content type, the `locale` value will be included in the entry data and replaced like the rest. You can simply use `{locale}` to include it where you like in the URL or query string.
 
 ```js
+// ./config/plugins.js
 {
   uid: 'api::page.page',
   draft: {
@@ -211,6 +212,7 @@ Before granting access to the preview in your frontend app, you will want to com
 The "copy link" button located beneath the preview button can be disabled with the `copy: false` prop applied to `draft` and `published` configurations. This value is `true` by default.
 
 ```js
+// ./config/plugins.js
 {
   uid: 'api::home.home',
   published: {
@@ -220,23 +222,38 @@ The "copy link" button located beneath the preview button can be disabled with t
 }
 ```
 
-### `injectListViewColumn`
-Set to `false` to disable the preview and copy link buttons from displaying in list view. This applies to all configured content types.
+## <a id="plugin-options"></a>🔌 Plugin Options
+| property | type (default) | description |
+| - | - | - |
+| listViewColumn | boolean (`true`) | Set to `false` to disable the preview and copy link buttons from displaying in list view. |
+| openTarget | string (`StrapiPreview`) | Set to any custom string. Optionally set to `_blank` to always open the preview page in a new tab or window. Otherwise the preview will re-use the same preview tab or window. |
+
+### `listViewColumn`
+Set to `false` to disable the preview and copy link buttons from displaying in list view.
 
 ```js
-// ./config/plugins.js
-'use strict';
-
-module.exports = {
-  'preview-button': {
-    config: {
-      injectListViewColumn: false,
-      contentTypes: [
-        // etc.
-      ],
-    },
+// ./src/api/page/content-types/page/schema.js
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": ""
   },
-};
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "preview-button": {
+      "listViewColumn": false
+    }
+  },
+  "attributes": {
+    // etc.
+  }
+}
 ```
 
 Ideally, the preview and copy link buttons in list view should appear alongside the other action icons for each row in the table. However, Strapi does not currently provide a hook to append new icons to that column. For now, this plugin will add its own "Preview" column with the extra icon actions.
@@ -244,28 +261,38 @@ Ideally, the preview and copy link buttons in list view should appear alongside 
 <img style="width: 960px; height: auto;" src="public/list-view.png" alt="Screenshot for list view in Strapi preview button plugin" />
 
 ### `openTarget`
-By default this value is set to `StrapiPreview`. It is used in the `window.open` function for the preview button to always open in the same tab.
+By default this value is set to `StrapiPreview` but it can be any custom string. It is used in the `window.open` function for the preview button to always open in the same tab.
 
-If you would rather disable this and, for example, have the preview button always open in a new tab, you could use `_blank` as the value. Any special target keywords such as `_blank`, `_top`, `_self`, or `_parent` are acceptable values.
+If you would rather disable this and, for example, have the preview button always open in a new tab, you could use `_blank` as the value. Special target keywords such as `_blank`, `_top`, `_self`, or `_parent` are also acceptable values.
+
+You could also use a different `openTarget` for each model schema if you wanted to have each collection type open in it's own designated tab or window.
 
 ```js
-// ./config/plugins.js
-'use strict';
-
-module.exports = {
-  'preview-button': {
-    config: {
-      openTarget: '_blank',
-      contentTypes: [
-        // etc.
-      ],
-    },
+// ./src/api/page/content-types/page/schema.js
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": ""
   },
-};
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "preview-button": {
+      "openTarget": "_blank"
+    }
+  },
+  "attributes": {
+    // etc.
+  }
+}
 ```
 
 ## <a id="extending"></a>🔩 Extending
-
 If you need to apply more advanced logic to the preview URL, you can accomplish this with the `plugin/preview-button/before-build-url` hook included with this plugin.
 
 Your Strapi app will need a **custom plugin** in order to use this hook.
@@ -307,7 +334,7 @@ The `package.json` is required for a Strapi plugin.
 // ./strapi-admin.js
 'use strict';
 
-module.exports = require( './admin/src' ).default;
+module.exports = require('./admin/src').default;
 ```
 
 In the main plugin file below, we register the plugin in the `register` method and we register the hook with the `bootstrap` method.
