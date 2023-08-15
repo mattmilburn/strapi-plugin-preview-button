@@ -1,15 +1,18 @@
 import React from 'react';
+import get from 'lodash/get';
 
-import ListViewTableCell from '../components/ListViewTableCell';
-import { parseUrl } from '../utils';
+import { ListViewColumn } from '../components';
+import { pluginId } from '../utils';
 
-const addPreviewColumn = ({ displayedHeaders, layout }, pluginConfig) => {
-  const { contentTypes, injectListViewColumn, openTarget } = pluginConfig;
-  const uidConfig = contentTypes?.find((type) => type.uid === layout.contentType.uid);
-  const isSupported = !!uidConfig;
+const addPreviewColumn = ({ displayedHeaders, layout }) => {
+  const uid = layout.contentType.uid;
+  const supportFlagKeys = ['contentType', 'pluginOptions', pluginId, 'listViewColumn'];
+  const isSupported = get(layout, supportFlagKeys, false) === true;
+  const draftAndPublishKeys = ['contentType', 'options', 'draftAndPublish'];
+  const hasDraftAndPublish = get(layout, draftAndPublishKeys, false) === true;
 
-  // Do nothing if this feature is not a supported type for the preview button.
-  if (!isSupported || !injectListViewColumn) {
+  // Do nothing if the preview button column is not supported or disabled for this UID.
+  if (!isSupported) {
     return {
       displayedHeaders,
       layout,
@@ -31,23 +34,9 @@ const addPreviewColumn = ({ displayedHeaders, layout }, pluginConfig) => {
         },
         name: 'preview',
         cellFormatter: (data) => {
-          const hasDraftAndPublish = layout.contentType.options.draftAndPublish === true;
-          const isDraft = hasDraftAndPublish && !data.publishedAt;
-          const configFromState = isSupported && uidConfig[isDraft ? 'draft' : 'published'];
-          const url = parseUrl(configFromState, data);
+          const isDraft = hasDraftAndPublish && !data?.publishedAt;
 
-          if (!url) {
-            return null;
-          }
-
-          return (
-            <ListViewTableCell
-              canCopy={configFromState?.copy === false ? false : true}
-              isDraft={isDraft}
-              target={openTarget}
-              url={url}
-            />
-          );
+          return <ListViewColumn uid={uid} data={data} isDraft={isDraft} />;
         },
       },
     ],

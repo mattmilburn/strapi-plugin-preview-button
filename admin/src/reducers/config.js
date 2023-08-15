@@ -6,7 +6,6 @@ const initialState = {
   isLoading: true,
   config: {
     contentTypes: [],
-    injectListViewColumn: false,
     openTarget: PREVIEW_WINDOW_NAME,
   },
 };
