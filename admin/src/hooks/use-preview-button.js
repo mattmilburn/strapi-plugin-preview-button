@@ -5,7 +5,7 @@ import { HOOK_BEFORE_BUILD_URL } from '../constants';
 import usePluginConfig from './use-plugin-config';
 import { parseUrl } from '../utils';
 
-const usePreviewUrl = (uid, data, isDraft, isCreating) => {
+const usePreviewButton = (uid, data, isDraft, isCreating) => {
   const { runHookWaterfall } = useStrapiApp();
   const { data: config, isLoading } = usePluginConfig();
   const [url, setUrl] = useState(null);
@@ -36,8 +36,10 @@ const usePreviewUrl = (uid, data, isDraft, isCreating) => {
       },
       true
     );
+
     const url = parseUrl(state, data);
 
+    // Do nothing if we failed to build the URL for some reason.
     if (!url) {
       return;
     }
@@ -63,4 +65,4 @@ const usePreviewUrl = (uid, data, isDraft, isCreating) => {
   };
 };
 
-export default usePreviewUrl;
+export default usePreviewButton;

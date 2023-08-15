@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
-import { usePreviewUrl } from '../../hooks';
+import { usePreviewButton } from '../../hooks';
 import CopyLinkButton from '../CopyLinkButton';
 import PreviewButton from '../PreviewButton';
 
@@ -10,7 +10,7 @@ const EditViewRightLinks = () => {
     useCMEditViewDataManager();
   const isDraft = hasDraftAndPublish && !modifiedData?.publishedAt;
   const { uid } = allLayoutData.contentType;
-  const { canCopy, isLoading, isSupported, openTarget, url } = usePreviewUrl(
+  const { canCopy, isLoading, isSupported, openTarget, url } = usePreviewButton(
     uid,
     modifiedData,
     isDraft,
@@ -20,6 +20,10 @@ const EditViewRightLinks = () => {
   if (!isSupported || isCreatingEntry || isLoading || !url) {
     return null;
   }
+
+  /**
+   * @TODO - Maybe use React.Suspense here with isLoading?
+   */
 
   return (
     <>
