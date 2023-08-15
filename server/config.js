@@ -3,12 +3,9 @@
 const { ValidationError } = require('@strapi/utils').errors;
 const has = require('lodash/has');
 
-const { PREVIEW_WINDOW_NAME } = require('./constants');
-
 module.exports = {
   default: {
     contentTypes: [],
-    openTarget: PREVIEW_WINDOW_NAME,
   },
   validator: (config) => {
     if (!has(config, 'contentTypes')) {

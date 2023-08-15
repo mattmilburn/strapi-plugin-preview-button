@@ -5,11 +5,8 @@ import { ListViewColumn } from '../components';
 import { pluginId } from '../utils';
 
 const addPreviewColumn = ({ displayedHeaders, layout }) => {
-  const uid = layout.contentType.uid;
-  const supportFlagKeys = ['contentType', 'pluginOptions', pluginId, 'listViewColumn'];
-  const isSupported = get(layout, supportFlagKeys, false) === true;
-  const draftAndPublishKeys = ['contentType', 'options', 'draftAndPublish'];
-  const hasDraftAndPublish = get(layout, draftAndPublishKeys, false) === true;
+  const supportKeys = ['contentType', 'pluginOptions', pluginId, 'listViewColumn'];
+  const isSupported = get(layout, supportKeys, false) === true;
 
   // Do nothing if the preview button column is not supported or disabled for this UID.
   if (!isSupported) {
@@ -33,11 +30,7 @@ const addPreviewColumn = ({ displayedHeaders, layout }) => {
           sortable: false,
         },
         name: 'preview',
-        cellFormatter: (data) => {
-          const isDraft = hasDraftAndPublish && !data?.publishedAt;
-
-          return <ListViewColumn uid={uid} data={data} isDraft={isDraft} />;
-        },
+        cellFormatter: (data) => <ListViewColumn data={data} layout={layout} />,
       },
     ],
     layout,

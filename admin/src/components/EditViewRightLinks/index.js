@@ -9,9 +9,9 @@ const EditViewRightLinks = () => {
   const { allLayoutData, hasDraftAndPublish, isCreatingEntry, initialData } =
     useCMEditViewDataManager();
   const isDraft = hasDraftAndPublish && !initialData?.publishedAt;
-  const { uid } = allLayoutData.contentType;
+
   const { canCopy, isLoading, isSupported, openTarget, url } = usePreviewButton(
-    uid,
+    allLayoutData,
     initialData,
     isDraft,
     isCreatingEntry

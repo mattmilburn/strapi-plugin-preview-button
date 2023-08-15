@@ -1,17 +1,24 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import get from 'lodash/get';
 import { useStrapiApp } from '@strapi/helper-plugin';
 
-import { HOOK_BEFORE_BUILD_URL } from '../constants';
+import { HOOK_BEFORE_BUILD_URL, PREVIEW_WINDOW_NAME } from '../constants';
 import usePluginConfig from './use-plugin-config';
-import { parseUrl } from '../utils';
+import { parseUrl, pluginId } from '../utils';
 
-const usePreviewButton = (uid, data, isDraft, isCreating) => {
+const usePreviewButton = (layout, data, isDraft, isCreating) => {
   const { runHookWaterfall } = useStrapiApp();
   const { data: config, isLoading } = usePluginConfig();
   const [url, setUrl] = useState(null);
   const [canCopy, setCopy] = useState(true);
 
-  const openTarget = config?.openTarget;
+  const { contentType } = layout;
+  const { uid } = contentType;
+  const openTarget = get(
+    contentType,
+    ['pluginOptions', pluginId, 'openTarget'],
+    PREVIEW_WINDOW_NAME
+  );
   const uidConfig = config?.contentTypes?.find((type) => type.uid === uid);
   const isSupported = !!uidConfig;
 

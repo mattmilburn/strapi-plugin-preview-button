@@ -12,10 +12,14 @@ import LinkIcon from '@strapi/icons/Link';
 import { usePreviewButton } from '../../hooks';
 import { getTrad } from '../../utils';
 
-const ListViewColumn = ({ uid, data, isDraft }) => {
+const ListViewColumn = ({ data, layout }) => {
   const { formatMessage } = useIntl();
   const toggleNotification = useNotification();
-  const { canCopy, isLoading, openTarget, url } = usePreviewButton(uid, data, isDraft, false);
+
+  const hasDraftAndPublish = layout.contentType.options.draftAndPublish === true;
+  const isDraft = hasDraftAndPublish && !data?.publishedAt;
+
+  const { canCopy, isLoading, openTarget, url } = usePreviewButton(layout, data, isDraft, false);
 
   const handleClick = useCallback(
     (event) => {
@@ -28,6 +32,16 @@ const ListViewColumn = ({ uid, data, isDraft }) => {
     },
     [url, openTarget]
   );
+
+  const handleOnCopy = useCallback(() => {
+    toggleNotification({
+      type: 'success',
+      message: {
+        id: 'notification.success.link-copied',
+        defaultMessage: 'Link copied to the clipboard',
+      },
+    });
+  }, [toggleNotification]);
 
   if (isLoading) {
     return (
@@ -56,18 +70,7 @@ const ListViewColumn = ({ uid, data, isDraft }) => {
         noBorder
       />
       {canCopy && (
-        <CopyToClipboard
-          text={url}
-          onCopy={() => {
-            toggleNotification({
-              type: 'success',
-              message: {
-                id: 'notification.success.link-copied',
-                defaultMessage: 'Link copied to the clipboard',
-              },
-            });
-          }}
-        >
+        <CopyToClipboard text={url} onCopy={handleOnCopy}>
           <IconButton
             icon={<LinkIcon />}
             label={formatMessage(
@@ -90,9 +93,20 @@ const ListViewColumn = ({ uid, data, isDraft }) => {
 };
 
 ListViewColumn.propTypes = {
-  uid: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
-  isDraft: PropTypes.bool.isRequired,
+  layout: PropTypes.shape({
+    contentType: PropTypes.shape({
+      uid: PropTypes.string.isRequired,
+      options: PropTypes.shape({
+        draftAndPublish: PropTypes.bool,
+      }),
+      pluginOptions: PropTypes.shape({
+        'preview-button': PropTypes.shape({
+          listViewColumn: PropTypes.bool,
+        }),
+      }),
+    }).isRequired,
+  }).isRequired,
 };
 
 export default ListViewColumn;
