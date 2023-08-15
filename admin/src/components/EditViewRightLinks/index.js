@@ -6,13 +6,13 @@ import CopyLinkButton from '../CopyLinkButton';
 import PreviewButton from '../PreviewButton';
 
 const EditViewRightLinks = () => {
-  const { allLayoutData, hasDraftAndPublish, isCreatingEntry, modifiedData } =
+  const { allLayoutData, hasDraftAndPublish, isCreatingEntry, initialData } =
     useCMEditViewDataManager();
-  const isDraft = hasDraftAndPublish && !modifiedData?.publishedAt;
+  const isDraft = hasDraftAndPublish && !initialData?.publishedAt;
   const { uid } = allLayoutData.contentType;
   const { canCopy, isLoading, isSupported, openTarget, url } = usePreviewButton(
     uid,
-    modifiedData,
+    initialData,
     isDraft,
     isCreatingEntry
   );
