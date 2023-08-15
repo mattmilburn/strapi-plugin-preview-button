@@ -1,8 +1,8 @@
 import React, { memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
-import { Button } from '@strapi/design-system';
-import { ExternalLink } from '@strapi/icons';
+import { Button } from '@strapi/design-system/Button';
+import ExternalLink from '@strapi/icons/ExternalLink';
 
 import { getTrad } from '../../utils';
 

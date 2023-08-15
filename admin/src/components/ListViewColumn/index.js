@@ -2,15 +2,20 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Flex, IconButton } from '@strapi/design-system';
+import { Flex } from '@strapi/design-system/Flex';
+import { IconButton } from '@strapi/design-system/IconButton';
+import { Loader } from '@strapi/design-system/Loader';
 import { stopPropagation, useNotification } from '@strapi/helper-plugin';
-import { ExternalLink, Link as LinkIcon } from '@strapi/icons';
+import ExternalLink from '@strapi/icons/ExternalLink';
+import LinkIcon from '@strapi/icons/Link';
 
+import { usePreviewButton } from '../../hooks';
 import { getTrad } from '../../utils';
 
-const ListViewTableCell = ({ canCopy, isDraft, target, url }) => {
+const ListViewColumn = ({ uid, data, isDraft }) => {
   const { formatMessage } = useIntl();
   const toggleNotification = useNotification();
+  const { canCopy, isLoading, openTarget, url } = usePreviewButton(uid, data, isDraft, false);
 
   const handleClick = useCallback(
     (event) => {
@@ -19,10 +24,18 @@ const ListViewTableCell = ({ canCopy, isDraft, target, url }) => {
         return;
       }
 
-      window.open(url, target);
+      window.open(url, openTarget);
     },
-    [url, target]
+    [url, openTarget]
   );
+
+  if (isLoading) {
+    return (
+      <Flex {...stopPropagation}>
+        <Loader small={true} />
+      </Flex>
+    );
+  }
 
   return (
     <Flex {...stopPropagation}>
@@ -76,11 +89,10 @@ const ListViewTableCell = ({ canCopy, isDraft, target, url }) => {
   );
 };
 
-ListViewTableCell.propTypes = {
-  canCopy: PropTypes.bool.isRequired,
+ListViewColumn.propTypes = {
+  uid: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
   isDraft: PropTypes.bool.isRequired,
-  target: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
 };
 
-export default ListViewTableCell;
+export default ListViewColumn;

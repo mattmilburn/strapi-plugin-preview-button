@@ -2,9 +2,9 @@ import React, { memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Button } from '@strapi/design-system';
+import { Button } from '@strapi/design-system/Button';
 import { useNotification } from '@strapi/helper-plugin';
-import { Link as LinkIcon } from '@strapi/icons';
+import LinkIcon from '@strapi/icons/Link';
 
 import { getTrad } from '../../utils';
 
