@@ -12,10 +12,10 @@
 ---
 
 ## Migrate from v1 to v2
-The breaking changes in this migration focus on improving plugin options and also a simple find and replace for a parameter name.
+The breaking changes in this migration focus on improving plugin options and also a simple find and replace for a parameter name in the `before-build-url` hook.
 
-#### `injectListViewColumn` and `openTarget`
-Previously, these config options were used alongside the rest of the config options in `./config/plugins.js` but they have moved to the `pluginOptions` prop of a model schema and will need to be applied to each schema individually.
+### `injectListViewColumn`
+Previously, this config options was used alongside the rest of the config options in `./config/plugins.js` but it has moved to the `pluginOptions` prop of a model schema and will need to be applied to each schema individually.
 
 In addition to the new location, the `injectListViewColumn` option is renamed to `listViewColumn` and it is set to `true` by default. You can disable the extra column by setting this value to `false` like in the code below.
 
@@ -30,7 +30,6 @@ module.exports = {
   'preview-button': {
     config: {
       injectListViewColumn: true,
-      openTarget: 'StrapiPreview',
       contentTypes: [
         // etc.
       ],
@@ -56,14 +55,63 @@ module.exports = {
   },
   "pluginOptions": {
     "preview-button": {
-      "listViewColumn": true,
-      "openTarget": "StrapiPreview"
+      "listViewColumn": true
     }
   },
   "attributes": {
     // etc.
   }
 }
+```
+
+### `openTarget`
+Previously, this config options was used alongside the rest of the config options in `./config/plugins.js` but it has moved to the `contentTypes[].draft` and `contentTypes[].published` props of the plugin options and will need to be applied to each prop individually.
+
+#### ❌ Not correct
+```js
+// ./config/plugins.js
+'use strict';
+
+module.exports = {
+  'preview-button': {
+    config: {
+      openTarget: 'CustomName',
+      contentTypes: [
+        // etc.
+      ],
+    },
+  },
+};
+```
+
+#### ✅ Correct
+```js
+// ./config/plugins.js
+'use strict';
+
+module.exports = {
+  'preview-button': {
+    config: {
+      contentTypes: [
+        {
+          uid: 'api::page.page',
+          draft: {
+            url: 'https://example.com/api/preview',
+            query: {
+              type: 'page',
+              slug: '{slug}',
+            },
+            openTarget: 'CustomName',
+          },
+          published: {
+            url: 'https://example.com/{slug}',
+            openTarget: 'CustomName',
+          },
+        },
+      ],
+    },
+  },
+};
 ```
 
 ### The parameters for the `before-build-url` custom hook have changed
@@ -183,7 +231,7 @@ If you wish to disable this button for the draft or published state (or both) th
     copy: false,
   },
   published: {
-    url: 'http://localhost:3000',
+    url: 'http://example.com/{slug}',
     copy: false,
   },
 }
