@@ -50,6 +50,7 @@ Each object in the array requires the `uid` as well as `draft` and/or `published
 | query | object (`{}`) | Optional query string params to include in the final URL. |
 | openTarget | string (`StrapiPreview`) | Set to any custom string. Optionally set to `_blank` to always open the preview page in a new tab or window. Otherwise the preview will re-use the same preview tab or window. |
 | copy | boolean (`true`) | Set to `false` to disable the copy link button that appears below the preview button. |
+| alwaysVisible| boolean (`false`) | Set to `true` to enable both preview and live buttons to render together in a published state. This option only applies to the `draft` prop. |
 
 #### Example
 Consider we have a `Home` single type as well as `Page` and `Post` collection types, where each has a simple `title` and `content` field. The `Page` and `Post` models will also use a `uid` field named `slug` so they can create many entries with unique paths. Here is the minimum recommended config for this scenario.
@@ -289,6 +290,31 @@ The "copy link" button located beneath the preview button can be disabled with t
   published: {
     url: 'http://localhost:3000',
     copy: false,
+  },
+}
+```
+
+#### Always render preview and live buttons together
+In **published mode**, the preview button changes to a "live view" button. If you want to keep the preview button alongside the live view button in published mode, set `draft.alwaysVisible` to `true`.
+
+In **draft mode**, the live view buttons will not appear.
+
+```js
+// ./config/plugins.js
+{
+  uid: 'api::page.page',
+  draft: {
+    url: 'http://localhost:3000/api/preview',
+    query: {
+      type: 'page',
+      slug: '{slug}',
+    },
+    openTarget: 'StrapiPreviewPage',
+    alwaysVisible: true,
+  },
+  published: {
+    url: 'http://localhost:3000/{slug}',
+    openTarget: 'StrapiPage',
   },
 }
 ```

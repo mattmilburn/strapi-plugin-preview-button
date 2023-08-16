@@ -114,8 +114,10 @@ module.exports = {
 };
 ```
 
-### The parameters for the `before-build-url` custom hook have changed
-Previously, the parameters for the custom hook `before-build-url` included a `state` prop which should be returned by your custom hook. This prop name is changing from `state` to `options`.
+### Parameters for the `before-build-url` custom hook have changed
+Previously, the parameters for the custom hook `before-build-url` included a `state` prop which should be returned by your custom hook. This prop is now removed and in its place are the props `draft` to `published`.
+
+The `state` prop always represented either the `draft` or `published` prop from the plugin config, but now the return value of your hook should return both props instead of just one.
 
 #### ❌ Not correct
 ```js
@@ -125,7 +127,7 @@ export default {
     app.registerHook('plugin/preview-button/before-build-url', ({ data, state }) => {
       const query = state?.query ?? {};
 
-      // Return modified `state` object here.
+      // Return modified `state` object here using `data` as a helper.
       return {
         state: {
           ...state,
@@ -145,18 +147,19 @@ export default {
 // ./admin/src/index.js
 export default {
   bootstrap(app) {
-    app.registerHook('plugin/preview-button/before-build-url', ({ data, options }) => {
-      const query = options?.query ?? {};
+    app.registerHook('plugin/preview-button/before-build-url', ({ data, draft, published }) => {
+      const draftQuery = draft?.query ?? {};
 
-      // Return modified `state` object here.
+      // Return an object with modified `draft` and `published` props using `data` as a helper.
       return {
-        options: {
-          ...options,
+        draft: {
+          ...draft,
           query: {
-            ...query,
+            ...draftQuery,
             example: 'EXAMPLE',
           },
         },
+        published,
       };
     });
   },
