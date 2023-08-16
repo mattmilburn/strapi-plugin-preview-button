@@ -1,64 +1,52 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useStrapiApp } from '@strapi/helper-plugin';
 
-import { HOOK_BEFORE_BUILD_URL, PREVIEW_WINDOW_NAME } from '../constants';
+import { HOOK_BEFORE_BUILD_URL } from '../constants';
 import usePluginConfig from './use-plugin-config';
-import { parseUrl } from '../utils';
+import { getPublishStateConfig } from '../utils';
 
 const usePreviewButton = (layout, data, isDraft, isCreating) => {
   const { runHookWaterfall } = useStrapiApp();
   const { data: config, isLoading } = usePluginConfig();
-  const [url, setUrl] = useState(null);
-  const [target, setTarget] = useState(PREVIEW_WINDOW_NAME);
-  const [canCopy, setCopy] = useState(true);
+  const [draft, setDraft] = useState(null);
+  const [published, setPublished] = useState(null);
 
-  const { contentType } = layout;
-  const { uid } = contentType;
+  const { uid } = layout.contentType;
   const uidConfig = config?.contentTypes?.find((type) => type.uid === uid);
   const isSupported = !!uidConfig;
 
-  const optionsFromConfig = useMemo(() => {
-    if (!isSupported) {
-      return {};
-    }
-
-    return uidConfig[isDraft ? 'draft' : 'published'];
-  }, [isSupported, isDraft, uidConfig]);
-
-  const compileUrl = useCallback(async () => {
+  const compileWithHooks = useCallback(async () => {
     // Run async hook then set state.
-    const { options } = await runHookWaterfall(
+    const result = await runHookWaterfall(
       HOOK_BEFORE_BUILD_URL,
-      { data, options: optionsFromConfig },
+      {
+        data,
+        draft: uidConfig?.draft,
+        published: uidConfig?.published,
+      },
       true
     );
 
-    const url = parseUrl(options, data);
+    const draftConfig = getPublishStateConfig(result?.draft, data);
+    const publishedConfig = getPublishStateConfig(result?.published, data);
 
-    // Do nothing if we failed to build the URL for some reason.
-    if (!url) {
-      return;
-    }
-
-    setUrl(url);
-    setTarget(options?.openTarget ?? PREVIEW_WINDOW_NAME);
-    setCopy(options?.copy === false ? false : true);
-  }, [data, optionsFromConfig, setCopy, setTarget, setUrl, runHookWaterfall]);
+    setDraft(draftConfig);
+    setPublished(publishedConfig);
+  }, [data, uidConfig, setDraft, setPublished, runHookWaterfall]);
 
   useEffect(() => {
     if (!isSupported || isLoading || isCreating) {
       return;
     }
 
-    compileUrl();
-  }, [isSupported, isLoading, isCreating, compileUrl]);
+    compileWithHooks();
+  }, [isSupported, isLoading, isCreating, compileWithHooks]);
 
   return {
-    canCopy,
     isLoading,
     isSupported,
-    openTarget: target,
-    url,
+    draft,
+    published,
   };
 };
 

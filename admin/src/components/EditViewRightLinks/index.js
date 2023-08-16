@@ -2,33 +2,31 @@ import React from 'react';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 import { usePreviewButton } from '../../hooks';
-import CopyLinkButton from '../CopyLinkButton';
-import PreviewButton from '../PreviewButton';
+import PreviewButtonGroup from '../PreviewButtonGroup';
 
 const EditViewRightLinks = () => {
   const { allLayoutData, hasDraftAndPublish, isCreatingEntry, initialData } =
     useCMEditViewDataManager();
   const isDraft = hasDraftAndPublish && !initialData?.publishedAt;
 
-  const { canCopy, isLoading, isSupported, openTarget, url } = usePreviewButton(
+  const { isLoading, isSupported, draft, published } = usePreviewButton(
     allLayoutData,
     initialData,
     isDraft,
     isCreatingEntry
   );
 
-  if (!isSupported || isCreatingEntry || isLoading || !url) {
+  if (!isSupported || isCreatingEntry || isLoading) {
     return null;
   }
 
-  /**
-   * @TODO - Maybe use React.Suspense here with isLoading?
-   */
+  const showPublished = !!published && !isDraft;
+  const showDraft = !!draft && (isDraft || draft?.alwaysVisible);
 
   return (
     <>
-      <PreviewButton isDraft={isDraft} url={url} target={openTarget} />
-      {canCopy && <CopyLinkButton isDraft={isDraft} url={url} />}
+      {showPublished && <PreviewButtonGroup data={published} isDraft={false} />}
+      {showDraft && <PreviewButtonGroup data={draft} isDraft={true} />}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -19,7 +19,15 @@ const ListViewColumn = ({ data, layout }) => {
   const hasDraftAndPublish = layout.contentType.options.draftAndPublish === true;
   const isDraft = hasDraftAndPublish && !data?.publishedAt;
 
-  const { canCopy, isLoading, openTarget, url } = usePreviewButton(layout, data, isDraft, false);
+  const { isLoading, draft, published } = usePreviewButton(layout, data, isDraft, false);
+
+  const { url, copy, openTarget } = useMemo(() => {
+    if (isDraft) {
+      return draft;
+    }
+
+    return published;
+  }, [isDraft, draft, published]);
 
   const handleClick = useCallback(
     (event) => {
@@ -69,7 +77,7 @@ const ListViewColumn = ({ data, layout }) => {
         icon={<ExternalLink />}
         noBorder
       />
-      {canCopy && (
+      {copy && (
         <CopyToClipboard text={url} onCopy={handleOnCopy}>
           <IconButton
             icon={<LinkIcon />}
