@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import get from 'lodash/get';
 import { Flex } from '@strapi/design-system/Flex';
 import { IconButton } from '@strapi/design-system/IconButton';
 import { Loader } from '@strapi/design-system/Loader';
@@ -9,6 +10,7 @@ import { stopPropagation, useNotification } from '@strapi/helper-plugin';
 import ExternalLink from '@strapi/icons/ExternalLink';
 import LinkIcon from '@strapi/icons/Link';
 
+import { PREVIEW_WINDOW_NAME } from '../../constants';
 import { usePreviewButton } from '../../hooks';
 import { getTrad } from '../../utils';
 
@@ -21,13 +23,17 @@ const ListViewColumn = ({ data, layout }) => {
 
   const { isLoading, draft, published } = usePreviewButton(layout, data, isDraft, false);
 
-  const { url, copy, openTarget } = useMemo(() => {
+  const config = useMemo(() => {
     if (isDraft) {
       return draft;
     }
 
     return published;
   }, [isDraft, draft, published]);
+
+  const url = get(config, 'url');
+  const copy = get(config, 'copy');
+  const openTarget = get(config, 'openTarget', PREVIEW_WINDOW_NAME);
 
   const handleClick = useCallback(
     (event) => {
