@@ -22,7 +22,7 @@ const usePreviewButton = (layout, data, isDraft, isCreating) => {
   const uidConfig = config?.contentTypes?.find((type) => type.uid === uid);
   const isSupported = !!uidConfig;
 
-  const pluginOptions = useMemo(() => {
+  const optionsFromConfig = useMemo(() => {
     if (!isSupported) {
       return {};
     }
@@ -30,21 +30,15 @@ const usePreviewButton = (layout, data, isDraft, isCreating) => {
     return uidConfig[isDraft ? 'draft' : 'published'];
   }, [isSupported, isDraft, uidConfig]);
 
-  const complete = useCallback(async () => {
+  const compileUrl = useCallback(async () => {
     // Run async hook then set state.
-    const { state } = await runHookWaterfall(
+    const { options } = await runHookWaterfall(
       HOOK_BEFORE_BUILD_URL,
-      {
-        /**
-         * @TODO - Rename the `state` prop to `pluginOptions` in next major version.
-         */
-        state: pluginOptions,
-        data,
-      },
+      { data, options: optionsFromConfig },
       true
     );
 
-    const url = parseUrl(state, data);
+    const url = parseUrl(options, data);
 
     // Do nothing if we failed to build the URL for some reason.
     if (!url) {
@@ -52,16 +46,16 @@ const usePreviewButton = (layout, data, isDraft, isCreating) => {
     }
 
     setUrl(url);
-    setCopy(state?.copy === false ? false : true);
-  }, [data, pluginOptions, setCopy, setUrl, runHookWaterfall]);
+    setCopy(options?.copy === false ? false : true);
+  }, [data, optionsFromConfig, setCopy, setUrl, runHookWaterfall]);
 
   useEffect(() => {
     if (!isSupported || isLoading || isCreating) {
       return;
     }
 
-    complete();
-  }, [isSupported, isLoading, isCreating, complete]);
+    compileUrl();
+  }, [isSupported, isLoading, isCreating, compileUrl]);
 
   return {
     canCopy,
