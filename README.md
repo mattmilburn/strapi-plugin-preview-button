@@ -315,7 +315,6 @@ The `package.json` is required for a Strapi plugin.
 
 ```js
 // ./package.json
-
 {
   "name": "example",
   "version": "0.1.0",
@@ -339,13 +338,12 @@ module.exports = require('./admin/src').default;
 
 In the main plugin file below, we register the plugin in the `register` method and we register the hook with the `bootstrap` method.
 
-The `state` argument is the original config object from `config/plugins.js`. So if you are editing a `Page` in draft mode, you will get the draft config for `Pages` from your plugin config passed into the callback.
+The `options` parameter is the original config object from `config/plugins.js`. So if you are editing a `Page` in draft mode, you will get the draft config for `Pages` from your plugin config passed into the callback and vice-versa with published mode.
 
-Here you can modify and return `state` while using `data` to make decisions.
+Here you will modify and return `options` while using `data` as a helper. In this example, we are just adding on a `foo=bar` query parameter to demonstrate how this hook can be utilized for more dynamic URLs.
 
 ```js
 // ./admin/src/index.js
-
 export default {
   register(app) {
     app.registerPlugin({
@@ -355,16 +353,16 @@ export default {
   },
 
   bootstrap(app) {
-    app.registerHook('plugin/preview-button/before-build-url', ({ state, data }) => {
-      const query = state?.query ?? {};
+    app.registerHook('plugin/preview-button/before-build-url', ({ data, options }) => {
+      const query = options?.query ?? {};
 
-      // Return modified `state` object here.
+      // Return modified `options` object here and use `data` however you like.
       return {
-        state: {
-          ...state,
+        options: {
+          ...options,
           query: {
             ...query,
-            example: 'EXAMPLE',
+            foo: 'bar',
           },
         },
       };
