@@ -32,4 +32,10 @@ describe('parseUrl', () => {
 
     expect(result).toEqual(output);
   });
+
+  it('should return null if params are null', () => {
+    const result = parseUrl(null, null);
+
+    expect(result).toBeNull();
+  });
 });
