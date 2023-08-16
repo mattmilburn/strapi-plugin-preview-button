@@ -18,7 +18,7 @@ export default {
     });
   },
 
-  async bootstrap(app) {
+  bootstrap(app) {
     app.injectContentManagerComponent('editView', 'right-links', {
       name: pluginId,
       Component: EditViewRightLinks,
