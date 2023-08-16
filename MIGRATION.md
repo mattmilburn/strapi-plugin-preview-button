@@ -12,7 +12,7 @@
 ---
 
 ## Migrate from v1 to v2
-There is only one breaking change when migrating from version 1 to 2 of this plugin. The config options for `injectListViewColumn` and `openTarget` have now moved to the `pluginOptions` prop of model schemas.
+The breaking changes in this migration focus on improving plugin options and also a simple find and replace for a parameter name.
 
 #### `injectListViewColumn` and `openTarget`
 Previously, these config options were used alongside the rest of the config options in `./config/plugins.js` but they have moved to the `pluginOptions` prop of a model schema and will need to be applied to each schema individually.
@@ -56,7 +56,7 @@ module.exports = {
   },
   "pluginOptions": {
     "preview-button": {
-      "listViewColumn": false,
+      "listViewColumn": true,
       "openTarget": "StrapiPreview"
     }
   },
@@ -64,6 +64,55 @@ module.exports = {
     // etc.
   }
 }
+```
+
+### The parameters for the `before-build-url` custom hook have changed
+Previously, the parameters for the custom hook `before-build-url` included a `state` prop which should be returned by your custom hook. This prop name is changing from `state` to `options`.
+
+#### ❌ Not correct
+```js
+// ./admin/src/index.js
+export default {
+  bootstrap(app) {
+    app.registerHook('plugin/preview-button/before-build-url', ({ data, state }) => {
+      const query = state?.query ?? {};
+
+      // Return modified `state` object here.
+      return {
+        state: {
+          ...state,
+          query: {
+            ...query,
+            example: 'EXAMPLE',
+          },
+        },
+      };
+    });
+  },
+};
+```
+
+#### ✅ Correct
+```js
+// ./admin/src/index.js
+export default {
+  bootstrap(app) {
+    app.registerHook('plugin/preview-button/before-build-url', ({ data, options }) => {
+      const query = options?.query ?? {};
+
+      // Return modified `state` object here.
+      return {
+        options: {
+          ...options,
+          query: {
+            ...query,
+            example: 'EXAMPLE',
+          },
+        },
+      };
+    });
+  },
+};
 ```
 
 ---
