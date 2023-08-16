@@ -17,8 +17,8 @@
 * [Support or Donate](#donate)
 
 ## <a id="features"></a>✨ Features
-* Adds a new button in content manager sidebar which links the user to a preview or live view of a frontend app view.
-* Optional preview button column in a collection's list view.
+* Adds a new button in content manager sidebar which links the user to a preview or live view of a frontend app.
+* Optional column in a collection's list view containing "preview" and "copy link" buttons.
 * Optional button to copy the preview link to your clipboard.
 * Customize which content types should use the preview button.
 * Customize endpoints for draft and published URLs.
@@ -402,9 +402,9 @@ module.exports = require('./admin/src').default;
 
 In the main plugin file below, we register the plugin in the `register` method and we register the hook with the `bootstrap` method.
 
-The `options` parameter is the original config object from `config/plugins.js`. So if you are editing a `Page` in draft mode, you will get the draft config for `Pages` from your plugin config passed into the callback and vice-versa with published mode.
+The hook provides `draft` and `published` parameters which are the same as the UID configs from `config/plugins.js`. So if you are editing a `Page`, you will get the `draft` and `published` configs for `api::page.page` from your plugin config passed into the callback.
 
-Here you will modify and return `options` while using `data` as a helper. In this example, we are just adding on a `foo=bar` query parameter to demonstrate how this hook can be utilized for more dynamic URLs.
+Here you will modify and return `draft` and `published` while using `data` however you like. In this example, we are just adding on a `foo=bar` query parameter to demonstrate how this hook can be utilized for more dynamic URLs.
 
 ```js
 // ./admin/src/index.js
@@ -417,18 +417,19 @@ export default {
   },
 
   bootstrap(app) {
-    app.registerHook('plugin/preview-button/before-build-url', ({ data, options }) => {
-      const query = options?.query ?? {};
+    app.registerHook('plugin/preview-button/before-build-url', ({ data, draft, published }) => {
+      const draftQuery = draft?.query ?? {};
 
-      // Return modified `options` object here and use `data` however you like.
+      // Return an object with modified `draft` and `published` props using `data` however you like.
       return {
-        options: {
-          ...options,
+        draft: {
+          ...draft,
           query: {
-            ...query,
+            ...draftQuery,
             foo: 'bar',
           },
         },
+        published,
       };
     });
   },

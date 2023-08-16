@@ -11,7 +11,7 @@
 
 ---
 
-## Migrate from v1 to v2
+## <a id="migrate-from-v1-to-v2"></a>Migrate from v1 to v2
 The breaking changes in this migration focus on improving plugin options and also a simple find and replace for a parameter name in the `before-build-url` hook.
 
 ### `injectListViewColumn`
@@ -127,13 +127,13 @@ export default {
     app.registerHook('plugin/preview-button/before-build-url', ({ data, state }) => {
       const query = state?.query ?? {};
 
-      // Return modified `state` object here using `data` as a helper.
+      // Return modified `state` object here using `data` however you like.
       return {
         state: {
           ...state,
           query: {
             ...query,
-            example: 'EXAMPLE',
+            foo: 'bar',
           },
         },
       };
@@ -150,13 +150,13 @@ export default {
     app.registerHook('plugin/preview-button/before-build-url', ({ data, draft, published }) => {
       const draftQuery = draft?.query ?? {};
 
-      // Return an object with modified `draft` and `published` props using `data` as a helper.
+      // Return an object with modified `draft` and `published` props using `data` however you like.
       return {
         draft: {
           ...draft,
           query: {
             ...draftQuery,
-            example: 'EXAMPLE',
+            foo: 'bar',
           },
         },
         published,
@@ -168,7 +168,7 @@ export default {
 
 ---
 
-## Migrate from v0 to v1
+## <a id="migrate-from-v0-to-v1"></a>Migrate from v0 to v1
 The breaking changes in this migration are focused on configuration while simplifying code and requirements. As a result, much of the plugin configuration has changed.
 
 ### Environment vars are no longer required
