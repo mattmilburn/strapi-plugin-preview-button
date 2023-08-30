@@ -51,7 +51,7 @@
     "lodash": "4.17.21",
     "prop-types": "^15.8.1",
     "qs": "^6.11.0",
-    "react": "^17.0.2",
+    "react": "^17.0.2 || ^18.0.0",
     "react-intl": "^6.4.4",
     "react-router-dom": "^5.3.4"
   },
@@ -86,7 +86,7 @@
     "prettier": "2.8.8",
     "prop-types": "^15.8.1",
     "qs": "^6.11.0",
-    "react": "^17.0.2",
+    "react": "^17.0.2 || ^18.0.0",
     "react-intl": "^6.4.4",
     "react-router-dom": "^5.3.4"
   },
