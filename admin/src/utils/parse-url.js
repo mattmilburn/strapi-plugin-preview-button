@@ -14,9 +14,10 @@ const parseUrl = (config, data) => {
       return acc;
     }
 
+    // We are decoding and encoding at the same time here to avoid double-encoding.
     return {
       ...acc,
-      [key]: val,
+      [key]: encodeURIComponent(decodeURIComponent(val)),
     };
   }, {});
   const params = Object.entries(config?.query ?? {}).reduce((acc, [key, val]) => {
@@ -27,7 +28,16 @@ const parseUrl = (config, data) => {
   }, {});
 
   const url = interpolate(trimSlashes(config.url), replacements);
-  const query = qs.stringify(params, { addQueryPrefix: true });
+  const query = qs.stringify(params, {
+    addQueryPrefix: true,
+
+    /**
+     * @NOTE - Disabling the `encoding` option here because we are already
+     * handling it in `replacements` and for some reason, tests are failing
+     * because qs mistakenly double-encodes params, but only during tests.
+     */
+    encode: false,
+  });
 
   return `${url}${query}`;
 };

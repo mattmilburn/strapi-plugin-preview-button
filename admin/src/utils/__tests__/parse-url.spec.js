@@ -33,6 +33,42 @@ describe('parseUrl', () => {
     expect(result).toEqual(output);
   });
 
+  it('should encode query string params', () => {
+    const config = {
+      url: 'https://www.example.com/{slug}',
+      query: {
+        type: 'page',
+        foobar: '{foobar}',
+      },
+    };
+    const data = {
+      slug: 'test',
+      foobar: 'foo/bar/test',
+    };
+    const output = 'https://www.example.com/test?type=page&foobar=foo%2Fbar%2Ftest';
+    const result = parseUrl(config, data, true);
+
+    expect(result).toEqual(output);
+  });
+
+  it('should not double-encode query string params', () => {
+    const config = {
+      url: 'https://www.example.com/{slug}',
+      query: {
+        type: 'page',
+        foobar: '{foobar}',
+      },
+    };
+    const data = {
+      slug: 'test',
+      foobar: 'foo%2Fbar%2Ftest',
+    };
+    const output = 'https://www.example.com/test?type=page&foobar=foo%2Fbar%2Ftest';
+    const result = parseUrl(config, data, true);
+
+    expect(result).toEqual(output);
+  });
+
   it('should return null if params are null', () => {
     const result = parseUrl(null, null);
 
