@@ -13,8 +13,10 @@
 * [Plugin Options](#plugin-options)
 * [Extending](#extending)
 * [User Guide](#user-guide)
+* [Troubleshooting](#troubleshooting)
 * [Migration](#migration)
 * [Support or Donate](#donate)
+* [Roadmap](#roadmap)
 
 ## <a id="features"></a>✨ Features
 * Adds a new button in content manager sidebar which links the user to a preview or live view of a frontend app.
@@ -30,6 +32,8 @@
 ```bash
 yarn add strapi-plugin-preview-button@latest
 ```
+
+Don't forget to **restart or rebuild** your Strapi app when installing a new plugin.
 
 ## <a id="configuration"></a>🔧 Configuration
 | property | type (default) | description |
@@ -462,8 +466,23 @@ For in-depth examples and instructions, please reference the links below to lear
 * [Next.js Preview Mode](https://nextjs.org/docs/advanced-features/preview-mode)
 * [Next.js Preview Mode example with Strapi](https://github.com/vercel/next.js/tree/canary/examples/cms-strapi)
 
+## <a id="troubleshooting"></a>💩 Troubleshooting
+
+#### In general
+Remember to **rebuild your app** after making changes to some config or other code.
+
+```bash
+yarn build
+# OR
+yarn develop
+```
+
 ## <a id="migration"></a>🚌 Migration
 Follow the [migration guides](MIGRATION.md) to keep your preview button plugin up-to-date.
 
 ## <a id="donate"></a>❤️ Support or Donate
 If you are enjoying this plugin and feel extra appreciative, you can [buy me a beer or 3 🍺🍺🍺](https://www.buymeacoffee.com/mattmilburn).
+
+## <a id="roadmap"></a>🚧 Roadmap
+* Custom validation hook.
+* RBAC support.
