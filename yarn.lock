@@ -2171,7 +2171,7 @@
     semver "7.5.4"
     umzug "3.2.1"
 
-"@strapi/design-system@1.13.0", "@strapi/design-system@^1.6.6":
+"@strapi/design-system@1.13.0", "@strapi/design-system@^1.9.0":
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/@strapi/design-system/-/design-system-1.13.0.tgz#6501c4e48941c16367ec6c8e0c0f5b9849530bed"
   integrity sha512-Z9wZyqzRKNXKNkeNAwSLYOHshXW6UmqsOvaeUiUDfE77hvsJOzR60nLDDfo9pzQ/24t9332NWUUa24mSXFt97Q==
@@ -2222,7 +2222,7 @@
     plop "2.7.6"
     pluralize "8.0.0"
 
-"@strapi/helper-plugin@4.15.0", "@strapi/helper-plugin@^4.11.0":
+"@strapi/helper-plugin@4.15.0", "@strapi/helper-plugin@^4.13.1":
   version "4.15.0"
   resolved "https://registry.yarnpkg.com/@strapi/helper-plugin/-/helper-plugin-4.15.0.tgz#176881c832287a4bd3117250e8cd482f75c47833"
   integrity sha512-PLX/zucxFsNHOrkSguIps9JvQytKT5gBGhRE/L0mViJ7Z3a0cN5NY9f3eL08BTOwnkhI4NkptisO50r6Uej4+Q==
@@ -2238,7 +2238,7 @@
     react-query "3.39.3"
     react-select "5.7.0"
 
-"@strapi/icons@1.13.0", "@strapi/icons@^1.6.6":
+"@strapi/icons@1.13.0", "@strapi/icons@^1.9.0":
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/@strapi/icons/-/icons-1.13.0.tgz#0020560b5bed008ddc39aa177b264cb3bebe8b67"
   integrity sha512-bmFJvyM75nuVyJVq4bgHxRYwu9eEkmRKNipEb/GBTBvvkHGN0GTHLOAedGpKGvB7RwcclbaymOP7oBlxahOmsw==
@@ -2390,7 +2390,7 @@
     "@strapi/utils" "4.15.0"
     fs-extra "10.0.0"
 
-"@strapi/strapi@4.15.0", "@strapi/strapi@^4.11.0":
+"@strapi/strapi@4.15.0", "@strapi/strapi@^4.13.1":
   version "4.15.0"
   resolved "https://registry.yarnpkg.com/@strapi/strapi/-/strapi-4.15.0.tgz#33f3b300d93c793590a44a8a607f37aaa5759ef4"
   integrity sha512-DmtnPLQICIuc3eKihhYn7SH4Np91gXvY71W0Ngy8P+q+MmdfNshXUgVxuV9QnWd1i7ifjxxWG2xYgdFd29pO6Q==
@@ -2514,7 +2514,7 @@
     aria-hidden "^1.2.3"
     react-remove-scroll "^2.5.7"
 
-"@strapi/utils@4.15.0", "@strapi/utils@^4.11.0":
+"@strapi/utils@4.15.0", "@strapi/utils@^4.13.1":
   version "4.15.0"
   resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.15.0.tgz#1f4cf0343b7dbc91afa0907dd5afb732b1c7efed"
   integrity sha512-8X7YNGpL7OdJOF3Sx3gnnvIt+omKPiZqoqCvLIfVxbpt1o597cmaVaBHeCWAYBkd9xqmdnalvtGmEjMtjS+ILw==
