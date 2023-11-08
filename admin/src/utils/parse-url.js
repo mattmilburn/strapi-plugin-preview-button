@@ -14,20 +14,19 @@ const parseUrl = (config, data) => {
       return acc;
     }
 
-    // We are decoding and encoding at the same time here to avoid double-encoding.
     return {
       ...acc,
-      [key]: encodeURIComponent(decodeURIComponent(val)),
+      [key]: val,
     };
   }, {});
   const params = Object.entries(config?.query ?? {}).reduce((acc, [key, val]) => {
     return {
       ...acc,
-      [key]: interpolate(val, replacements),
+      [key]: encodeURIComponent(interpolate(val, replacements)),
     };
   }, {});
 
-  const url = interpolate(trimSlashes(config.url), replacements);
+  const url = encodeURI(interpolate(trimSlashes(config.url), replacements));
   const query = qs.stringify(params, {
     addQueryPrefix: true,
 
