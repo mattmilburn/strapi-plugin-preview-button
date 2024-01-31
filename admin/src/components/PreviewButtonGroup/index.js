@@ -6,7 +6,9 @@ import PreviewButton from '../PreviewButton';
 
 const PreviewButtonGroup = ({ data, isDraft }) => {
   const { url, copy, openTarget } = data;
-  const copyAllowed = copy !== false ? true : false;
+
+  // In order to disable the copy feature, `copy` must be explicitly defined as `false`.
+  const copyAllowed = copy !== false;
 
   return (
     <>

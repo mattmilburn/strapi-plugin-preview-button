@@ -7,7 +7,7 @@ module.exports = {
   default: {
     contentTypes: [],
   },
-  validator: (config) => {
+  validator(config) {
     if (!has(config, 'contentTypes')) {
       return;
     }

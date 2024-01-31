@@ -39,6 +39,7 @@ const ListViewColumn = ({ data, layout }) => {
     (event) => {
       if (!url) {
         event.preventDefault();
+
         return;
       }
 
@@ -60,7 +61,7 @@ const ListViewColumn = ({ data, layout }) => {
   if (isLoading) {
     return (
       <Flex {...stopPropagation}>
-        <Loader small={true} />
+        <Loader small />
       </Flex>
     );
   }
