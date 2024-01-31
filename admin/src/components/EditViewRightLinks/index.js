@@ -26,7 +26,7 @@ const EditViewRightLinks = () => {
   return (
     <>
       {showPublished && <PreviewButtonGroup data={published} isDraft={false} />}
-      {showDraft && <PreviewButtonGroup data={draft} isDraft={true} />}
+      {showDraft && <PreviewButtonGroup data={draft} isDraft />}
     </>
   );
 };

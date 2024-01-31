@@ -13,6 +13,7 @@ const PreviewButton = ({ isDraft, target, url }) => {
     (event) => {
       if (!url) {
         event.preventDefault();
+
         return;
       }
 
