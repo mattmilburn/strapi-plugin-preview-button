@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFetchClient, useNotification } from '@strapi/helper-plugin';
+import { useAPIErrorHandler, useFetchClient, useNotification } from '@strapi/helper-plugin';
 
 import { ACTION_RESOLVE_CONFIG } from '../constants';
 import { pluginId } from '../utils';
 
 const usePluginConfig = () => {
+  const { formatAPIError } = useAPIErrorHandler();
   const dispatch = useDispatch();
   const fetchClient = useFetchClient();
   const toggleNotification = useNotification();
@@ -32,10 +33,10 @@ const usePluginConfig = () => {
 
         toggleNotification({
           type: 'warning',
-          message: { id: 'notification.error' },
+          message: formatAPIError(err),
         });
       });
-  }, [isLoading, config, dispatch, fetchClient, toggleNotification]);
+  }, [isLoading, config, dispatch, fetchClient, toggleNotification, formatAPIError]);
 
   return {
     data: config,
