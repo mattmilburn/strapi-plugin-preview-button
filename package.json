@@ -4,10 +4,10 @@
   "description": "A plugin for Strapi CMS that adds a preview button and live view button to the content manager edit view.",
   "license": "MIT",
   "strapi": {
-    "displayName": "Preview Button",
+    "kind": "plugin",
     "name": "preview-button",
-    "description": "Adds a preview button and live view button to the content manager edit view.",
-    "kind": "plugin"
+    "displayName": "Preview Button",
+    "description": "Adds a preview button and live view button to the content manager edit view."
   },
   "author": {
     "name": "Matt Milburn",
@@ -38,16 +38,16 @@
     ]
   },
   "dependencies": {
+    "@strapi/design-system": "^1.9.0",
+    "@strapi/helper-plugin": "^4.13.1",
+    "@strapi/icons": "^1.9.0",
+    "@strapi/utils": "^4.13.1",
     "immer": "9.0.21",
     "react-copy-to-clipboard": "5.1.0",
     "react-redux": "8.1.1"
   },
   "peerDependencies": {
-    "@strapi/design-system": "^1.9.0",
-    "@strapi/helper-plugin": "^4.13.1",
-    "@strapi/icons": "^1.9.0",
     "@strapi/strapi": "^4.13.1",
-    "@strapi/utils": "^4.13.1",
     "lodash": "4.17.21",
     "prop-types": "^15.8.1",
     "qs": "^6.11.0",
@@ -59,11 +59,7 @@
     "@babel/core": "7.22.9",
     "@babel/eslint-parser": "7.22.9",
     "@babel/preset-react": "7.22.5",
-    "@strapi/design-system": "^1.9.0",
-    "@strapi/helper-plugin": "^4.13.1",
-    "@strapi/icons": "^1.9.0",
     "@strapi/strapi": "^4.13.1",
-    "@strapi/utils": "^4.13.1",
     "@swc/core": "1.3.70",
     "@swc/jest": "0.2.27",
     "eslint": "8.45.0",
