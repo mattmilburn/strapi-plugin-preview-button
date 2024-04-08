@@ -1,0 +1,20 @@
+# Testing
+/coverage
+junit.xml
+
+# Misc
+.DS_Store
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Development
+.husky
+.editorconfig
+.eslint*
+.prettier*
+.yarnrc.yml
+yarn.lock
+jest.config.js
