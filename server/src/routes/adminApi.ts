@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+const adminApiRoutes = {
   type: 'admin',
   routes: [
     {
@@ -13,3 +11,5 @@ module.exports = {
     },
   ],
 };
+
+export default adminApiRoutes;
