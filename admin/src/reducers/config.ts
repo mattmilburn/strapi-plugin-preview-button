@@ -1,12 +1,10 @@
 import produce from 'immer';
 
+import { type PreviewButtonPluginConfig } from '../../../server/src/config';
 import { ACTION_RESOLVE_CONFIG } from '../constants';
 
-const initialState = {
-  isLoading: true,
-  config: {
-    contentTypes: [],
-  },
+const initialState: PreviewButtonPluginConfig = {
+  contentTypes: null,
 };
 
 const configReducer = produce((previousState, action) => {

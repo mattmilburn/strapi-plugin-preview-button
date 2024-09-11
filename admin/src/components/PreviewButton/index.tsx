@@ -1,25 +1,29 @@
-import React, { memo, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import { memo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
-import { Button } from '@strapi/design-system/Button';
-import ExternalLink from '@strapi/icons/ExternalLink';
+import { Button } from '@strapi/design-system';
+import { ExternalLink } from '@strapi/icons';
 
+import { type PreviewButtonStateConfig } from '../../../../server/src/config';
 import { getTrad } from '../../utils';
 
-const PreviewButton = ({ isDraft, target, url }) => {
+export interface PreviewButtonProps extends PreviewButtonStateConfig {
+  isDraft: boolean;
+}
+
+const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
   const { formatMessage } = useIntl();
 
   const handleClick = useCallback(
-    (event) => {
+    (event: Event) => {
       if (!url) {
         event.preventDefault();
 
         return;
       }
 
-      window.open(url, target);
+      window.open(url, openTarget);
     },
-    [url, target]
+    [url, openTarget]
   );
 
   return (
@@ -43,12 +47,6 @@ const PreviewButton = ({ isDraft, target, url }) => {
       )}
     </Button>
   );
-};
-
-PreviewButton.propTypes = {
-  isDraft: PropTypes.bool.isRequired,
-  target: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
 };
 
 export default memo(PreviewButton);

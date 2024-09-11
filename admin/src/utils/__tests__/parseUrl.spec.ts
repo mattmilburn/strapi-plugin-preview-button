@@ -1,4 +1,4 @@
-import parseUrl from '../parse-url';
+import parseUrl from '../parseUrl';
 
 describe('parseUrl', () => {
   it('should populate variables into a URL string', () => {
@@ -46,7 +46,7 @@ describe('parseUrl', () => {
       foobar: 'foo/bar/test',
     };
     const output = 'https://www.example.com/test?type=page&foobar=foo%2Fbar%2Ftest';
-    const result = parseUrl(config, data, true);
+    const result = parseUrl(config, data);
 
     expect(result).toEqual(output);
   });
@@ -64,12 +64,13 @@ describe('parseUrl', () => {
       foobar: 'foo%bar%test',
     };
     const output = 'https://www.example.com/test?type=page&foobar=foo%25bar%25test';
-    const result = parseUrl(config, data, true);
+    const result = parseUrl(config, data);
 
     expect(result).toEqual(output);
   });
 
   it('should return null if params are null', () => {
+    // @ts-expect-error - Intentionally passing null for the test.
     const result = parseUrl(null, null);
 
     expect(result).toBeNull();

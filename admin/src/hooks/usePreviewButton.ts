@@ -1,15 +1,28 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useStrapiApp } from '@strapi/helper-plugin';
+import { useStrapiApp } from '@strapi/admin/strapi-admin';
 
+import { type PreviewButtonStateConfig } from '../../../server/src/config';
 import { HOOK_BEFORE_BUILD_URL } from '../constants';
-import usePluginConfig from './use-plugin-config';
 import { getPublishStateConfig } from '../utils';
+import usePluginConfig from './usePluginConfig';
 
-const usePreviewButton = (layout, data, isDraft, isCreating) => {
-  const { runHookWaterfall } = useStrapiApp();
+export interface UsePreviewButtonReturn {
+  isLoading: boolean;
+  isSupported: boolean;
+  draft: PreviewButtonStateConfig | null;
+  published: PreviewButtonStateConfig | null;
+}
+
+const usePreviewButton = (
+  layout: any,
+  data: any,
+  isCreating: boolean,
+): UsePreviewButtonReturn => {
+  const runHookWaterfall = useStrapiApp('PreviewButton', (value) => value.runHookWaterfall);
   const { data: config, isLoading } = usePluginConfig();
-  const [draft, setDraft] = useState(null);
-  const [published, setPublished] = useState(null);
+
+  const [draft, setDraft] = useState<PreviewButtonStateConfig | null>(null);
+  const [published, setPublished] = useState<PreviewButtonStateConfig | null>(null);
 
   const { uid } = layout.contentType;
   const uidConfig = config?.contentTypes?.find((type) => type.uid === uid);
@@ -23,12 +36,11 @@ const usePreviewButton = (layout, data, isDraft, isCreating) => {
         data,
         draft: uidConfig?.draft,
         published: uidConfig?.published,
-      },
-      true
+      }
     );
 
-    const draftConfig = getPublishStateConfig(result?.draft, data);
-    const publishedConfig = getPublishStateConfig(result?.published, data);
+    const draftConfig = getPublishStateConfig(result?.draft as PreviewButtonStateConfig, data);
+    const publishedConfig = getPublishStateConfig(result?.published as PreviewButtonStateConfig, data);
 
     setDraft(draftConfig);
     setPublished(publishedConfig);

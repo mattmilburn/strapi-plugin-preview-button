@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 import { usePreviewButton } from '../../hooks';
@@ -12,7 +11,6 @@ const EditViewRightLinks = () => {
   const { isLoading, isSupported, draft, published } = usePreviewButton(
     allLayoutData,
     initialData,
-    isDraft,
     isCreatingEntry
   );
 

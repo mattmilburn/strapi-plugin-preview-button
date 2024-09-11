@@ -1,4 +1,4 @@
-import trimSlashes from '../trim-slashes';
+import trimSlashes from '../trimSlashes';
 
 describe('trimSlashes', () => {
   it('should remove outer slashes from a string', () => {

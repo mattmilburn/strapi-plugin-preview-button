@@ -1,26 +1,30 @@
-import React, { memo, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import { memo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Button } from '@strapi/design-system/Button';
-import { useNotification } from '@strapi/helper-plugin';
-import LinkIcon from '@strapi/icons/Link';
+import { Button } from '@strapi/design-system';
+import { Link as LinkIcon } from '@strapi/icons';
+import { useNotification } from '@strapi/strapi/admin';
 
 import { getTrad } from '../../utils';
 
-const CopyLinkButton = ({ isDraft, url }) => {
+export interface CopyLinkButtonProps {
+  isDraft: boolean;
+  url: string;
+}
+
+const CopyLinkButton = ({ isDraft, url }: CopyLinkButtonProps) => {
   const { formatMessage } = useIntl();
-  const toggleNotification = useNotification();
+  const { toggleNotification } = useNotification();
 
   const handleOnCopy = useCallback(() => {
     toggleNotification({
       type: 'success',
-      message: {
+      message: formatMessage({
         id: 'notification.success.link-copied',
         defaultMessage: 'Link copied to the clipboard',
-      },
+      }),
     });
-  }, [toggleNotification]);
+  }, [formatMessage, toggleNotification]);
 
   return (
     <CopyToClipboard text={url} onCopy={handleOnCopy}>
@@ -39,11 +43,6 @@ const CopyLinkButton = ({ isDraft, url }) => {
       </Button>
     </CopyToClipboard>
   );
-};
-
-CopyLinkButton.propTypes = {
-  isDraft: PropTypes.bool.isRequired,
-  url: PropTypes.string.isRequired,
 };
 
 export default memo(CopyLinkButton);

@@ -1,27 +1,40 @@
-import React, { useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import get from 'lodash/get';
-import { Flex } from '@strapi/design-system/Flex';
-import { IconButton } from '@strapi/design-system/IconButton';
-import { Loader } from '@strapi/design-system/Loader';
-import { stopPropagation, useNotification } from '@strapi/helper-plugin';
-import ExternalLink from '@strapi/icons/ExternalLink';
-import LinkIcon from '@strapi/icons/Link';
+import { Flex, IconButton, Loader } from '@strapi/design-system';
+import { ExternalLink, Link as LinkIcon } from '@strapi/icons';
+import { useNotification } from '@strapi/strapi/admin';
 
 import { PREVIEW_WINDOW_NAME } from '../../constants';
 import { usePreviewButton } from '../../hooks';
 import { getTrad } from '../../utils';
 
-const ListViewColumn = ({ data, layout }) => {
+export interface ListViewColumnProps {
+  data: any;
+  layout: {
+    contentType: {
+      uid: string;
+      options: {
+        draftAndPublish: boolean;
+      };
+      pluginOptions: {
+        [pluginId: string]: {
+          listViewColumn: boolean;
+        };
+      };
+    };
+  };
+}
+
+const ListViewColumn = ({ data, layout }: ListViewColumnProps) => {
   const { formatMessage } = useIntl();
-  const toggleNotification = useNotification();
+  const { toggleNotification } = useNotification();
 
   const hasDraftAndPublish = layout.contentType.options.draftAndPublish === true;
   const isDraft = hasDraftAndPublish && !data?.publishedAt;
 
-  const { isLoading, draft, published } = usePreviewButton(layout, data, isDraft, false);
+  const { isLoading, draft, published } = usePreviewButton(layout, data, false);
 
   const config = useMemo(() => {
     if (isDraft) {
@@ -31,12 +44,12 @@ const ListViewColumn = ({ data, layout }) => {
     return published;
   }, [isDraft, draft, published]);
 
-  const url = get(config, 'url');
+  const url = get(config, 'url', '');
   const copy = get(config, 'copy');
   const openTarget = get(config, 'openTarget', PREVIEW_WINDOW_NAME);
 
   const handleClick = useCallback(
-    (event) => {
+    (event: Event) => {
       if (!url) {
         event.preventDefault();
 
@@ -51,23 +64,23 @@ const ListViewColumn = ({ data, layout }) => {
   const handleOnCopy = useCallback(() => {
     toggleNotification({
       type: 'success',
-      message: {
+      message: formatMessage({
         id: 'notification.success.link-copied',
         defaultMessage: 'Link copied to the clipboard',
-      },
+      }),
     });
-  }, [toggleNotification]);
+  }, [formatMessage, toggleNotification]);
 
   if (isLoading) {
     return (
-      <Flex {...stopPropagation}>
+      <Flex>
         <Loader small />
       </Flex>
     );
   }
 
   return (
-    <Flex {...stopPropagation}>
+    <Flex>
       <IconButton
         onClick={handleClick}
         label={formatMessage(
@@ -105,23 +118,6 @@ const ListViewColumn = ({ data, layout }) => {
       )}
     </Flex>
   );
-};
-
-ListViewColumn.propTypes = {
-  data: PropTypes.object.isRequired,
-  layout: PropTypes.shape({
-    contentType: PropTypes.shape({
-      uid: PropTypes.string.isRequired,
-      options: PropTypes.shape({
-        draftAndPublish: PropTypes.bool,
-      }),
-      pluginOptions: PropTypes.shape({
-        'preview-button': PropTypes.shape({
-          listViewColumn: PropTypes.bool,
-        }),
-      }),
-    }).isRequired,
-  }).isRequired,
 };
 
 export default ListViewColumn;

@@ -1,11 +1,12 @@
 import qs from 'qs';
 
+import { PreviewButtonStateConfig } from '../../../server/src/config';
 import interpolate from './interpolate';
-import trimSlashes from './trim-slashes';
+import trimSlashes from './trimSlashes';
 
-const parseUrl = (config, data) => {
+const parseUrl = (config: PreviewButtonStateConfig, data: any): string => {
   if (!config || !data) {
-    return null;
+    return '';
   }
 
   const supportedTypes = ['number', 'string'];

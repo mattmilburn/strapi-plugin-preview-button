@@ -1,10 +1,38 @@
-import React from 'react';
 import get from 'lodash/get';
 
 import { ListViewColumn } from '../components';
 import { pluginId } from '../utils';
 
-const addPreviewColumn = ({ displayedHeaders, layout }) => {
+export interface AddPreviewColumnProps {
+  displayedHeaders: {
+    key: string;
+    fieldSchema: {
+      type: string;
+    };
+    metadatas: {
+      label: string;
+      searchable: boolean;
+      sortable: boolean;
+    };
+    name: string;
+    cellFormatter: (data: any) => React.ReactElement;
+  }[];
+  layout: {
+    contentType: {
+      uid: string;
+      options: {
+        draftAndPublish: boolean;
+      };
+      pluginOptions: {
+        [pluginId: string]: {
+          listViewColumn: boolean;
+        };
+      };
+    };
+  };
+}
+
+const addPreviewColumn = ({ displayedHeaders, layout }: AddPreviewColumnProps) => {
   const supportKeys = ['contentType', 'pluginOptions', pluginId, 'listViewColumn'];
   const isSupported = get(layout, supportKeys, false) === true;
 
@@ -30,7 +58,7 @@ const addPreviewColumn = ({ displayedHeaders, layout }) => {
           sortable: false,
         },
         name: 'preview',
-        cellFormatter: (data) => <ListViewColumn data={data} layout={layout} />,
+        cellFormatter: (data: any) => <ListViewColumn data={data} layout={layout} />,
       },
     ],
     layout,
