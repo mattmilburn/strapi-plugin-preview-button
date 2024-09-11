@@ -1,6 +1,4 @@
-build
+dist
 coverage
 public
-LICENSE.md
-MIGRATION.md
-README.md
+*.md
