@@ -68,7 +68,7 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@strapi/utils": "^5.0.0-rc.19",
+    "@strapi/utils": "^5.0.0-rc.22",
     "immer": "9.0.21",
     "lodash": "4.17.21",
     "qs": "6.12.0",
@@ -78,7 +78,7 @@
   },
   "peerDependencies": {
     "@strapi/sdk-plugin": "^5.2.0",
-    "@strapi/strapi": "^5.0.0-rc.19",
+    "@strapi/strapi": "^5.0.0-rc.22",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1"
@@ -88,8 +88,8 @@
     "@babel/eslint-parser": "7.24.1",
     "@babel/preset-react": "7.24.1",
     "@strapi/sdk-plugin": "^5.2.0",
-    "@strapi/strapi": "^5.0.0-rc.19",
-    "@strapi/typescript-utils": "^5.0.0-rc.19",
+    "@strapi/strapi": "^5.0.0-rc.22",
+    "@strapi/typescript-utils": "^5.0.0-rc.22",
     "@swc/core": "1.4.8",
     "@swc/jest": "0.2.36",
     "@types/jest": "29.5.12",
