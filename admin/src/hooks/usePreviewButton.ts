@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
 import { useStrapiApp } from '@strapi/admin/strapi-admin';
+import { useCallback, useEffect, useState } from 'react';
 
+import { type UID } from '@strapi/strapi';
 import { type PreviewButtonStateConfig } from '../../../server/src/config';
 import { HOOK_BEFORE_BUILD_URL } from '../constants';
 import { getPublishStateConfig } from '../utils';
@@ -14,9 +15,8 @@ export interface UsePreviewButtonReturn {
 }
 
 const usePreviewButton = (
-  layout: any,
+  uid: UID.ContentType | undefined,
   data: any,
-  isCreating: boolean,
 ): UsePreviewButtonReturn => {
   const runHookWaterfall = useStrapiApp('PreviewButton', (value) => value.runHookWaterfall);
   const { data: config, isLoading } = usePluginConfig();
@@ -24,7 +24,6 @@ const usePreviewButton = (
   const [draft, setDraft] = useState<PreviewButtonStateConfig | null>(null);
   const [published, setPublished] = useState<PreviewButtonStateConfig | null>(null);
 
-  const { uid } = layout.contentType;
   const uidConfig = config?.contentTypes?.find((type) => type.uid === uid);
   const isSupported = !!uidConfig;
 
@@ -47,12 +46,12 @@ const usePreviewButton = (
   }, [data, uidConfig, setDraft, setPublished, runHookWaterfall]);
 
   useEffect(() => {
-    if (!isSupported || isLoading || isCreating) {
+    if (!isSupported || isLoading) {
       return;
     }
 
     compileWithHooks();
-  }, [isSupported, isLoading, isCreating, compileWithHooks]);
+  }, [isSupported, isLoading, compileWithHooks]);
 
   return {
     isLoading,
