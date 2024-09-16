@@ -1,25 +1,31 @@
-import { useCMEditViewDataManager } from '@strapi/helper-plugin';
-
+import { unstable_useDocument } from '@strapi/content-manager/strapi-admin';
+import { useParams } from 'react-router-dom';
 import { usePreviewButton } from '../../hooks';
 import PreviewButtonGroup from '../PreviewButtonGroup';
 
 const EditViewRightLinks = () => {
-  const { allLayoutData, hasDraftAndPublish, isCreatingEntry, initialData } =
-    useCMEditViewDataManager();
-  const isDraft = hasDraftAndPublish && !initialData?.publishedAt;
+  // We need to get the document id, model, and collectionType in order to
+  // use the useDocument hook.
+  // Note: `documentId` is undefined when the document is being created and has
+  // not been saved yet.
+  const { id: documentId, slug: model = '', collectionType = '' } = useParams();
 
-  const { isLoading, isSupported, draft, published } = usePreviewButton(
-    allLayoutData,
-    initialData,
-    isCreatingEntry
-  );
+  // Get the document data (as `document`, which is undefined at first)
+  // and the uid so the preview button has the data it needs.
+  const { document, schema } = unstable_useDocument({ documentId, model, collectionType });
+  const uid = schema?.uid;
 
-  if (!isSupported || isCreatingEntry || isLoading) {
+  const draftExists = document?.status === 'draft' || document?.status === 'modified';
+  const publishedExists = document?.status === 'published' || document?.status === 'modified';
+
+  const { isLoading, isSupported, draft, published } = usePreviewButton(uid, document);
+
+  if (!document || !uid || !isSupported || isLoading) {
     return null;
   }
 
-  const showPublished = !!published && !isDraft;
-  const showDraft = !!draft && (isDraft || draft?.alwaysVisible);
+  const showPublished = !!published && publishedExists;
+  const showDraft = !!draft && (draftExists || draft?.alwaysVisible);
 
   return (
     <>

@@ -1,3 +1,4 @@
+import { type UID } from '@strapi/strapi';
 import { errors } from '@strapi/utils';
 import has from 'lodash/has';
 
@@ -11,7 +12,7 @@ export interface PreviewButtonStateConfig {
 
 export interface PreviewButtonPluginConfig {
   contentTypes?: {
-    uid: any;
+    uid: UID.ContentType;
     draft?: PreviewButtonStateConfig;
     published?: PreviewButtonStateConfig;
   }[] | null;
