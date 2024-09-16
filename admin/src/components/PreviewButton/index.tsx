@@ -1,7 +1,7 @@
+import { LinkButton } from '@strapi/design-system';
+import { ExternalLink } from '@strapi/icons';
 import { memo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
-import { Button } from '@strapi/design-system';
-import { ExternalLink } from '@strapi/icons';
 
 import { type PreviewButtonStateConfig } from '../../../../server/src/config';
 import { getTrad } from '../../utils';
@@ -15,11 +15,9 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
 
   const handleClick = useCallback(
     (event: Event) => {
-      if (!url) {
-        event.preventDefault();
+      event.preventDefault();
 
-        return;
-      }
+      if (!url)  return;
 
       window.open(url, openTarget);
     },
@@ -27,12 +25,15 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
   );
 
   return (
-    <Button
+    <LinkButton
+      href={url}
+      target={'_blank'}
       onClick={handleClick}
       size="S"
       startIcon={<ExternalLink />}
       variant="secondary"
       style={{ width: '100%' }}
+      disabled={!url}
     >
       {formatMessage(
         isDraft
@@ -45,7 +46,7 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
               defaultMessage: 'Open live view',
             }
       )}
-    </Button>
+    </LinkButton>
   );
 };
 
