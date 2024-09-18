@@ -1,3 +1,4 @@
+import { UID } from '@strapi/strapi';
 import get from 'lodash/get';
 
 import { ListViewColumn } from '../components';
@@ -19,7 +20,7 @@ export interface AddPreviewColumnProps {
   }[];
   layout: {
     contentType: {
-      uid: string;
+      uid: UID.ContentType | undefined;
       options: {
         draftAndPublish: boolean;
       };
