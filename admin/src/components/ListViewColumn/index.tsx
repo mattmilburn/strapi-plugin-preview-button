@@ -35,7 +35,7 @@ const ListViewColumn = ({ data, layout }: ListViewColumnProps) => {
   const hasDraftAndPublish = layout.contentType.options.draftAndPublish === true;
   const isDraft = hasDraftAndPublish && !data?.publishedAt;
 
-  const { isLoading, draft, published } = usePreviewButton(layout, data, false);
+  const { isLoading, draft, published } = usePreviewButton(layout.contentType.uid, data);
 
   const config = useMemo(() => {
     if (isDraft) {
