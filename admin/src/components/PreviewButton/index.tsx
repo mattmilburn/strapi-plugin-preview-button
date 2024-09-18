@@ -17,7 +17,9 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
     (event: Event) => {
       event.preventDefault();
 
-      if (!url)  return;
+      if (!url) {
+        return
+      };
 
       window.open(url, openTarget);
     },
@@ -27,7 +29,7 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
   return (
     <LinkButton
       href={url}
-      target={'_blank'}
+      target="_blank"
       onClick={handleClick}
       size="S"
       startIcon={<ExternalLink />}
