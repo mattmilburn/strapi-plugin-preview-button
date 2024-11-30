@@ -38,13 +38,8 @@
     }
   },
   "files": [
-    "dist",
-    "./strapi-server.js"
+    "dist"
   ],
-  "engines": {
-    "node": ">=18.0.0 <=20.x.x",
-    "npm": ">=6.0.0"
-  },
   "scripts": {
     "build": "strapi-plugin build",
     "format": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|css|md)\"",
@@ -128,6 +123,6 @@
     "preview",
     "draft",
     "page",
-    "next"
+    "published"
   ]
 }
