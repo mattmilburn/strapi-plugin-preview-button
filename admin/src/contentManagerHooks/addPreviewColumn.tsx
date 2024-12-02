@@ -1,5 +1,5 @@
-import { UID } from '@strapi/strapi';
 import get from 'lodash/get';
+import type { UID } from '@strapi/strapi';
 
 import { ListViewColumn } from '../components';
 import { pluginId } from '../utils';
