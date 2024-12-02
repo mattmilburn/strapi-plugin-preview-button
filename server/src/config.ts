@@ -11,11 +11,13 @@ export interface PreviewButtonStateConfig {
 }
 
 export interface PreviewButtonPluginConfig {
-  contentTypes?: {
-    uid: UID.ContentType;
-    draft?: PreviewButtonStateConfig;
-    published?: PreviewButtonStateConfig;
-  }[] | null;
+  contentTypes?:
+    | {
+        uid: UID.ContentType;
+        draft?: PreviewButtonStateConfig;
+        published?: PreviewButtonStateConfig;
+      }[]
+    | null;
 }
 
 export const defaultConfig: PreviewButtonPluginConfig = {

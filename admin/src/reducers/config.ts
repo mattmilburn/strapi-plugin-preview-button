@@ -1,6 +1,6 @@
-import produce from 'immer';
+import { produce } from 'immer';
 
-import { type PreviewButtonPluginConfig } from '../../../server/src/config';
+import type { PreviewButtonPluginConfig } from '../../../server/src/config';
 import { ACTION_RESOLVE_CONFIG } from '../constants';
 
 const initialState: PreviewButtonPluginConfig = {

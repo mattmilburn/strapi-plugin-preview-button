@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { type PreviewButtonStateConfig } from '../../../../server/src/config';
+import type { PreviewButtonStateConfig } from '../../../../server/src/config';
 import CopyLinkButton from '../CopyLinkButton';
 import PreviewButton from '../PreviewButton';
 

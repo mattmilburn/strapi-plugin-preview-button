@@ -1,7 +1,7 @@
 import config, { type ConfigService } from './config';
 
 export type PreviewButtonServices = {
-  config: ConfigService,
+  config: ConfigService;
 };
 
 export default {

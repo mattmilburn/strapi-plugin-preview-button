@@ -9,6 +9,3 @@ export default {
   routes,
   services,
 };
-
-
-

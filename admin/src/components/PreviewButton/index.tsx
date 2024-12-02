@@ -3,7 +3,7 @@ import { ExternalLink } from '@strapi/icons';
 import { memo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 
-import { type PreviewButtonStateConfig } from '../../../../server/src/config';
+import type { PreviewButtonStateConfig } from '../../../../server/src/config';
 import { getTrad } from '../../utils';
 
 export interface PreviewButtonProps extends PreviewButtonStateConfig {
@@ -18,8 +18,8 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
       event.preventDefault();
 
       if (!url) {
-        return
-      };
+        return;
+      }
 
       window.open(url, openTarget);
     },
@@ -28,14 +28,14 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
 
   return (
     <LinkButton
+      disabled={!url}
       href={url}
-      target="_blank"
       onClick={handleClick}
       size="S"
       startIcon={<ExternalLink />}
+      target="_blank"
       variant="secondary"
       style={{ width: '100%' }}
-      disabled={!url}
     >
       {formatMessage(
         isDraft
