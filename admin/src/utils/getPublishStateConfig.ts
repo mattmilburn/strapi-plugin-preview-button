@@ -1,4 +1,4 @@
-import { PreviewButtonStateConfig } from '../../../server/src/config';
+import type { PreviewButtonStateConfig } from '../../../server/src/config';
 import { PREVIEW_WINDOW_NAME } from '../constants';
 import parseUrl from './parseUrl';
 

@@ -1,8 +1,8 @@
-import { useStrapiApp } from '@strapi/admin/strapi-admin';
 import { useCallback, useEffect, useState } from 'react';
+import { useStrapiApp } from '@strapi/admin/strapi-admin';
+import type { UID } from '@strapi/strapi';
 
-import { type UID } from '@strapi/strapi';
-import { type PreviewButtonStateConfig } from '../../../server/src/config';
+import type { PreviewButtonStateConfig } from '../../../server/src/config';
 import { HOOK_BEFORE_BUILD_URL } from '../constants';
 import { getPublishStateConfig } from '../utils';
 import usePluginConfig from './usePluginConfig';
@@ -14,10 +14,7 @@ export interface UsePreviewButtonReturn {
   published: PreviewButtonStateConfig | null;
 }
 
-const usePreviewButton = (
-  uid: UID.ContentType | undefined,
-  data: any,
-): UsePreviewButtonReturn => {
+const usePreviewButton = (uid: UID.ContentType | undefined, data: any): UsePreviewButtonReturn => {
   const runHookWaterfall = useStrapiApp('PreviewButton', (value) => value.runHookWaterfall);
   const { data: config, isLoading } = usePluginConfig();
 
@@ -29,17 +26,17 @@ const usePreviewButton = (
 
   const compileWithHooks = useCallback(async () => {
     // Run async hook then set state.
-    const result = await runHookWaterfall(
-      HOOK_BEFORE_BUILD_URL,
-      {
-        data,
-        draft: uidConfig?.draft,
-        published: uidConfig?.published,
-      }
-    );
+    const result = await runHookWaterfall(HOOK_BEFORE_BUILD_URL, {
+      data,
+      draft: uidConfig?.draft,
+      published: uidConfig?.published,
+    });
 
     const draftConfig = getPublishStateConfig(result?.draft as PreviewButtonStateConfig, data);
-    const publishedConfig = getPublishStateConfig(result?.published as PreviewButtonStateConfig, data);
+    const publishedConfig = getPublishStateConfig(
+      result?.published as PreviewButtonStateConfig,
+      data
+    );
 
     setDraft(draftConfig);
     setPublished(publishedConfig);

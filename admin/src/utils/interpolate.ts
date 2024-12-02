@@ -1,4 +1,4 @@
-const interpolate = (originalStr: string, data: any = {}): string => {
+const interpolate = (originalStr: string, data: Record<string, any> = {}): string => {
   let str = originalStr;
 
   Object.entries(data).forEach(([key, value]: [string, any]) => {
