@@ -42,8 +42,8 @@
   ],
   "scripts": {
     "build": "strapi-plugin build",
-    "format": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|css|md)\"",
-    "format:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|md)\"",
+    "format": "prettier --check \"{admin,server}/**/*.(ts|tsx|json|md)\"",
+    "format:fix": "prettier --write \"{admin,server}/**/*.(ts|tsx|json|md)\"",
     "lint": "eslint --fix-dry-run '{admin,server}/**/*.{ts,tsx}'",
     "lint:fix": "eslint --fix '{admin,server}/**/*.{ts,tsx}'",
     "prepare": "husky",
@@ -54,10 +54,8 @@
     "watch:link": "strapi-plugin watch:link"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --check",
-      "eslint --fix-dry-run"
-    ]
+    "{admin,server}/**/*.(ts|tsx|json|css|md)": "prettier --check",
+    "{admin,server}/**/*.{ts,tsx}": "eslint --fix-dry-run"
   },
   "prettier": {
     "endOfLine": "lf",
