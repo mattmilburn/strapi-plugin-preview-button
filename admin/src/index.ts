@@ -1,8 +1,8 @@
 import { EditViewRightLinks } from './components';
-import { HOOK_BEFORE_BUILD_URL } from './constants';
+import { HOOK_BEFORE_BUILD_URL, PLUGIN_ID, PLUGIN_NAME } from './constants';
 import { addPreviewColumn } from './contentManagerHooks';
 import reducers from './reducers';
-import { pluginId, pluginName, prefixPluginTranslations } from './utils';
+import { prefixPluginTranslations } from './utils';
 
 export default {
   register(app: any) {
@@ -11,14 +11,14 @@ export default {
     app.createHook(HOOK_BEFORE_BUILD_URL);
 
     app.registerPlugin({
-      id: pluginId,
-      name: pluginName,
+      id: PLUGIN_ID,
+      name: PLUGIN_NAME,
     });
   },
 
   bootstrap(app: any) {
     app.getPlugin('content-manager').injectComponent('editView', 'right-links', {
-      name: pluginId,
+      name: PLUGIN_ID,
       Component: EditViewRightLinks,
     });
 

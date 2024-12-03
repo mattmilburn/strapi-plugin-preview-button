@@ -8,7 +8,7 @@ const initialState: PreviewButtonPluginConfig = {
 };
 
 const configReducer = produce((previousState, action) => {
-  let state = previousState ?? initialState;
+  const state = previousState ?? initialState;
 
   switch (action.type) {
     case ACTION_RESOLVE_CONFIG:

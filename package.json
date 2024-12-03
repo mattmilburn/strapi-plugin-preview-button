@@ -47,11 +47,25 @@
     "lint": "eslint --fix-dry-run '{admin,server}/**/*.{ts,tsx}'",
     "lint:fix": "eslint --fix '{admin,server}/**/*.{ts,tsx}'",
     "prepare": "husky",
-    "test": "jest --testPathPattern='\\/__tests__\\/.*\\.(?:test|spec)\\.js$' --ci 2>&1",
+    "test": "jest --forceExit --detectOpenHandles",
     "test:ts:back": "run -T tsc -p server/tsconfig.json",
     "verify": "strapi-plugin verify",
     "watch": "strapi-plugin watch",
     "watch:link": "strapi-plugin watch:link"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "transform": {
+      "^.+\\.test\\.{ts,tsx}?$": "ts-jest"
+    },
+    "testPathIgnorePatterns": [
+      "/coverage/",
+      "/dist/",
+      "/node_modules/",
+      "/public/",
+      ".tmp",
+      ".cache"
+    ]
   },
   "lint-staged": {
     "{admin,server}/**/*.(ts|tsx|json|css|md)": "prettier --check",
@@ -75,7 +89,6 @@
     "styled-components": "^6"
   },
   "peerDependencies": {
-    "@strapi/sdk-plugin": "^5.2.0",
     "@strapi/strapi": "^5.4.0",
     "react": "^18",
     "react-dom": "^18",
@@ -87,20 +100,21 @@
     "@strapi/sdk-plugin": "^5.2.0",
     "@strapi/strapi": "^5.4.0",
     "@strapi/typescript-utils": "^5.4.0",
-    "@swc/core": "^1.9.3",
-    "@swc/jest": "^0.2.37",
     "@types/eslint__js": "^8",
     "@types/jest": "^29",
     "@types/react-copy-to-clipboard": "^5",
     "eslint": "^9",
     "husky": "^9",
     "jest": "^29",
-    "jest-junit": "^16",
+    "jest-environment-jsdom": "^29",
     "lint-staged": "^15",
     "prettier": "^3",
     "react": "^18",
     "react-dom": "^18",
     "react-router-dom": "^6",
+    "sqlite3": "^5",
+    "supertest": "^7",
+    "ts-jest": "^29",
     "typescript": "^5.7.0",
     "typescript-eslint": "^7"
   },

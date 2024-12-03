@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 import parseUrl from '../parseUrl';
 
 describe('parseUrl', () => {
@@ -69,10 +70,12 @@ describe('parseUrl', () => {
     expect(result).toEqual(output);
   });
 
-  it('should return null if params are null', () => {
-    // @ts-expect-error - Intentionally passing null for the test.
-    const result = parseUrl(null, null);
+  it('should return an empty string if data param is null', () => {
+    const config = {
+      url: 'https://www.example.com/{locale}/{slug}',
+    };
+    const result = parseUrl(config, null);
 
-    expect(result).toBeNull();
+    expect(result).toEqual('');
   });
 });

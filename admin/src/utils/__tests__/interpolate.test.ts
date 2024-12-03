@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 import interpolate from '../interpolate';
 
 describe('interpolate', () => {

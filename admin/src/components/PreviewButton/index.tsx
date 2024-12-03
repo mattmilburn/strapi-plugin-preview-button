@@ -1,7 +1,7 @@
-import { LinkButton } from '@strapi/design-system';
-import { ExternalLink } from '@strapi/icons';
 import { memo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
+import { LinkButton } from '@strapi/design-system';
+import { ExternalLink } from '@strapi/icons';
 
 import type { PreviewButtonStateConfig } from '../../../../server/src/config';
 import { getTrad } from '../../utils';

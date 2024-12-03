@@ -1,4 +1,4 @@
-import qs from 'qs';
+import * as qs from 'qs';
 
 import type { PreviewButtonStateConfig } from '../../../server/src/config';
 import interpolate from './interpolate';
