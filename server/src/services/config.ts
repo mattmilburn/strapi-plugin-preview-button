@@ -1,17 +1,17 @@
-import { type Core } from '@strapi/strapi';
+import type { Core } from '@strapi/strapi';
 
-import { defaultConfig, type PreviewButtonPluginConfig } from '../config';
-import { pluginId } from '../utils';
+import { defaultConfig } from '../config';
+import type { PreviewButtonPluginConfig } from '../config';
+import { PLUGIN_ID } from '../constants';
 
-type ConfigService = ReturnType<typeof configService>;
+export type ConfigService = ReturnType<typeof configService>;
 
 const configService = ({ strapi }: { strapi: Core.Strapi }) => ({
   async get(): Promise<PreviewButtonPluginConfig> {
-    const config = await strapi.config.get(`plugin::${pluginId}`, defaultConfig);
+    const config = await strapi.config.get(`plugin::${PLUGIN_ID}`, defaultConfig);
 
     return config;
   },
 });
 
-export { type ConfigService };
 export default configService;

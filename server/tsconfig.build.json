@@ -3,8 +3,8 @@
   "include": ["./src"],
   "exclude": ["**/*.test.ts"],
   "compilerOptions": {
-    "rootDir": "../",
     "baseUrl": ".",
+    "rootDir": "../",
     "outDir": "./dist"
   }
 }

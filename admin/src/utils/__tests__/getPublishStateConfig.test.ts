@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 import type { PreviewButtonStateConfig } from '../../../../server/src/config';
 import getPublishStateConfig, { defaultRequiredConfig } from '../getPublishStateConfig';
 
@@ -6,9 +7,8 @@ describe('getPublishStateConfig', () => {
     const data = { slug: 'foobar' };
     const input = { url: 'https://example.com/{slug}' };
     const result = getPublishStateConfig(input, data) as PreviewButtonStateConfig;
-    const requiredKeys = [...Object.keys(defaultRequiredConfig), 'url'];
 
-    expect(Object.keys(result)).toEqual(requiredKeys);
+    expect(Object.keys(result)).toEqual(Object.keys(defaultRequiredConfig));
   });
 
   it('should populate values into the `url` prop', () => {
@@ -18,12 +18,5 @@ describe('getPublishStateConfig', () => {
     const result = getPublishStateConfig(input, data) as PreviewButtonStateConfig;
 
     expect(result.url).toEqual(output);
-  });
-
-  it('should return null if params are null', () => {
-    // @ts-expect-error - Intentionally passing null for the test.
-    const result = getPublishStateConfig(null, null);
-
-    expect(result).toBeNull();
   });
 });

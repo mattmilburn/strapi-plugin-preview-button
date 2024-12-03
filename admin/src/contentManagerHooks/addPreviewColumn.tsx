@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import type { UID } from '@strapi/strapi';
 
 import { ListViewColumn } from '../components';
-import { pluginId } from '../utils';
+import { PLUGIN_ID } from '../constants';
 
 export interface AddPreviewColumnProps {
   displayedHeaders: {
@@ -34,7 +34,7 @@ export interface AddPreviewColumnProps {
 }
 
 const addPreviewColumn = ({ displayedHeaders, layout }: AddPreviewColumnProps) => {
-  const supportKeys = ['contentType', 'pluginOptions', pluginId, 'listViewColumn'];
+  const supportKeys = ['contentType', 'pluginOptions', PLUGIN_ID, 'listViewColumn'];
   const isSupported = get(layout, supportKeys, false) === true;
 
   // Do nothing if the preview button column is not supported or disabled for this UID.

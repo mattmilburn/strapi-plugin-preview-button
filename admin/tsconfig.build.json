@@ -3,8 +3,8 @@
   "include": ["./src", "./custom.d.ts"],
   "exclude": ["**/*.test.ts", "**/*.test.tsx"],
   "compilerOptions": {
-    "rootDir": "../",
     "baseUrl": ".",
+    "rootDir": "../",
     "outDir": "./dist"
   }
 }

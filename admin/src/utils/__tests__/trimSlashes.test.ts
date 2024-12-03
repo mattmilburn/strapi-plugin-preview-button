@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 import trimSlashes from '../trimSlashes';
 
 describe('trimSlashes', () => {

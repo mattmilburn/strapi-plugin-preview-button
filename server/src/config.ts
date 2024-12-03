@@ -1,6 +1,6 @@
-import { type UID } from '@strapi/strapi';
-import { errors } from '@strapi/utils';
 import has from 'lodash/has';
+import type { UID } from '@strapi/strapi';
+import { errors } from '@strapi/utils';
 
 export interface PreviewButtonStateConfig {
   url: string;

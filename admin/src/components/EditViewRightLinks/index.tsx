@@ -1,5 +1,6 @@
-import { unstable_useDocument } from '@strapi/content-manager/strapi-admin';
 import { useParams } from 'react-router-dom';
+import { unstable_useDocument } from '@strapi/content-manager/strapi-admin';
+
 import { usePreviewButton } from '../../hooks';
 import PreviewButtonGroup from '../PreviewButtonGroup';
 

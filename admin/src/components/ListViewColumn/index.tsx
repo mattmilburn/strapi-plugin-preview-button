@@ -1,11 +1,11 @@
+import { useCallback, useMemo } from 'react';
+import { useIntl } from 'react-intl';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import get from 'lodash/get';
 import { Flex, IconButton, Loader } from '@strapi/design-system';
 import { ExternalLink, Link as LinkIcon } from '@strapi/icons';
-import { UID } from '@strapi/strapi';
+import type { UID } from '@strapi/strapi';
 import { useNotification } from '@strapi/strapi/admin';
-import get from 'lodash/get';
-import { useCallback, useMemo } from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { useIntl } from 'react-intl';
 
 import { PREVIEW_WINDOW_NAME } from '../../constants';
 import { usePreviewButton } from '../../hooks';
