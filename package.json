@@ -48,6 +48,7 @@
     "lint:fix": "eslint --fix '{admin,server}/**/*.{ts,tsx}'",
     "prepare": "husky",
     "test": "jest --forceExit --detectOpenHandles",
+    "test:ts:front": "run -T tsc -p admin/tsconfig.json",
     "test:ts:back": "run -T tsc -p server/tsconfig.json",
     "verify": "strapi-plugin verify",
     "watch": "strapi-plugin watch",
@@ -80,12 +81,12 @@
   },
   "dependencies": {
     "@strapi/utils": "^5.4.0",
-    "immer": "^10",
+    "immer": "^9",
     "lodash": "4.17.21",
     "qs": "^6",
     "react-copy-to-clipboard": "^5",
     "react-intl": "^7",
-    "react-redux": "^9",
+    "react-redux": "^8",
     "styled-components": "^6"
   },
   "peerDependencies": {
