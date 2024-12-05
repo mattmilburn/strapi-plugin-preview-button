@@ -1,1 +1,1 @@
-export const PLUGIN_ID = 'strapi-plugin-preview-button';
+export const PLUGIN_ID = 'preview-button';
