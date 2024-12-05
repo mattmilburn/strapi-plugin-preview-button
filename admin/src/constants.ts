@@ -1,4 +1,4 @@
-export const PLUGIN_ID = 'strapi-plugin-preview-button';
+export const PLUGIN_ID = 'preview-button';
 export const PLUGIN_NAME = 'Preview Button';
 
 export const ACTION_RESOLVE_PREVIEW = `${PLUGIN_ID}/resolve-data`;
