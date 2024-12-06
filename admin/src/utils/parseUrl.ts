@@ -1,6 +1,6 @@
 import * as qs from 'qs';
 
-import type { PreviewButtonStateConfig } from '../../../server/src/config';
+import { type PreviewButtonStateConfig } from '../../../server/src/config';
 import interpolate from './interpolate';
 import trimSlashes from './trimSlashes';
 

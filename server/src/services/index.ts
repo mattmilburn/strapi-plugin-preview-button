@@ -1,5 +1,4 @@
-import config from './config';
-import type { ConfigService } from './config';
+import config, { type ConfigService } from './config';
 
 export interface PreviewButtonServices {
   config: ConfigService;

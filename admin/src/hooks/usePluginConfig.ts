@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAPIErrorHandler, useFetchClient, useNotification } from '@strapi/strapi/admin';
 
-import type { PreviewButtonPluginConfig } from '../../../server/src/config';
+import { type PreviewButtonPluginConfig } from '../../../server/src/config';
 import { ACTION_RESOLVE_CONFIG, PLUGIN_ID } from '../constants';
 
 export interface UsePluginConfigReturn {

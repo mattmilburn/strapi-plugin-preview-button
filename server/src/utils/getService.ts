@@ -1,6 +1,5 @@
 import { PLUGIN_ID } from '../constants';
-
-import type { PreviewButtonServices } from '../services';
+import { type PreviewButtonServices } from '../services';
 
 const getService = <TName extends keyof PreviewButtonServices>(
   name: TName

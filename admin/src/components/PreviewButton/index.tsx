@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { LinkButton } from '@strapi/design-system';
 import { ExternalLink } from '@strapi/icons';
 
-import type { PreviewButtonStateConfig } from '../../../../server/src/config';
+import { type PreviewButtonStateConfig } from '../../../../server/src/config';
 import { getTrad } from '../../utils';
 
 export interface PreviewButtonProps extends PreviewButtonStateConfig {
