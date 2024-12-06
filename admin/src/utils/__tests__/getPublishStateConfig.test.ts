@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import type { PreviewButtonStateConfig } from '../../../../server/src/config';
+import { type PreviewButtonStateConfig } from '../../../../server/src/config';
 import getPublishStateConfig, { defaultRequiredConfig } from '../getPublishStateConfig';
 
 describe('getPublishStateConfig', () => {

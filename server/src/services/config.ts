@@ -1,7 +1,6 @@
-import type { Core } from '@strapi/strapi';
+import { type Core } from '@strapi/strapi';
 
-import { defaultConfig } from '../config';
-import type { PreviewButtonPluginConfig } from '../config';
+import { defaultConfig, type PreviewButtonPluginConfig } from '../config';
 import { PLUGIN_ID } from '../constants';
 
 export type ConfigService = ReturnType<typeof configService>;
