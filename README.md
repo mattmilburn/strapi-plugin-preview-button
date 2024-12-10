@@ -59,11 +59,9 @@ Each object in the array requires the `uid` as well as `draft` and/or `published
 #### Example
 Consider we have a `Home` single type as well as `Page` and `Post` collection types, where each has a simple `title` and `content` field. The `Page` and `Post` models will also use a `uid` field named `slug` so they can create many entries with unique paths. Here is the minimum recommended config for this scenario.
 
-```js
-// ./config/plugins.js
-'use strict';
-
-module.exports = {
+```ts
+// ./config/plugins.ts`
+export default () => ({
   'preview-button': {
     config: {
       contentTypes: [
@@ -102,7 +100,7 @@ module.exports = {
       ],
     },
   },
-};
+});
 ```
 
 In this example, the `Home` page is a single type and does not have `draftAndPublish` enabled so we do not use the `draft` prop.
@@ -131,8 +129,8 @@ For example, depending on how you are choosing to handle your preview method, yo
 
 > **Unmatched values** will be replaced with an empty string.
 
-```js
-// ./config/plugins.js
+```ts
+// ./config/plugins.ts`
 {
   uid: 'api::page.page',
   draft: {
@@ -151,8 +149,8 @@ For example, depending on how you are choosing to handle your preview method, yo
 #### Use with localization enabled
 If you have localization enabled for a content type, the `locale` value will be included in the entry data and replaced like the rest. You can simply use `{locale}` to include it where you like in the URL or query string.
 
-```js
-// ./config/plugins.js
+```ts
+// ./config/plugins.ts`
 {
   uid: 'api::page.page',
   draft: {
@@ -172,11 +170,9 @@ If you have localization enabled for a content type, the `locale` value will be 
 #### Use a secret key with preview URLs
 You can optionally use a secret key with your preview URLs by taking advantage of environment vars and the `query` prop. See example below.
 
-```js
-// ./config/plugins.js
-'use strict';
-
-module.exports = ({ env }) => ({
+```ts
+// ./config/plugins.ts`
+export default ({ env }) => ({
   'preview-button': {
     config: {
       contentTypes: [
@@ -219,8 +215,8 @@ By default this value is set to `StrapiPreview` but it can be any custom string.
 
 If you would rather have the preview button always open in a new tab, you could use `_blank` as the value. Special target keywords such as `_blank`, `_top`, `_self`, or `_parent` are also acceptable values.
 
-```js
-// ./config/plugins.js
+```ts
+// ./config/plugins.ts`
 {
   uid: 'api::page.page',
   draft: {
@@ -240,11 +236,9 @@ If you would rather have the preview button always open in a new tab, you could 
 
 You could also use a different `openTarget` for each model schema if you wanted to have each collection type open in it's own designated tab or window, like in the example below.
 
-```js
-// ./config/plugins.js
-'use strict';
-
-module.exports = {
+```ts
+// ./config/plugins.ts`
+export default () => ({
   'preview-button': {
     config: {
       contentTypes: [
@@ -281,14 +275,14 @@ module.exports = {
       ],
     },
   },
-};
+});
 ```
 
 #### Disable copy link button
 The "copy link" button located beneath the preview button can be disabled with the `copy: false` prop applied to `draft` and `published` configurations. This value is `true` by default.
 
-```js
-// ./config/plugins.js
+```ts
+// ./config/plugins.ts`
 {
   uid: 'api::home.home',
   published: {
@@ -303,8 +297,8 @@ In **published mode**, the preview button changes to a "live view" button. If yo
 
 In **draft mode**, the live view buttons will not appear.
 
-```js
-// ./config/plugins.js
+```ts
+// ./config/plugins.ts`
 {
   uid: 'api::page.page',
   draft: {
@@ -331,8 +325,8 @@ In **draft mode**, the live view buttons will not appear.
 ### `listViewColumn`
 Set to `false` to disable the preview and copy link buttons from displaying in list view.
 
-```js
-// ./src/api/page/content-types/page/schema.js
+```ts
+// ./src/api/page/content-types/page/schema.ts
 {
   "kind": "collectionType",
   "collectionName": "pages",
@@ -381,7 +375,7 @@ In this example, we will create the bare minimum for a Strapi plugin that allows
 
 The `package.json` is required for a Strapi plugin.
 
-```js
+```json
 // ./package.json
 {
   "name": "example",
@@ -406,12 +400,12 @@ module.exports = require('./admin/src').default;
 
 In the main plugin file below, we register the plugin in the `register` method and we register the hook with the `bootstrap` method.
 
-The hook provides `draft` and `published` parameters which are the same as the UID configs from `config/plugins.js`. So if you are editing a `Page`, you will get the `draft` and `published` configs for `api::page.page` from your plugin config passed into the callback.
+The hook provides `draft` and `published` parameters which are the same as the UID configs from `config/plugins.ts`. So if you are editing a `Page`, you will get the `draft` and `published` configs for `api::page.page` from your plugin config passed into the callback.
 
 Here you will modify and return `draft` and `published` while using `data` however you like. In this example, we are just adding on a `foo=bar` query parameter to demonstrate how this hook can be utilized for more dynamic URLs.
 
-```js
-// ./admin/src/index.js
+```ts
+// ./admin/src/index.ts
 export default {
   register(app) {
     app.registerPlugin({
@@ -440,18 +434,16 @@ export default {
 };
 ```
 
-Finally, don't forget to enable your plugin in your app by adding it to `config/plugins.js`.
+Finally, don't forget to enable your plugin in your app by adding it to `config/plugins.ts`.
 
-```js
-// ./config/plugins.js
-'use strict';
-
-module.exports = {
+```ts
+// ./config/plugins.ts`
+export default () => ({
   example: {
     enabled: true,
     resolve: './src/plugins/example',
   },
-};
+});
 ```
 
 ## <a id="user-guide"></a>📘 User Guide

@@ -6,10 +6,16 @@
 
 ## Get Started
 
+* [Migrate from v2 to v3](#migrate-from-v2-to-v3)
 * [Migrate from v1 to v2](#migrate-from-v1-to-v2)
 * [Migrate from v0 to v1](#migrate-from-v0-to-v1)
 
 ---
+
+## <a id="migrate-from-v2-to-v3"></a>Migrate from v2 to v3
+This upgrade requires Strapi v5 and is NOT compatible with Strapi v4.
+
+Everything else with your plugin installation can remain the same.
 
 ## <a id="migrate-from-v1-to-v2"></a>Migrate from v1 to v2
 The breaking changes in this migration focus on improving plugin options and also a simple find and replace for a parameter name in the `before-build-url` hook.
