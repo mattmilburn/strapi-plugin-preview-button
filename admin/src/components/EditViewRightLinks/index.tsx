@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { unstable_useDocument } from '@strapi/content-manager/strapi-admin';
+import { unstable_useDocument as useDocument } from '@strapi/content-manager/strapi-admin';
 
 import { usePreviewButton } from '../../hooks';
 import PreviewButtonGroup from '../PreviewButtonGroup';
@@ -13,7 +13,7 @@ const EditViewRightLinks = () => {
 
   // Get the document data (as `document`, which is undefined at first)
   // and the uid so the preview button has the data it needs.
-  const { document, schema } = unstable_useDocument({ documentId, model, collectionType });
+  const { document, schema } = useDocument({ collectionType, documentId, model });
   const uid = schema?.uid;
 
   const draftExists = document?.status === 'draft' || document?.status === 'modified';
