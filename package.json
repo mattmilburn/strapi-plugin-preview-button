@@ -80,7 +80,7 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@strapi/utils": "^5.4.0",
+    "@strapi/utils": "^5.5.0",
     "immer": "^9",
     "lodash": "4.17.21",
     "qs": "^6",
@@ -90,7 +90,8 @@
     "styled-components": "^6"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^5.4.0",
+    "@strapi/sdk-plugin": "^5.2.0",
+    "@strapi/strapi": "^5.5.0",
     "react": "^18",
     "react-dom": "^18",
     "react-router-dom": "^6",
@@ -99,8 +100,8 @@
   "devDependencies": {
     "@eslint/js": "^9",
     "@strapi/sdk-plugin": "^5.2.0",
-    "@strapi/strapi": "^5.4.0",
-    "@strapi/typescript-utils": "^5.4.0",
+    "@strapi/strapi": "^5.5.0",
+    "@strapi/typescript-utils": "^5.5.0",
     "@types/eslint__js": "^8",
     "@types/jest": "^29",
     "@types/react-copy-to-clipboard": "^5",
