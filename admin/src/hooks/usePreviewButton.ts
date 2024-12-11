@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useStrapiApp } from '@strapi/admin/strapi-admin';
+import { useStrapiApp } from '@strapi/strapi/admin';
 import { type UID } from '@strapi/strapi';
 
 import { type PreviewButtonStateConfig } from '../../../server/src/config';
