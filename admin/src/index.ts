@@ -7,9 +7,8 @@ import { prefixPluginTranslations } from './utils';
 export default {
   register(app: any) {
     app.addReducers(reducers);
-
     app.createHook(HOOK_BEFORE_BUILD_URL);
-
+    app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', addPreviewColumn);
     app.registerPlugin({
       id: PLUGIN_ID,
       name: PLUGIN_NAME,
@@ -21,8 +20,6 @@ export default {
       name: PLUGIN_ID,
       Component: EditViewRightLinks,
     });
-
-    app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', addPreviewColumn);
   },
 
   async registerTrads({ locales }: { locales: string[] }) {

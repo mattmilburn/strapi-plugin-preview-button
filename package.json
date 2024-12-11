@@ -80,6 +80,7 @@
     "trailingComma": "es5"
   },
   "dependencies": {
+    "@strapi/design-system": "^2.0.0-rc.14",
     "@strapi/utils": "^5.5.0",
     "immer": "^9",
     "lodash": "4.17.21",

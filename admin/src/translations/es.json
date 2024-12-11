@@ -3,5 +3,6 @@
   "form.button.published": "Abrir vista en vivo",
   "form.button.copy-link": "Copiar link",
   "form.button.copy-link.draft": "Copiar enlace de vista previa",
+  "list-view.column-header": "Avance",
   "notification.success.link-copied": "Enlace copiado al portapapeles"
 }
