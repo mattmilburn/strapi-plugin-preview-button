@@ -114,8 +114,6 @@
     "react": "^18",
     "react-dom": "^18",
     "react-router-dom": "^6",
-    "sqlite3": "^5",
-    "supertest": "^7",
     "ts-jest": "^29",
     "typescript": "^5.7.0",
     "typescript-eslint": "^7"
