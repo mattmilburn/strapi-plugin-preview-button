@@ -3,7 +3,7 @@ import { useStrapiApp } from '@strapi/strapi/admin';
 import { type UID } from '@strapi/strapi';
 
 import { type PreviewButtonStateConfig } from '../../../server/src/config';
-import { HOOK_BEFORE_BUILD_URL } from '../constants';
+import { HOOK_BEFORE_BUILD_URL, PLUGIN_ID } from '../constants';
 import { getPublishStateConfig } from '../utils';
 import usePluginConfig from './usePluginConfig';
 
@@ -15,7 +15,7 @@ export interface UsePreviewButtonReturn {
 }
 
 const usePreviewButton = (uid: UID.ContentType | undefined, data: any): UsePreviewButtonReturn => {
-  const runHookWaterfall = useStrapiApp('PreviewButton', (value) => value.runHookWaterfall);
+  const runHookWaterfall = useStrapiApp(PLUGIN_ID, (value) => value.runHookWaterfall);
   const { data: config, isLoading } = usePluginConfig();
 
   const [draft, setDraft] = useState<PreviewButtonStateConfig | null>(null);
