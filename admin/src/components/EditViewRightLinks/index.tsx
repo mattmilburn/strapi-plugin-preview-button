@@ -8,8 +8,14 @@ const EditViewRightLinks = () => {
   // @NOTE - `documentId` is undefined when the document is first being created.
   const { collectionType = '', id: documentId, slug: model = '' } = useParams();
   const [searchParams] = useSearchParams();
-  const { document, schema } = useDocument({ collectionType, documentId, model });
+  const params: Record<string, string> = {};
+  const locale = searchParams.get('plugins[i18n][locale]');
 
+  if (locale) {
+    params.locale = locale;
+  }
+
+  const { document, schema } = useDocument({ collectionType, documentId, model, params });
   const uid = schema?.uid;
   const { isLoading, isSupported, draft, published } = usePreviewButton(uid, document);
 
