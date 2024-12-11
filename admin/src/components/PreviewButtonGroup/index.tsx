@@ -12,13 +12,12 @@ export interface PreviewButtonGroupProps {
 const PreviewButtonGroup = ({ data, isDraft }: PreviewButtonGroupProps) => {
   const { url, copy, openTarget } = data;
 
-  // In order to disable the copy feature, `copy` must be explicitly defined as `false`.
-  const copyAllowed = copy !== false;
+  // @NOTE - In order to disable the copy feature, `copy` must be explicitly defined as `false`.
 
   return (
     <>
       <PreviewButton isDraft={isDraft} url={url} openTarget={openTarget} />
-      {copyAllowed && <CopyLinkButton isDraft={isDraft} url={url} />}
+      {copy !== false && <CopyLinkButton isDraft={isDraft} url={url} />}
     </>
   );
 };
