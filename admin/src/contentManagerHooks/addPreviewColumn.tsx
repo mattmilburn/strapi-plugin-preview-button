@@ -1,41 +1,18 @@
 import get from 'lodash/get';
-import { type UID } from '@strapi/strapi';
+import { type ListFieldLayout, type ListLayout } from '@strapi/content-manager/strapi-admin';
+import { type Modules, type UID } from '@strapi/strapi';
 
 import { ListViewColumn } from '../components';
 import { PLUGIN_ID } from '../constants';
+import { getTrad } from '../utils';
 
 export interface AddPreviewColumnProps {
-  displayedHeaders: {
-    key: string;
-    fieldSchema: {
-      type: string;
-    };
-    metadatas: {
-      label: string;
-      searchable: boolean;
-      sortable: boolean;
-    };
-    name: string;
-    cellFormatter: (data: any) => React.ReactElement;
-  }[];
-  layout: {
-    contentType: {
-      uid: UID.ContentType | undefined;
-      options: {
-        draftAndPublish: boolean;
-      };
-      pluginOptions: {
-        [pluginId: string]: {
-          listViewColumn: boolean;
-        };
-      };
-    };
-  };
+  displayedHeaders: ListFieldLayout[];
+  layout: ListLayout;
 }
 
 const addPreviewColumn = ({ displayedHeaders, layout }: AddPreviewColumnProps) => {
-  const supportKeys = ['contentType', 'pluginOptions', PLUGIN_ID, 'listViewColumn'];
-  const isSupported = get(layout, supportKeys, false) === true;
+  const isSupported = get(layout, ['options', PLUGIN_ID, 'listViewColumn'], false) === true;
 
   // Do nothing if the preview button column is not supported or disabled for this UID.
   if (!isSupported) {
@@ -49,17 +26,18 @@ const addPreviewColumn = ({ displayedHeaders, layout }: AddPreviewColumnProps) =
     displayedHeaders: [
       ...displayedHeaders,
       {
-        key: '__preview_key__',
-        fieldSchema: {
-          type: 'string',
-        },
-        metadatas: {
-          label: 'Preview',
-          searchable: false,
-          sortable: false,
+        label: {
+          id: getTrad('list-view.column-header'),
+          defaultMessage: 'Preview',
         },
         name: 'preview',
-        cellFormatter: (data: any) => <ListViewColumn data={data} layout={layout} />,
+        searchable: false,
+        sortable: false,
+        cellFormatter: (
+          data: Modules.Documents.AnyDocument,
+          _: any,
+          { model }: { model: UID.ContentType }
+        ) => <ListViewColumn data={data} layout={layout} model={model} />,
       },
     ],
     layout,

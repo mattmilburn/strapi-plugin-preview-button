@@ -2648,7 +2648,7 @@
     semver "7.5.4"
     umzug "3.8.1"
 
-"@strapi/design-system@2.0.0-rc.14":
+"@strapi/design-system@2.0.0-rc.14", "@strapi/design-system@^2.0.0-rc.14":
   version "2.0.0-rc.14"
   resolved "https://registry.yarnpkg.com/@strapi/design-system/-/design-system-2.0.0-rc.14.tgz#7478f50b3740311a3df3b929f410699b039cf5ef"
   integrity sha512-zOtArGfAQmKO5qqRE0IlONfjR1JL2VL/KjV3hE++KSybOZgfhbdckN4svpNtJ6i2Pv+glm7nHdu9h6AHRBuujQ==

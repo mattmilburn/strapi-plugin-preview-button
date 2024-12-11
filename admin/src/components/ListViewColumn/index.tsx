@@ -2,8 +2,9 @@ import { useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import get from 'lodash/get';
-import { Flex, IconButton, Loader } from '@strapi/design-system';
-import { ExternalLink, Link as LinkIcon } from '@strapi/icons';
+import { type ListLayout } from '@strapi/content-manager/strapi-admin';
+import { Flex, IconButton, IconButtonGroup, Loader } from '@strapi/design-system';
+import { ExternalLink, Link } from '@strapi/icons';
 import { type UID } from '@strapi/strapi';
 import { useNotification } from '@strapi/strapi/admin';
 
@@ -13,29 +14,18 @@ import { getTrad } from '../../utils';
 
 export interface ListViewColumnProps {
   data: any;
-  layout: {
-    contentType: {
-      uid: UID.ContentType | undefined;
-      options: {
-        draftAndPublish: boolean;
-      };
-      pluginOptions: {
-        [pluginId: string]: {
-          listViewColumn: boolean;
-        };
-      };
-    };
-  };
+  layout: ListLayout;
+  model: UID.ContentType;
 }
 
-const ListViewColumn = ({ data, layout }: ListViewColumnProps) => {
+const ListViewColumn = ({ data, layout, model }: ListViewColumnProps) => {
   const { formatMessage } = useIntl();
   const { toggleNotification } = useNotification();
 
-  const hasDraftAndPublish = layout.contentType.options.draftAndPublish === true;
-  const isDraft = hasDraftAndPublish && !data?.publishedAt;
+  const hasDraftAndPublish = layout.options.draftAndPublish === true;
+  const isDraft = hasDraftAndPublish && data.status === 'draft';
 
-  const { isLoading, draft, published } = usePreviewButton(layout.contentType.uid, data);
+  const { isLoading, draft, published } = usePreviewButton(model, data); // @TODO - Use model UID.
 
   const config = useMemo(() => {
     if (isDraft) {
@@ -49,11 +39,12 @@ const ListViewColumn = ({ data, layout }: ListViewColumnProps) => {
   const copy = get(config, 'copy');
   const openTarget = get(config, 'openTarget', PREVIEW_WINDOW_NAME);
 
-  const handleClick = useCallback(
+  const handleOpenLink = useCallback(
     (event: Event) => {
-      if (!url) {
-        event.preventDefault();
+      event.preventDefault();
+      event.stopPropagation();
 
+      if (!url) {
         return;
       }
 
@@ -62,7 +53,7 @@ const ListViewColumn = ({ data, layout }: ListViewColumnProps) => {
     [url, openTarget]
   );
 
-  const handleOnCopy = useCallback(() => {
+  const handleCopy = useCallback(() => {
     toggleNotification({
       type: 'success',
       message: formatMessage({
@@ -81,9 +72,9 @@ const ListViewColumn = ({ data, layout }: ListViewColumnProps) => {
   }
 
   return (
-    <Flex>
+    <IconButtonGroup>
       <IconButton
-        onClick={handleClick}
+        onClick={handleOpenLink}
         label={formatMessage(
           isDraft
             ? {
@@ -95,13 +86,17 @@ const ListViewColumn = ({ data, layout }: ListViewColumnProps) => {
                 defaultMessage: 'Open live view',
               }
         )}
-        icon={<ExternalLink />}
         noBorder
-      />
+      >
+        <ExternalLink />
+      </IconButton>
       {copy && (
-        <CopyToClipboard text={url} onCopy={handleOnCopy}>
+        <CopyToClipboard text={url} onCopy={handleCopy}>
           <IconButton
-            icon={<LinkIcon />}
+            onClick={(event: Event) => {
+              event.preventDefault();
+              event.stopPropagation();
+            }}
             label={formatMessage(
               isDraft
                 ? {
@@ -114,10 +109,12 @@ const ListViewColumn = ({ data, layout }: ListViewColumnProps) => {
                   }
             )}
             noBorder
-          />
+          >
+            <Link />
+          </IconButton>
         </CopyToClipboard>
       )}
-    </Flex>
+    </IconButtonGroup>
   );
 };
 
