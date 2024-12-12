@@ -5,7 +5,6 @@ import { usePreviewButton } from '../../hooks';
 import PreviewButtonGroup from '../PreviewButtonGroup';
 
 const EditViewRightLinks = () => {
-  // @NOTE - `documentId` is undefined when the document is first being created.
   const { collectionType = '', id: documentId, slug: model = '' } = useParams();
   const [searchParams] = useSearchParams();
   const params: Record<string, string> = {};
@@ -19,13 +18,14 @@ const EditViewRightLinks = () => {
   const uid = schema?.uid;
   const { isLoading, isSupported, draft, published } = usePreviewButton(uid, document);
 
-  if (!document || !uid || !isSupported || isLoading) {
+  if (!document?.id || !uid || !isSupported || isLoading) {
     return null;
   }
 
-  const isDraft = searchParams.get('status') !== 'published';
+  const hasDraftAndPublish = schema?.options?.draftAndPublish === true;
+  const isDraft = hasDraftAndPublish && searchParams.get('status') !== 'published';
   const showPublished = !!published && !isDraft;
-  const showDraft = !!draft && (isDraft || draft?.alwaysVisible);
+  const showDraft = hasDraftAndPublish && !!draft && (isDraft || draft?.alwaysVisible);
 
   return (
     <>
