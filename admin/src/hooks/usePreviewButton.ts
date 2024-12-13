@@ -30,6 +30,7 @@ const usePreviewButton = (uid: UID.ContentType | undefined, data: any): UsePrevi
       data,
       draft: uidConfig?.draft,
       published: uidConfig?.published,
+      uid,
     });
 
     const draftConfig = getPublishStateConfig(result?.draft as PreviewButtonStateConfig, data);
