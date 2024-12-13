@@ -1,6 +1,7 @@
 import { memo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import styled from 'styled-components';
 import { Button } from '@strapi/design-system';
 import { Link as LinkIcon } from '@strapi/icons';
 import { useNotification } from '@strapi/strapi/admin';
@@ -11,6 +12,10 @@ export interface CopyLinkButtonProps {
   isDraft: boolean;
   url: string;
 }
+
+const ButtonStyled = styled(Button)`
+  width: 100%;
+`;
 
 const CopyLinkButton = ({ isDraft, url }: CopyLinkButtonProps) => {
   const { formatMessage } = useIntl();
@@ -28,7 +33,7 @@ const CopyLinkButton = ({ isDraft, url }: CopyLinkButtonProps) => {
 
   return (
     <CopyToClipboard text={url} onCopy={handleOnCopy}>
-      <Button size="S" startIcon={<LinkIcon />} variant="secondary" style={{ width: '100%' }}>
+      <ButtonStyled size="S" startIcon={<LinkIcon />} variant="secondary">
         {formatMessage(
           isDraft
             ? {
@@ -40,7 +45,7 @@ const CopyLinkButton = ({ isDraft, url }: CopyLinkButtonProps) => {
                 defaultMessage: 'Copy link',
               }
         )}
-      </Button>
+      </ButtonStyled>
     </CopyToClipboard>
   );
 };

@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
 import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 import { LinkButton } from '@strapi/design-system';
 import { ExternalLink } from '@strapi/icons';
 
@@ -9,6 +10,15 @@ import { getTrad } from '../../utils';
 export interface PreviewButtonProps extends PreviewButtonStateConfig {
   isDraft: boolean;
 }
+
+const LinkButtonStyled = styled(LinkButton)`
+  width: 100%;
+
+  // Fix visited state color for the icon.
+  &:visited {
+    color: ${({ theme }) => theme.colors.primary700};
+  }
+`;
 
 const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
   const { formatMessage } = useIntl();
@@ -27,7 +37,7 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
   );
 
   return (
-    <LinkButton
+    <LinkButtonStyled
       disabled={!url}
       href={url}
       onClick={handleClick}
@@ -35,7 +45,6 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
       startIcon={<ExternalLink />}
       target="_blank"
       variant="secondary"
-      style={{ width: '100%' }}
     >
       {formatMessage(
         isDraft
@@ -48,7 +57,7 @@ const PreviewButton = ({ isDraft, openTarget, url }: PreviewButtonProps) => {
               defaultMessage: 'Open live view',
             }
       )}
-    </LinkButton>
+    </LinkButtonStyled>
   );
 };
 
