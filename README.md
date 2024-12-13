@@ -2,6 +2,14 @@
   <img style="width: 160px; height: auto;" src="public/logo-2x.png" alt="Logo for Strapi preview button plugin" />
   <h1>Strapi Preview Button</h1>
   <p>A plugin for Strapi CMS that adds a preview button and live view button to the content manager edit view.</p>
+  <p>
+    <a href="https://www.npmjs.com/package/strapi-plugin-preview-button">
+      <img src="https://img.shields.io/npm/v/strapi-plugin-preview-button.svg" alt="Latest npm version" />
+    </a>
+    <a href="https://strapi.io">
+      <img src="https://img.shields.io/badge/strapi-v5-blue" alt="Strapi supported version" />
+    </a>
+  </p>
   <img style="width: 960px; height: auto;" src="public/screenshot.png" alt="Screenshot for Strapi preview button plugin" />
 </div>
 
@@ -9,6 +17,7 @@
 
 * [Features](#features)
 * [Installation](#installation)
+* [Compatability](#compatability)
 * [Configuration](#configuration)
 * [Plugin Options](#plugin-options)
 * [Extending](#extending)
@@ -16,7 +25,6 @@
 * [Troubleshooting](#troubleshooting)
 * [Migration](#migration)
 * [Support or Donate](#donate)
-* [Roadmap](#roadmap)
 
 ## <a id="features"></a>✨ Features
 * Adds a new button in content manager sidebar which links the user to a preview or live view of a frontend app.
@@ -34,6 +42,12 @@ yarn add strapi-plugin-preview-button@latest
 ```
 
 Don't forget to **restart or rebuild** your Strapi app when installing a new plugin.
+
+## <a id="compatability"></a>🔩 Compatibility
+| Strapi version | Plugin version |
+| - | - |
+| v5 | v3 |
+| v4 | v1, v2 |
 
 ## <a id="configuration"></a>🔧 Configuration
 | property | type (default) | description |
@@ -350,8 +364,6 @@ Set to `false` to disable the preview and copy link buttons from displaying in l
 }
 ```
 
-Ideally, the preview and copy link buttons in list view should appear alongside the other action icons for each row in the table. However, Strapi does not currently provide a hook to append new icons to that column. For now, this plugin will add its own "Preview" column with the extra icon actions.
-
 <img style="width: 960px; height: auto;" src="public/list-view.png" alt="Screenshot for list view in Strapi preview button plugin" />
 
 ## <a id="extending"></a>🔩 Extending
@@ -359,66 +371,23 @@ If you need to apply more advanced logic to the preview URL, you can accomplish 
 
 Your Strapi app will need a **custom plugin** in order to use this hook.
 
-> See [Plugins Development](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html) in Strapi docs for more info.
+> See [Plugins Development](https://docs.strapi.io/dev-docs/plugins/developing-plugins) in Strapi docs for more info.
 
 #### Example
-In this example, we will create the bare minimum for a Strapi plugin that allows us to run our custom hook. The file structure for the plugin will look like the code below.
+In the code below, we register the hook and the plugin in the `register` method of the plugin's `admin/src/index.ts` file.
 
-```
-/src/plugins/example
-  /admin
-    /src
-      index.js
-  package.json
-  strapi-admin.js
-```
+The callback receives `draft` and `published` parameters which are the same as the UID configs from `config/plugins.ts`. So if you are editing a `Page`, you will get the `draft` and `published` configs for `api::page.page` from your plugin config passed into the callback. The `data` and `uid` props are also provided to help mutate the `draft` and `published` configs.
 
-The `package.json` is required for a Strapi plugin.
-
-```json
-// ./package.json
-{
-  "name": "example",
-  "version": "0.1.0",
-  "description": "Example.",
-  "strapi": {
-    "displayName": "Example",
-    "name": "example",
-    "description": "Example",
-    "kind": "plugin"
-  },
-  "dependencies": {}
-}
-```
-
-```js
-// ./strapi-admin.js
-'use strict';
-
-module.exports = require('./admin/src').default;
-```
-
-In the main plugin file below, we register the plugin in the `register` method and we register the hook with the `bootstrap` method.
-
-The hook provides `draft` and `published` parameters which are the same as the UID configs from `config/plugins.ts`. So if you are editing a `Page`, you will get the `draft` and `published` configs for `api::page.page` from your plugin config passed into the callback.
-
-Here you will modify and return `draft` and `published` while using `data` however you like. In this example, we are just adding on a `foo=bar` query parameter to demonstrate how this hook can be utilized for more dynamic URLs.
+In this example, we are just adding on a `foo=bar` query parameter to demonstrate how this hook can be utilized for more dynamic URLs.
 
 ```ts
 // ./admin/src/index.ts
 export default {
   register(app) {
-    app.registerPlugin({
-      id: 'example',
-      name: 'example',
-    });
-  },
-
-  bootstrap(app) {
-    app.registerHook('plugin/preview-button/before-build-url', ({ data, draft, published }) => {
+    app.registerHook('plugin/preview-button/before-build-url', ({ data, draft, published, uid }) => {
       const draftQuery = draft?.query ?? {};
 
-      // Return an object with modified `draft` and `published` props using `data` however you like.
+      // Return an object with modified `draft` and `published` props.
       return {
         draft: {
           ...draft,
@@ -429,6 +398,11 @@ export default {
         },
         published,
       };
+    });
+
+    app.registerPlugin({
+      id: 'example',
+      name: 'Example',
     });
   },
 };
@@ -455,7 +429,7 @@ The **Open draft preview** button should lead to an endpoint that redirects to t
 
 For in-depth examples and instructions, please reference the links below to learn how this can be accomplished with Next.js and Strapi.
 
-* [Next.js Preview Mode](https://nextjs.org/docs/advanced-features/preview-mode)
+* [Next.js Preview Mode](https://nextjs.org/docs/pages/building-your-application/configuring/preview-mode)
 * [Next.js Preview Mode example with Strapi](https://github.com/vercel/next.js/tree/canary/examples/cms-strapi)
 
 ## <a id="troubleshooting"></a>💩 Troubleshooting
@@ -474,7 +448,3 @@ Follow the [migration guides](MIGRATION.md) to keep your preview button plugin u
 
 ## <a id="donate"></a>❤️ Support or Donate
 If you are enjoying this plugin and feel extra appreciative, you can [buy me a beer or 3 🍺🍺🍺](https://www.buymeacoffee.com/mattmilburn).
-
-## <a id="roadmap"></a>🚧 Roadmap
-* Custom validation hook.
-* RBAC support.
