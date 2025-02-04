@@ -1,6 +1,5 @@
 # Testing
 /coverage
-junit.xml
 
 # Misc
 .DS_Store
@@ -15,6 +14,4 @@ yarn-error.log*
 .editorconfig
 .eslint*
 .prettier*
-.yarnrc.yml
 yarn.lock
-jest.config.js

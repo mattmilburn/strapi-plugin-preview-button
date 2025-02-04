@@ -3,5 +3,6 @@
   "form.button.published": "ライブプレビューを開く",
   "form.button.copy-link": "リンクをコピーする",
   "form.button.copy-link.draft": "プレビュー リンクをコピー",
+  "list-view.column-header": "プレビュー",
   "notification.success.link-copied": "クリップボードにリンクをコピーしました"
 }
