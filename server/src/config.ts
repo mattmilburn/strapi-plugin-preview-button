@@ -27,7 +27,7 @@ export const defaultConfig: PreviewButtonPluginConfig = {
 export default {
   default: defaultConfig,
   validator(config: PreviewButtonPluginConfig) {
-    if (!has(config, 'contentTypes')) {
+    if (!has(config, 'contentTypes') || config.contentTypes === null) {
       return;
     }
 
