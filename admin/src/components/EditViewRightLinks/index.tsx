@@ -6,6 +6,11 @@ import PreviewButtonGroup from '../PreviewButtonGroup';
 
 const EditViewRightLinks = () => {
   const { collectionType = '', id: documentId, slug: model = '' } = useParams();
+
+  if (!documentId || documentId === 'create') {
+    return null;
+  }
+
   const [searchParams] = useSearchParams();
   const params: Record<string, string> = {};
   const locale = searchParams.get('plugins[i18n][locale]');
