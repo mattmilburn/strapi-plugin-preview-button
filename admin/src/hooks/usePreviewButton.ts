@@ -55,12 +55,12 @@ const usePreviewButton = (uid: UID.ContentType | undefined, data: any): UsePrevi
   }, [data, uidConfig, setDraft, setPublished, runHookWaterfall]);
 
   useEffect(() => {
-    if (!isSupported || isLoading) {
+    if (isLoading || !isSupported) {
       return;
     }
 
     compileWithHooks();
-  }, [isSupported, isLoading, compileWithHooks]);
+  }, [isLoading, isSupported, compileWithHooks]);
 
   return {
     isLoading,
