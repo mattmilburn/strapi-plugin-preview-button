@@ -6,8 +6,9 @@ import PreviewButtonGroup from '../PreviewButtonGroup';
 
 const EditViewRightLinks = () => {
   const { collectionType = '', id: documentId, slug: model = '' } = useParams();
+  const isSingleType = collectionType === 'single-types';
 
-  if (!documentId || documentId === 'create') {
+  if ((!isSingleType && !documentId) || documentId === 'create') {
     return null;
   }
 
