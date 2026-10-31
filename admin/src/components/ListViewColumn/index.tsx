@@ -86,7 +86,6 @@ const ListViewColumn = ({ data, layout, model }: ListViewColumnProps) => {
                 defaultMessage: 'Open live view',
               }
         )}
-        noBorder
       >
         <ExternalLink />
       </IconButton>
@@ -108,7 +107,6 @@ const ListViewColumn = ({ data, layout, model }: ListViewColumnProps) => {
                     defaultMessage: 'Copy link',
                   }
             )}
-            noBorder
           >
             <Link />
           </IconButton>
